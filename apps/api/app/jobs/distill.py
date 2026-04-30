@@ -63,4 +63,13 @@ def run() -> dict:
                 (new, r["id"]),
             )
             distilled += 1
+        else:
+            # Neither the LLM nor `_shrink` could produce something tighter
+            # (TLDR is already short on word-count even though character-length
+            # passed the SQL filter). Touch `updated_at` so this item gets a
+            # 30-day cool-down before we burn another LLM call on it.
+            db.execute(
+                "UPDATE items SET updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+                (r["id"],),
+            )
     return {"distilled": distilled, "detail": f"distilled={distilled}/{len(rows)}"}

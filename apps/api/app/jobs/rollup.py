@@ -92,14 +92,29 @@ def run() -> dict:
     if not clusters:
         return {"communities": 0, "detail": "no clusters"}
 
-    db.execute("DELETE FROM communities")
-    written = 0
+    # Build the new rows *first* (this is where LLM calls / DB lookups can
+    # fail) and only swap them in inside an explicit transaction. The
+    # connection is in autocommit mode, so DELETE + INSERT must be wrapped
+    # in BEGIN/COMMIT to avoid readers seeing an empty `communities` table
+    # if a later step throws.
+    new_rows: list[tuple[str, str, str]] = []
     for ids in sorted(clusters.values(), key=lambda c: -len(c))[:MAX_COMMUNITIES]:
         label, summary = _label_and_summarise(ids)
-        db.execute(
+        new_rows.append((label, summary, json.dumps(ids)))
+    if not new_rows:
+        return {"communities": 0, "detail": "no rows produced"}
+
+    conn = db.get_conn()
+    conn.execute("BEGIN")
+    try:
+        conn.execute("DELETE FROM communities")
+        conn.executemany(
             "INSERT INTO communities(label, summary, member_ids, period_start, period_end) "
             "VALUES(?, ?, ?, datetime('now', '-30 days'), CURRENT_TIMESTAMP)",
-            (label, summary, json.dumps(ids)),
+            new_rows,
         )
-        written += 1
-    return {"communities": written, "detail": f"communities={written}"}
+        conn.execute("COMMIT")
+    except Exception:
+        conn.execute("ROLLBACK")
+        raise
+    return {"communities": len(new_rows), "detail": f"communities={len(new_rows)}"}
