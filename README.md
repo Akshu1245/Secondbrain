@@ -38,6 +38,8 @@ This repo ships both — as one pitch, two technical artefacts.
 | [`docs/oem-pitch/oem-targets.md`](docs/oem-pitch/oem-targets.md) | Ranked OEM targets (Moto → OnePlus → Nothing → ASUS → Jio) with entry points and sourced citations. |
 | [`docs/oem-pitch/oem-outreach.md`](docs/oem-pitch/oem-outreach.md) | Week-by-week outreach playbook + 2 cold-email templates + LinkedIn DM. |
 | [`docs/oem-pitch/user-pain-audit.md`](docs/oem-pitch/user-pain-audit.md) | Reddit / Twitter / Instagram / Facebook pain audit with direct links to public complaints. |
+| [`docs/oem-pitch/what-users-want.md`](docs/oem-pitch/what-users-want.md) | The mirror of the pain audit — what users explicitly say *would* make them stay or switch to Moto. The doc to put in front of a Moto Product Lead. |
+| [`docs/oem-pitch/solo-founder-to-moto.md`](docs/oem-pitch/solo-founder-to-moto.md) | 90-day campaign plan for a solo founder to land at Moto — partnership track + job track in parallel, with named roles and live req IDs. |
 | [`docs/oem-pitch/integration/`](docs/oem-pitch/integration/) | `IAolMiddleware.aidl` + `AolClient.kt` — drop-in Kotlin reference for native integration into a Moto / OnePlus / Nothing AI assistant. |
 
 ## Repo layout

@@ -15,6 +15,8 @@ their feature roadmap.
 | OEM targets (ranked) | [`../../docs/oem-pitch/oem-targets.md`](../../docs/oem-pitch/oem-targets.md) |
 | Outreach playbook | [`../../docs/oem-pitch/oem-outreach.md`](../../docs/oem-pitch/oem-outreach.md) |
 | User-pain audit (Reddit / Twitter / Insta / FB) | [`../../docs/oem-pitch/user-pain-audit.md`](../../docs/oem-pitch/user-pain-audit.md) |
+| What users want (the inverse — for Moto PMs) | [`../../docs/oem-pitch/what-users-want.md`](../../docs/oem-pitch/what-users-want.md) |
+| Solo-founder 90-day campaign plan | [`../../docs/oem-pitch/solo-founder-to-moto.md`](../../docs/oem-pitch/solo-founder-to-moto.md) |
 | Native integration (AIDL + Kotlin) | [`../../docs/oem-pitch/integration/`](../../docs/oem-pitch/integration/) |
 | Companion product (memory layer) | this same repo — see top-level [`README`](../../README.md) and PR #3 |
 
