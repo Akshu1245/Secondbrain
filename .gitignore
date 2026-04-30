@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+.next/
+out/
+node_modules/
+data/runtime/
+*.log
+.DS_Store

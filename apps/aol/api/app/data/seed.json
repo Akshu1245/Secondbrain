@@ -1,0 +1,34 @@
+{
+  "features": [
+    {"id": "live_translate",      "name": "Live Translate",          "category": "voice",        "description": "Real-time speech translation in 12 languages.",                "default_on": true,  "compute_class": "heavy",  "ms_local": 1800, "ms_cloud": 420 },
+    {"id": "circle_to_search",    "name": "Circle to Search",        "category": "search",       "description": "Long-press home, draw a circle around anything to search.",   "default_on": true,  "compute_class": "medium", "ms_local": 250,  "ms_cloud": 180 },
+    {"id": "magic_eraser",        "name": "Magic Eraser",            "category": "camera",       "description": "Remove unwanted objects from photos.",                         "default_on": true,  "compute_class": "heavy",  "ms_local": 2400, "ms_cloud": 600 },
+    {"id": "generative_fill",     "name": "Generative Fill",         "category": "camera",       "description": "Expand photo borders with AI-generated content.",              "default_on": true,  "compute_class": "heavy",  "ms_local": 4200, "ms_cloud": 900 },
+    {"id": "note_summary",        "name": "Note Summary",            "category": "notes",        "description": "Summarise long notes into bullet points.",                     "default_on": true,  "compute_class": "medium", "ms_local": 800,  "ms_cloud": 250 },
+    {"id": "smart_reply",         "name": "Smart Reply",             "category": "messaging",    "description": "Suggest 3 contextual replies in any messaging app.",           "default_on": true,  "compute_class": "light",  "ms_local": 90,   "ms_cloud": 140 },
+    {"id": "screenshot_text",     "name": "Screenshot Text Extract", "category": "system",       "description": "Copy text out of any screenshot.",                             "default_on": true,  "compute_class": "light",  "ms_local": 110,  "ms_cloud": 200 },
+    {"id": "voice_recorder_summary","name": "Voice Recorder Summary","category": "voice",        "description": "Summarise + tag a meeting recording.",                         "default_on": true,  "compute_class": "heavy",  "ms_local": 5800, "ms_cloud": 1200 },
+    {"id": "live_caption",        "name": "Live Caption",            "category": "voice",        "description": "Auto-caption any audio playing on the phone.",                 "default_on": true,  "compute_class": "medium", "ms_local": 220,  "ms_cloud": 240 },
+    {"id": "wallpaper_studio",    "name": "AI Wallpaper Studio",     "category": "system",       "description": "Generate custom wallpapers from a text prompt.",               "default_on": true,  "compute_class": "heavy",  "ms_local": 9000, "ms_cloud": 1800 },
+    {"id": "emoji_kitchen",       "name": "Emoji Kitchen",           "category": "keyboard",     "description": "AI-mash two emojis together as a sticker.",                    "default_on": true,  "compute_class": "light",  "ms_local": 60,   "ms_cloud": 120 },
+    {"id": "ai_music_remix",      "name": "AI Music Remix",          "category": "system",       "description": "Remix any track into a different genre.",                      "default_on": true,  "compute_class": "heavy",  "ms_local": 12000,"ms_cloud": 2400 },
+    {"id": "smart_calendar",      "name": "Smart Calendar Suggestions","category": "productivity","description": "Suggest events based on detected travel + emails.",            "default_on": true,  "compute_class": "medium", "ms_local": 600,  "ms_cloud": 220 },
+    {"id": "focus_mode",          "name": "Adaptive Focus Mode",     "category": "wellbeing",    "description": "Detect distraction + nudge a Do-Not-Disturb window.",          "default_on": false, "compute_class": "light",  "ms_local": 80,   "ms_cloud": 150 },
+    {"id": "battery_advisor",     "name": "AI Battery Advisor",      "category": "system",       "description": "Predict drain + recommend background-app trims.",              "default_on": true,  "compute_class": "light",  "ms_local": 130,  "ms_cloud": 180 },
+    {"id": "spam_call_filter",    "name": "Spam Call Filter",        "category": "calls",        "description": "Detect + decline likely-spam calls.",                          "default_on": true,  "compute_class": "light",  "ms_local": 70,   "ms_cloud": 200 },
+    {"id": "call_screening",      "name": "AI Call Screening",       "category": "calls",        "description": "Bot answers unknown calls + transcribes to you.",              "default_on": true,  "compute_class": "medium", "ms_local": 400,  "ms_cloud": 220 },
+    {"id": "sleep_sound_gen",     "name": "Sleep Soundscape Generator","category": "wellbeing",  "description": "Generate ambient soundscapes from a prompt.",                  "default_on": true,  "compute_class": "heavy",  "ms_local": 7200, "ms_cloud": 1600 },
+    {"id": "auto_wallpaper_swap", "name": "Auto-Wallpaper Time-Swap", "category": "system",       "description": "Rotate wallpaper based on time-of-day mood.",                  "default_on": true,  "compute_class": "light",  "ms_local": 50,   "ms_cloud": 120 },
+    {"id": "expression_meme",     "name": "Expression Meme Maker",    "category": "camera",       "description": "Turn a selfie into themed meme variants.",                     "default_on": true,  "compute_class": "heavy",  "ms_local": 6500, "ms_cloud": 1400 },
+    {"id": "ai_translate_camera", "name": "Camera Translate",        "category": "camera",       "description": "Live-translate text seen through the camera.",                 "default_on": true,  "compute_class": "medium", "ms_local": 320,  "ms_cloud": 280 },
+    {"id": "navigation_hint",     "name": "Smart Navigation Hint",   "category": "productivity", "description": "Offer route + ETA based on calendar + traffic.",               "default_on": true,  "compute_class": "medium", "ms_local": 350,  "ms_cloud": 240 },
+    {"id": "morning_briefing",    "name": "Morning Briefing",        "category": "productivity", "description": "Read out weather + first 3 calendar events.",                  "default_on": true,  "compute_class": "light",  "ms_local": 100,  "ms_cloud": 220 },
+    {"id": "ai_storymaker",       "name": "AI Story-Maker",          "category": "system",       "description": "Generate a short story from a one-line prompt.",               "default_on": true,  "compute_class": "heavy",  "ms_local": 11000,"ms_cloud": 1900 }
+  ],
+  "user_prefs": {
+    "priority_categories": ["productivity", "messaging", "calls"],
+    "battery_saver": false,
+    "data_saver":   false,
+    "private_mode": false
+  }
+}
