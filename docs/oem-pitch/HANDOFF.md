@@ -58,7 +58,7 @@ Snapshot of state so you can resume from exactly where we left off.
 | `what-users-want.md` | Inverse of pain audit — what users say *would* make them stay or switch to Moto |
 | `solo-founder-to-moto.md` | 90-day campaign for a solo person, two parallel tracks (partnership + job), with named LinkedIn search queries, Lenovo req IDs, etc. |
 | `integration/IAolMiddleware.aidl` | Drop-in Android binding interface (6 lines of code, 67 lines of comments) |
-| `integration/AolClient.kt` | Reference Kotlin client + service skeleton (~155 LOC) |
+| `integration/AolClient.kt` | Reference Kotlin client + service skeleton (125 LOC, cloc) |
 | `integration/README.md` | How a Moto engineer wires it in |
 
 ### 4. Outreach drafts (`docs/oem-pitch/outreach-drafts/`) — ready to copy-paste
@@ -91,12 +91,17 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
   4. Stop, upload the .mp4, embed the URL in: top-level `README.md`, `pitch-deck.md` slide 5, `one-pager.md`, all 3 outreach drafts
   5. Commit + push as a single commit on this branch
 
-### B. AIDL/Kotlin LOC verification
-- Current count (just measured): IAolMiddleware.aidl = 78 lines (5 blank, 67 comment, **6 actual code**); AolClient.kt = 219 lines (22 blank, 42 comment, **155 actual code**). **Total semantic LOC: ~161.**
-- The pitch claim "drop in &lt; 150 LOC" is *slightly* over (off by 11). Two ways to fix:
-  - **Trim AolClient.kt** by ~15 lines (drop the optional Compose UI hint and shorten the example service binding) → claim becomes verifiable.
-  - **Update the claim** to "~160 LOC" or "&lt; 200 LOC" everywhere (2 files: `moto-software-lead-cold-email.md` line 38, `solo-founder-to-moto.md` line 103).
-- Either is fine; trimming is more honest. Skipped for now; will do on resume.
+### B. AIDL/Kotlin LOC verification — RESOLVED
+- The earlier 161-LOC estimate counted the `/* … */` end-of-file usage example
+  as code. A standard tool (`cloc`) doesn't — and once block comments are
+  excluded, the actual integration code is **131 LOC** (`AolClient.kt` 125 +
+  `IAolMiddleware.aidl` 6).
+- The pitch claim "drops in under 150 LOC" is verifiable as written. No
+  trimming or claim-rewording was needed.
+- Reproduce: [`docs/oem-pitch/integration/verify-loc.sh`](integration/verify-loc.sh).
+  The script exits non-zero the moment integration LOC stops being strictly
+  under 150, so any future addition will surface the regression in CI before
+  the pitch goes stale. Numbers are also cited in [`integration/README.md`](integration/README.md).
 
 ---
 
