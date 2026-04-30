@@ -99,9 +99,9 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
 - The pitch claim "drops in under 150 LOC" is verifiable as written. No
   trimming or claim-rewording was needed.
 - Reproduce: [`docs/oem-pitch/integration/verify-loc.sh`](integration/verify-loc.sh).
-  The script exits non-zero if the integration ever grows past 150 LOC, so
-  any future addition will surface the regression in CI before the pitch goes
-  stale. Numbers are also cited in [`integration/README.md`](integration/README.md).
+  The script exits non-zero the moment integration LOC stops being strictly
+  under 150, so any future addition will surface the regression in CI before
+  the pitch goes stale. Numbers are also cited in [`integration/README.md`](integration/README.md).
 
 ---
 

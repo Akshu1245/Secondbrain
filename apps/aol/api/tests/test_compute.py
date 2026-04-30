@@ -3,9 +3,15 @@
 The most important test in this file is
 ``test_aggregate_saved_ms_is_summed_over_local_routes_only`` — it pins the
 fix from commit ``b550b2d`` so the headline ``saved_ms`` number can never
-silently regress to a ~50× inflated value (the bug was: the original code
-summed ``alt_ms - chosen_ms`` over *all* routes including cloud, where the
-delta is negative and the "saving" is fictitious).
+silently regress to a ~50× inflated value. The bug: ``aggregate()`` summed
+``alt_ms - chosen_ms`` over *every* logged route, including cloud routes.
+In ``compute.route``, ``alt_ms`` is the route we *didn't* take, so for a
+cloud decision ``alt_ms - chosen_ms = ms_local - ms_cloud`` — also positive
+for heavy features (because we routed cloud precisely *because* local would
+have been slower). Summing that as a "saving" double-counts: those routes
+weren't local, so no time was actually saved on them. Real savings are
+only the ``ms_cloud - ms_local`` differences on routes where we actually
+picked local.
 """
 
 from __future__ import annotations
@@ -85,13 +91,16 @@ def test_aggregate_saved_ms_is_summed_over_local_routes_only():
     assert len(clouds) == 5
 
     expected_local_savings = sum(e["alt_ms"] - e["chosen_ms"] for e in locals_)
-    # Adversarial sanity: the buggy version would have included cloud
-    # routes, where alt_ms - chosen_ms is *negative* (local is slower for
-    # heavy features) — so totals would diverge if the bug regressed.
+    # Adversarial sanity: the buggy version summed `alt_ms - chosen_ms`
+    # over *every* route. For cloud routes that delta is `ms_local -
+    # ms_cloud` — positive on heavy features, where local would have been
+    # the slower path — so the buggy sum picks up phantom "savings" from
+    # the cloud rows on top of the real local savings. The two values
+    # must diverge or the regression-pin doesn't pin anything.
     naive_buggy_sum = sum(e["alt_ms"] - e["chosen_ms"] for e in log)
     assert naive_buggy_sum != expected_local_savings, (
         "test setup failed to construct a divergence; pick features whose "
-        "local/cloud deltas have opposite signs"
+        "local and cloud routes both contribute non-zero deltas"
     )
 
     agg = compute.aggregate()

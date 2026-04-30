@@ -50,5 +50,5 @@ if [ "$total" -lt 150 ]; then
   echo "OK: under 150 LOC."
   exit 0
 fi
-echo "WARNING: integration LOC has grown past 150."
+echo "WARNING: integration LOC is no longer under 150 (total ${total})."
 exit 1

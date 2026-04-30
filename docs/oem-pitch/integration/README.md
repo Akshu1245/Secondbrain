@@ -55,8 +55,9 @@ AOL onto their existing AI assistant launcher in a single sprint.
 That's the full integration. Total diff size on a typical OEM AI launcher is
 **131 LOC** (`AolClient.kt` 125 + `IAolMiddleware.aidl` 6, semantic lines of
 code, block comments and the end-of-file usage example excluded). Reproduce
-with [`./verify-loc.sh`](./verify-loc.sh) — the script fails if integration
-LOC ever grows past 150 so the pitch claim stays honest.
+with [`./verify-loc.sh`](./verify-loc.sh) — the script fails the moment
+integration LOC stops being strictly under 150, so the pitch claim stays
+honest.
 
 ## Failure modes
 
