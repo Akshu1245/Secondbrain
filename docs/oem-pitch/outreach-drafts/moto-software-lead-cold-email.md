@@ -28,16 +28,18 @@ chart.
 
 ## Cold email — primary version (3 sentences, ≤ 120 words)
 
-> Subject: 90-second demo — the missing memory + optimisation layer for Moto AI
+> Subject: 45% of Moto AI calls on-device — 90-sec demo + AIDL stub
 
 > Hi Mahmoud,
 >
-> Saw the Moto AI Catch-Me-Up / Pay-Attention / Remember-This memory
-> gap (Remember-This doesn't persist, Catch-Me-Up doesn't recall) — I
-> built a 90-second demo of the fix and an AIDL stub your Android team
-> can drop in in &lt; 150 LOC. Live: <https://out-ujjsjvxm.devinapps.com> ·
-> Repo: <https://github.com/Akshu1245/Secondbrain>. 4 provisional patents
-> in adjacent AI territory.
+> Built a working middleware that routes ~45% of Moto AI invocations on-
+> device (Catch Me Up, Smart Reply, Remember This stay local; Pay
+> Attention + Image Studio stay cloud), and an AIDL + Kotlin reference
+> your team can drop in in **131 LOC**. Per-feature mapping with the
+> $/month at Moto's Q2 2025 shipment scale here:
+> <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md>.
+> Live demo: <https://out-ujjsjvxm.devinapps.com> · Repo: <https://github.com/Akshu1245/Secondbrain>.
+> 4 provisional patents in adjacent AI territory.
 >
 > Worth 15 minutes on the calendar?
 >
@@ -51,10 +53,11 @@ chart.
 
 ## LinkedIn DM version (≤ 300 chars — fits the connection-request limit)
 
-> Hi Mahmoud — saw the Moto AI Remember-This / Catch-Me-Up memory gap.
-> Built a 90-sec demo of the fix + an AIDL stub for Android in &lt;150
-> LOC. Live: out-ujjsjvxm.devinapps.com. 4 patents adjacent. Worth 15
-> minutes? — Akshay
+> Hi Mahmoud — built a middleware that routes ~45% of Moto AI calls
+> on-device + an AIDL stub in 131 LOC. Per-feature mapping +
+> $/month at Moto's Q2 25 scale:
+> github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md.
+> Live: out-ujjsjvxm.devinapps.com. Worth 15 min? — Akshay
 
 (287 chars including spaces. Drop "+ an AIDL stub for Android in &lt;150
 LOC" if your target's profile suggests they'd rather see the product

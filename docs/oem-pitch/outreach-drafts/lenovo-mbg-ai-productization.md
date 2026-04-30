@@ -9,7 +9,7 @@
 
 ## Subject line (when paste-applying via email or referral channel)
 
-> Software Engineer, AI Productization (req 69831) — built the missing memory + optimisation layer for Moto AI
+> Software Engineer, AI Productization (req 69831) — shipped a Moto AI optimiser (45 % calls on-device, 131-LOC AIDL drop-in)
 
 ---
 
@@ -50,7 +50,12 @@ Catch-Me-Up, Pay-Attention, and Remember-This.
   makes Remember-This actually persist + recall across sessions. They
   are exactly the two gaps in the current Moto AI surface — sourced
   from a per-platform Reddit / press / OzBargain crawl I documented at
-  <https://github.com/Akshu1245/Secondbrain/blob/devin/1777538026-aol-pitch/docs/oem-pitch/user-pain-audit.md>
+  <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/user-pain-audit.md>.
+* Per-feature mapping of *which Moto AI feature each AOL module
+  improves* (Catch Me Up → local; Pay Attention → stays cloud but
+  context-suggested; Smart Reply → local; etc.) plus dollar-savings
+  calibrated to Lenovo-Motorola's 14.5 M Q2 2025 shipments:
+  <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md>
 * The AOL Compute Optimizer is the same kind of rule-based local-vs-
   cloud routing decision a productization team has to make every
   sprint. The decision log is auditable per call — built so a Lenovo

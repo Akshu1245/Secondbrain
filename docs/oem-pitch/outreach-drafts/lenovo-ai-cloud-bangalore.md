@@ -59,7 +59,11 @@ local inference and the cloud and audits the decision per call.
   stack. AOL's Compute Optimizer is the rule-based front-door for that
   pipeline — it tells the cloud *which* feature calls to even bother
   serving. Together with the Lenovo AI Cloud you can measure dollars
-  saved per device per month rather than just "we shipped AI."
+  saved per device per month rather than just "we shipped AI." The
+  per-feature mapping (which Moto AI features stay cloud, which go
+  local, and the $/month delta at Lenovo-Motorola's Q2 2025 shipment
+  scale) is documented at
+  <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md>.
 * The job description mentions **Python, Linux, on-prem + cloud, basic
   AI / GitHub Copilot, Kubernetes, MongoDB, SALT-stack**. AOL's stack
   hits 6 of those directly (Python, Linux containerised on Fly.io,
