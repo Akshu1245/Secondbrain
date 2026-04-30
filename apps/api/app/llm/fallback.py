@@ -129,7 +129,7 @@ def _extract_entities(text: str, source_url: str | None) -> list[ExtractedEntity
 
     # URLs => websites
     for url in _URL_RE.findall(text):
-        host = urlparse(url).netloc.lower().lstrip("www.")
+        host = urlparse(url).netloc.lower().removeprefix("www.")
         if not host:
             continue
         key = (host, "website")

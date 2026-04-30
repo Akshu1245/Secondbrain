@@ -54,7 +54,9 @@ def _fts_search(q: str, k: int) -> list:
         """
         SELECT items.id        AS id,
                bm25(items_fts) AS bm25,
-               (1.0 / (1.0 - bm25(items_fts))) AS lex_score,
+               -- bm25() returns <= 0; more negative == better match.
+               -- Negate so higher == better, matching the vec score direction.
+               (-1.0 * bm25(items_fts)) AS lex_score,
                snippet(items_fts, 1, '\x02', '\x03', '…', 12) AS snippet
           FROM items_fts
           JOIN items ON items.id = items_fts.rowid
