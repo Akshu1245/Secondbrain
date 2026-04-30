@@ -146,6 +146,10 @@ def _delete_item(args: dict[str, Any]) -> dict[str, Any]:
     item_id = int(args.get("id"))
     if not db.query_one("SELECT 1 FROM items WHERE id=?", (item_id,)):
         return {"error": f"no item with id {item_id}"}
+    # facts_vec is a vec0 virtual table, no FK cascade — drop fact vectors first.
+    from ..ingest.pipeline import _delete_facts_for_item
+
+    _delete_facts_for_item(item_id)
     db.execute("DELETE FROM items WHERE id=?", (item_id,))
     db.execute("DELETE FROM item_vectors WHERE item_id=?", (item_id,))
     return {"deleted": item_id}

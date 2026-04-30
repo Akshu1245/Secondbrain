@@ -180,8 +180,18 @@ def _save_entities(item_id: int, entities: list[tuple[str, str, Any, Any]]) -> N
             )
 
 
-def _save_facts(item_id: int, facts: list) -> None:
+def _delete_facts_for_item(item_id: int) -> None:
+    """Drop facts for an item *and* their vec entries. ``facts_vec`` is a vec0
+    virtual table so it doesn't participate in foreign-key cascades — every
+    caller that removes from ``facts`` must call this helper instead."""
+    old = db.query_all("SELECT id FROM facts WHERE item_id=?", (item_id,))
+    for fr in old:
+        db.execute("DELETE FROM facts_vec WHERE fact_id=?", (fr["id"],))
     db.execute("DELETE FROM facts WHERE item_id=?", (item_id,))
+
+
+def _save_facts(item_id: int, facts: list) -> None:
+    _delete_facts_for_item(item_id)
     for f in facts:
         text = (getattr(f, "text", None) or "").strip()
         if not text:

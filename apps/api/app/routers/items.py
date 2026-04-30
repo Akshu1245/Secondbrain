@@ -126,6 +126,10 @@ def patch_item(item_id: int, patch: ItemPatch) -> ItemOut:
 def delete_item(item_id: int) -> dict:
     if not db.query_one("SELECT 1 FROM items WHERE id=?", (item_id,)):
         raise HTTPException(status_code=404, detail="not found")
+    # facts_vec is a vec0 virtual table, no FK cascade — drop fact vectors first.
+    from ..ingest.pipeline import _delete_facts_for_item
+
+    _delete_facts_for_item(item_id)
     db.execute("DELETE FROM items WHERE id=?", (item_id,))
     db.execute("DELETE FROM item_vectors WHERE item_id=?", (item_id,))
     return {"ok": True}
