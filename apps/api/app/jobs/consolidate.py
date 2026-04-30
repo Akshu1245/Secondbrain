@@ -83,4 +83,9 @@ def run() -> dict:
             _merge(canonical, loser)
             seen.add(loser)
             merged += 1
+            # If the current outer item was the loser, it no longer exists —
+            # any further candidates from `cands` would try to merge into a
+            # deleted row and trip the FK on facts/episodes/etc.
+            if loser == item_id:
+                break
     return {"merged": merged, "detail": f"merged={merged}"}

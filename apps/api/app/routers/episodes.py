@@ -45,16 +45,16 @@ def list_episodes(
     where: list[str] = []
     params: list = []
     if actor:
-        where.append("actor = ?")
+        where.append("e.actor = ?")
         params.append(actor)
     if channel:
-        where.append("channel = ?")
+        where.append("e.channel = ?")
         params.append(channel)
     if since:
-        where.append("created_at >= ?")
+        where.append("e.created_at >= ?")
         params.append(since)
     if until:
-        where.append("created_at <= ?")
+        where.append("e.created_at <= ?")
         params.append(until)
     where_sql = ("WHERE " + " AND ".join(where)) if where else ""
 
@@ -70,7 +70,9 @@ def list_episodes(
         """,
         tuple(params + [limit]),
     )
-    total_row = db.query_one(f"SELECT COUNT(*) AS c FROM episodes {where_sql}", tuple(params))
+    total_row = db.query_one(
+        f"SELECT COUNT(*) AS c FROM episodes e {where_sql}", tuple(params)
+    )
     return {
         "episodes": [dict(r) for r in rows],
         "total": int(total_row["c"]) if total_row else 0,
