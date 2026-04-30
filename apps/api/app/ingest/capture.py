@@ -148,8 +148,11 @@ def _capture_video(url: str, *, platform: str, kind: str, given_title: str | Non
             "subtitlesformat": "vtt",
         }
         try:
+            # Always pass download=True so yt-dlp's full pipeline runs
+            # (including writing subtitle files); skip_download still controls
+            # whether the heavy media file is fetched.
             with YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=settings.enable_whisper) or {}
+                info = ydl.extract_info(url, download=True) or {}
             if settings.enable_whisper:
                 req = info.get("requested_downloads") or []
                 if req:

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 
@@ -13,6 +14,7 @@ from fastapi.staticfiles import StaticFiles
 from . import __version__
 from .config import settings
 from .db import init_db
+from .events import bind_loop
 from .llm import get_provider
 from .routers import entities, graph, ingest, items, search, stream
 
@@ -23,6 +25,7 @@ log = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     init_db()
+    bind_loop(asyncio.get_running_loop())
     log.info("schema ready at %s", settings.db_path)
     log.info("LLM provider: %s", get_provider().name)
     yield
