@@ -43,11 +43,11 @@ def _merge(canonical_id: int, loser_id: int) -> None:
         "VALUES('item', ?, 'item', ?, 'merged_into')",
         (loser_id, canonical_id),
     )
-    # Drop the loser. CASCADE handles item_tags/item_entities/job_events that
-    # weren't migrated; item_vectors and facts_vec need explicit cleanup.
-    fact_rows = db.query_all("SELECT id FROM facts WHERE item_id = ?", (loser_id,))
-    for fr in fact_rows:
-        db.execute("DELETE FROM facts_vec WHERE fact_id = ?", (fr["id"],))
+    # Drop the loser. CASCADE handles item_tags / item_entities. Facts (and
+    # therefore facts_vec) are preserved — they were re-pointed at canonical
+    # by the UPDATE above, so no explicit facts_vec cleanup is needed.
+    # item_vectors is the only side-table that's not CASCADE'd and not
+    # migrated, so it needs an explicit DELETE.
     db.execute("DELETE FROM item_vectors WHERE item_id = ?", (loser_id,))
     db.execute("DELETE FROM items WHERE id = ?", (loser_id,))
 
