@@ -18,10 +18,15 @@ from .. import db
 
 
 def run() -> dict:
+    # Age uses the later of `decayed_at` (set when this job last ran) and
+    # `last_seen_at` (bumped every recall). If the user recalls a fact 1 day
+    # before this job runs, `last_seen_at` wins and the fact is spared.
     rows = db.query_all(
         """
         SELECT id, confidence, recall_count,
-               julianday('now') - julianday(COALESCE(decayed_at, last_seen_at)) AS age_days
+               julianday('now')
+               - julianday(MAX(COALESCE(decayed_at, last_seen_at), last_seen_at))
+                 AS age_days
           FROM facts
          WHERE merged_into IS NULL
         """
