@@ -49,6 +49,12 @@ def process_item(item_id: int, *, text: str | None, url: str | None, title: str 
 
         body_parts = [cap.body or ""]
 
+        # When the caller supplied BOTH a url and free-form text (e.g. Web Share
+        # Target gives us page title + selected text alongside the URL), keep
+        # the user's text so it's part of the summary / embedding / search.
+        if url and text and text.strip() and text.strip() != url.strip():
+            body_parts.append(text.strip())
+
         # 2. transcribe (if we got media)
         if cap.media_path:
             t = transcribe(cap.media_path)

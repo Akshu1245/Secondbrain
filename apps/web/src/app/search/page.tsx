@@ -69,12 +69,7 @@ export default function SearchPage() {
           {data.hits.map((h) => (
             <li key={h.item.id} className="space-y-1">
               <ItemCard item={h.item} />
-              {h.snippet && (
-                <p
-                  className="px-1 text-xs text-muted"
-                  dangerouslySetInnerHTML={{ __html: h.snippet }}
-                />
-              )}
+              {h.snippet && <Snippet text={h.snippet} />}
             </li>
           ))}
         </ul>
@@ -83,4 +78,25 @@ export default function SearchPage() {
       ) : null}
     </div>
   );
+}
+
+// Backend wraps matched terms in U+0002 / U+0003 control characters; we render
+// them as <mark> here so the snippet is never injected as raw HTML.
+function Snippet({ text }: { text: string }) {
+  const parts: React.ReactNode[] = [];
+  const re = /\u0002([\s\S]*?)\u0003/g;
+  let last = 0;
+  let match: RegExpExecArray | null;
+  let i = 0;
+  while ((match = re.exec(text)) !== null) {
+    if (match.index > last) parts.push(text.slice(last, match.index));
+    parts.push(
+      <mark key={i++} className="rounded bg-accent/20 text-foreground">
+        {match[1]}
+      </mark>,
+    );
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return <p className="px-1 text-xs text-muted">{parts}</p>;
 }

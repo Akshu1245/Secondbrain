@@ -17,10 +17,13 @@ def _default_data_dir() -> Path:
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    # Storage
+    # Storage — db_path / media_dir derive from data_dir at init time so they
+    # track .env-provided overrides (pydantic-settings doesn't write back to
+    # os.environ, so referencing _default_data_dir() at class definition time
+    # would leave them out of sync).
     data_dir: Path = _default_data_dir()
-    db_path: Path = _default_data_dir() / "secondbrain.db"
-    media_dir: Path = _default_data_dir() / "media"
+    db_path: Path | None = None
+    media_dir: Path | None = None
 
     # LLM
     llm_provider: str = "auto"  # auto | openai | openrouter | ollama | fallback
@@ -51,8 +54,15 @@ class Settings(BaseSettings):
     serve_frontend: bool = False
     frontend_dir: Path = Path("web")
 
+    def model_post_init(self, __context: object) -> None:
+        if self.db_path is None:
+            self.db_path = self.data_dir / "secondbrain.db"
+        if self.media_dir is None:
+            self.media_dir = self.data_dir / "media"
+
     def ensure_dirs(self) -> None:
         self.data_dir.mkdir(parents=True, exist_ok=True)
+        assert self.media_dir is not None
         self.media_dir.mkdir(parents=True, exist_ok=True)
 
 
