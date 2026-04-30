@@ -14,21 +14,75 @@ All three drafts share the same credential pack: live AOL demo URL, repo
 URL, 4 patents, the Catch-Me-Up / Pay-Attention / Remember-This memory
 gap framing.
 
+## Ranked target list (verified May 2026 via public LinkedIn)
+
+Named targets that are publicly visible on LinkedIn. Listed in the order
+you should approach them.
+
+### A. Moto AI cold email (Tuesday May 5, 4–5 PM IST)
+
+| # | Name | Title | LinkedIn |
+|---|---|---|---|
+| 1 | **Mahmoud Ebrahim** | VP, MBG Software Development at Motorola Mobility | <https://linkedin.com/in/mahmoudebrahim> |
+| 2 | Thomas Gitzinger | Director & Principal Engineer, Innovation & Architecture | <https://linkedin.com/in/thomas-gitzinger-94a61912> |
+| 3 | Eric Niu | Distinguished Staff Engineer, Motorola Mobile Devices | <https://linkedin.com/in/eric-niu-aa316318> |
+| 4 | Edward Benyukhis | Director, SW/FW Engineering, Platform Software (Android) | search by name |
+
+Send to **Mahmoud only** on May 5. If no reply by May 19, send follow-up #1
+to Mahmoud and a fresh first-touch to Thomas. **Never CC.**
+
+### B. Lenovo MBG / Chicago referral path (Thursday May 7, applying to req 69831)
+
+The req goes through the Lenovo careers portal. Independently, send a
+short LinkedIn note to:
+
+| # | Name | Why |
+|---|---|---|
+| 1 | **Mahmoud Ebrahim** | VP MBG Software Development. The hiring chain for AI Productization rolls up to him. |
+| 2 | Pranav Bhatt | Director, Product Operations & Business Development at Motorola Mobility — useful internal referrer if Mahmoud doesn't reply. |
+
+Referral note (200 chars, send same day as the application):
+
+> Hi Mahmoud — just submitted my application to req 69831 (AI
+> Productization, Chicago). I built AOL — a system-layer optimiser for
+> Moto AI — live at out-ujjsjvxm.devinapps.com. Worth a 15-min look at
+> the demo? — Akshay
+
+### C. Lenovo Bangalore / AI Cloud referral path (Thursday May 7, applying to req 76696)
+
+| # | Name | Why |
+|---|---|---|
+| 1 | **Amith Parameshwara** | Asia Pacific Lead — AI Practice at Lenovo, Bengaluru. Closest discipline match for AI Cloud. <https://linkedin.com/in/amithmp> |
+| 2 | Brijendra Y. | Hybrid Cloud and AI Delivery Leader, Lenovo, Bengaluru. Useful internal referrer. <https://linkedin.com/in/brijendra-brij-y-28844415> |
+
+Referral note (200 chars):
+
+> Hi Amith — applied to req 76696 (AI Cloud, Bangalore). I built a
+> rule-based local-vs-cloud router for OEM AI surfaces — routes ~45%
+> of calls on-device, audit-friendly. Live: out-ujjsjvxm.devinapps.com.
+> Worth 15 min? — Akshay
+
+---
+
 ## Before sending — checklist
 
-- [ ] Replace `[NAME]`, `[OEM]`, `[ROLE]` placeholders with real values.
-- [ ] Confirm the Lenovo req IDs (69831, 76696) are still open at
-      <https://jobs.lenovo.com>. If not, find the closest equivalent
-      and update the body.
-- [ ] Replace `[YOUR LINKEDIN URL]` with your own profile.
-- [ ] Replace `[PATENT 1 TITLE]` etc. with the actual patent titles
-      (or remove the line if you'd rather list them in the resume only).
+- [ ] Confirm the Lenovo req IDs (**69831**, **76696**) are still open
+      at <https://jobs.lenovo.com>. If either is closed, find the
+      nearest equivalent on the same team and update the cover letter
+      subject line + opening.
+- [ ] Replace `[YOUR LINKEDIN URL]` with your own profile (any valid
+      `https://linkedin.com/in/...` link).
+- [ ] Replace `[PATENT 1 TITLE]` … `[PATENT 4 TITLE]` with the actual
+      titles (or delete those bullets if you'd rather list patents only
+      in the resume PDF).
+- [ ] Replace `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]`
+      with a single-line credentials summary.
 - [ ] Send a test email to yourself first to confirm formatting in
-      Gmail / Outlook (markdown does NOT render — copy-paste the rendered
-      version instead, or convert to plaintext).
-- [ ] For the Moto cold email: use LinkedIn DM if you can't find the
-      person's email. The DM template is shorter — see the bottom of
-      the email file.
+      Gmail / Outlook (markdown does NOT render — copy-paste the
+      rendered version, or convert to plaintext).
+- [ ] For the Moto cold email: use LinkedIn DM (the 287-char version)
+      if you can't find the person's email. The DM template is the
+      bottom of [`moto-software-lead-cold-email.md`](./moto-software-lead-cold-email.md).
 
 ## Tracking
 

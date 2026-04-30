@@ -150,11 +150,15 @@ In equal priority, the explicit list of things to kill or hide-by-default:
 ## Why this matters commercially
 
 At 10K-device pilot scale (the AOL pitch) the Compute Optimizer alone
-saves ~**$36K / month** on cloud-AI cost. At a Moto India SKU run-rate
-(low-millions of devices / year) the same savings extrapolate into the
-**eight-figure annual range** — not in revenue, but in *cost the OEM is
-already spending and getting nothing back for*. That is the line the
-finance team understands.
+eliminates ~**6.75M cloud-AI calls / month**. At the seed-data
+illustrative cost ($0.0008/call) that's ~$5K/month; at the realistic
+OEM cost-per-call (typically 3–10× higher because flagship LLM calls
+cost more than the seed bound), it lands in the **low-five-figure
+$/month range**. At a Moto India SKU run-rate (low-millions of devices
+/ year) the same savings extrapolate into the **seven-to-eight-figure
+annual range** — not in revenue, but in *cost the OEM is already
+spending and getting nothing back for*. That is the line the finance
+team understands.
 
 The user-trust win is harder to quantify but bigger: shipping a single
 binding off-switch flips the press narrative from *"Moto adds more

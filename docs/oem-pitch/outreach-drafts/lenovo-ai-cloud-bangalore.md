@@ -40,11 +40,14 @@ local inference and the cloud and audits the decision per call.
     * API + Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>
     * Repo: <https://github.com/Akshu1245/Secondbrain> (subdir
       `apps/aol/`)
-* On the seeded 24-feature dataset the router keeps **45.5% of calls
-  on-device** and saves **~1,904 ms of latency per call** vs naïve
-  always-cloud routing. At 10K-device pilot scale that translates to
-  ~$36K/month in cloud-AI cost saved — the same back-of-envelope
-  Lenovo's MBG team is already running.
+* On the seeded 24-feature dataset the router keeps **~45% of calls
+  on-device**, eliminating those cloud-AI calls entirely. Real
+  per-call latency savings come from the local routes (~50–130 ms
+  saved per locally-routed light task vs the cloud round-trip); the
+  cost saving is the more material number. At a 10K-device pilot
+  with ~50 invocations/device/day, the eliminated cloud calls map
+  to a low-five-figure $/month range of cloud-AI spend — the same
+  back-of-envelope Lenovo's MBG team is already running.
 * Deployed end-to-end: FastAPI backend on **Fly.io**, Next.js dashboard
   shipped as a **static export**. Containerised, reproducible, single
   `pyproject.toml` install path. The dev workflow uses `uv` for
@@ -114,11 +117,12 @@ Live demo: <https://out-ujjsjvxm.devinapps.com>
 > (solo project, open-source). Rule-based local-vs-cloud routing
 > middleware for OEM AI assistants. Honors `battery_saver`,
 > `data_saver`, and `private_mode` preferences; logs every decision
-> with the rule that fired, latency, and per-call cost. **45.5% of
-> calls routed on-device, ~1,904 ms latency saved per call** on the
-> seeded dataset; **~$36K/month saved** at 10K-device pilot scale.
-> FastAPI + Fly.io + Next.js static export. Live demo:
-> out-ujjsjvxm.devinapps.com. Repo: github.com/Akshu1245/Secondbrain.
+> with the rule that fired, latency, and per-call cost. **~45% of
+> calls routed on-device** on the seeded dataset, eliminating those
+> cloud-AI calls entirely; pilot-scale savings are illustrative and
+> documented in the repo. FastAPI + Fly.io + Next.js static export.
+> Live demo: out-ujjsjvxm.devinapps.com. Repo:
+> github.com/Akshu1245/Secondbrain.
 
 ---
 

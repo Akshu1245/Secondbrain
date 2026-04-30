@@ -73,12 +73,16 @@ real OEM AI via an Android Service (AIDL stub in `docs/integration/`).
 Numbers below are **live** from <https://out-ujjsjvxm.devinapps.com>.
 
 - **Surface size: 24 → 17 features (–25%)** after AOL applies the filter.
-- **Compute router on a sample run of 11 invocations:** 45% local, 55% cloud,
-  **avg 1,904 ms latency saved** vs. naïve "always-cloud" routing.
-- **Per-call cloud cost** (illustrative `$0.0008` per cloud call) → at the
-  conservative pilot of *10,000 devices × 50 invocations/day*, AOL's local
-  routing alone saves **~$36K/month** on cloud spend, before any reduction
-  from feature hiding.
+- **Compute router on a sample run of 11 invocations:** ~45% local,
+  ~55% cloud. Latency savings come from the locally-routed light
+  tasks (the cloud round-trip is avoided); the headline value is the
+  **eliminated cloud-AI call count**.
+- **Per-call cloud cost** (`$0.0008` per cloud call, seed-data
+  illustrative — real OEM cost-per-call is typically 3–10× higher).
+  At a *10,000-device × 50-invocation/day* pilot, AOL's local routing
+  eliminates ~6.75M cloud calls/month, equating to **~$5K/month at
+  the seed-data cost** and into the **low-five-figure $/month range**
+  at realistic OEM cost-per-call. Surface hiding stacks on top.
 - **Demo:** click "Before / After" on the live dashboard. Click "Compute
   Router" → "Run routing". Click "Why This Matters" for the citations.
 

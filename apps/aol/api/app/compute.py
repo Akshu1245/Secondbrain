@@ -81,8 +81,13 @@ def aggregate() -> dict[str, Any]:
                 "saved_ms_avg": 0}
     local = [e for e in log if e["decision"] == "local"]
     cloud = [e for e in log if e["decision"] == "cloud"]
+    # Savings are measured vs an always-cloud baseline. Cloud routes save
+    # nothing vs that baseline (the baseline would have routed cloud too); only
+    # local routes contribute real savings. Aggregating over `log` instead of
+    # `local` would inflate `saved_ms` with phantom "savings" from heavy
+    # cloud-routed tasks where the alternative (local) was slower.
     saved_usd = round(len(local) * COST_PER_CLOUD_CALL_USD, 4)
-    saved_ms = sum(e["alt_ms"] - e["chosen_ms"] for e in log)
+    saved_ms = sum(e["alt_ms"] - e["chosen_ms"] for e in local)
     return {
         "total": n,
         "local_pct": round(100 * len(local) / n, 1),

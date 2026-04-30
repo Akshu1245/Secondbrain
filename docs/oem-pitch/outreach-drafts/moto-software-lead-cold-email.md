@@ -1,10 +1,21 @@
 # Cold email — Moto / Lenovo MBG software lead
 
 **Target:** A named software / AI lead on the Moto AI team (Catch-Me-Up,
-Pay-Attention, Remember-This). Find via the LinkedIn queries in
-[`../solo-founder-to-moto.md`](../solo-founder-to-moto.md) — typical
-title: *Director / Sr. Director of Software Engineering, Mobile AI* or
-*Principal Engineer, Mobile AI*.
+Pay-Attention, Remember-This).
+
+### Ranked targets (verified May 2026 via public LinkedIn search)
+
+| # | Name | Title | LinkedIn | Why this person |
+|---|---|---|---|---|
+| 1 | **Mahmoud Ebrahim** | VP, MBG Software Development at Motorola Mobility (Lenovo) | <https://linkedin.com/in/mahmoudebrahim> | His own LinkedIn bio names *"Moto AI — our next-gen AI platform"* as a key achievement. Direct decision-maker. Roselle, IL. **PRIMARY.** |
+| 2 | **Thomas Gitzinger** | Director & Principal Engineer, Innovation and Architecture at Motorola Mobility | <https://linkedin.com/in/thomas-gitzinger-94a61912> | Innovation/architecture remit — closest engineering counterpart. Libertyville, IL. **TECH-FIRST FALLBACK.** |
+| 3 | **Eric Niu** | Distinguished Staff Engineer & Tech Leader at Motorola Mobile Devices | <https://linkedin.com/in/eric-niu-aa316318> | Distinguished engineer level; Sunnyvale, CA — useful if you want a US west-coast technical opinion. |
+| 4 | **Edward Benyukhis** | Director, SW/FW Engineering, Platform Software (Android products) at Motorola | (search by name on LinkedIn) | Owns the Platform Software layer where AOL would integrate. Strong fit if Mahmoud's calendar is closed. |
+| 5 | **Robert Yesudass Divya** | Engineering Lead SME at Motorola Mobility | <https://linkedin.com/in/robertydivya> | IC-level lead; useful only as a *referral source* into the org, not as a primary recipient. |
+
+**Send order:** **Mahmoud first** (Tuesday May 5). If no reply by **May 19**, follow-up #1 to Mahmoud and a *fresh first-touch* to Thomas Gitzinger on the same day. If neither replies by **June 2**, pivot to OnePlus / Nothing per [`../solo-founder-to-moto.md`](../solo-founder-to-moto.md). **Do not** send to all five at once — Moto is a relatively small org and they will see the cross-CC.
+
+*Typical title pattern to confirm: Director / Sr. Director of Software Engineering, Mobile AI; Principal Engineer, Mobile AI; VP, MBG Software Development.*
 
 **Send window:** **Tuesday, May 5, 2026 — 4:00–5:00 PM IST** (Mars day;
 date 5 = Mercury, communication-favoured).
@@ -19,7 +30,7 @@ chart.
 
 > Subject: 90-second demo — the missing memory + optimisation layer for Moto AI
 
-> Hi [NAME],
+> Hi Mahmoud,
 >
 > Saw the Moto AI Catch-Me-Up / Pay-Attention / Remember-This memory
 > gap (Remember-This doesn't persist, Catch-Me-Up doesn't recall) — I
@@ -34,11 +45,13 @@ chart.
 > K S Akshay
 > `rashisolutions1245@gmail.com` · `[YOUR LINKEDIN URL]`
 
+*If sending to a different target from the table above, change "Mahmoud" to that recipient's first name. **Do not** keep "Mahmoud" if you're sending to Thomas / Eric / Edward.*
+
 ---
 
 ## LinkedIn DM version (≤ 300 chars — fits the connection-request limit)
 
-> Hi [NAME] — saw the Moto AI Remember-This / Catch-Me-Up memory gap.
+> Hi Mahmoud — saw the Moto AI Remember-This / Catch-Me-Up memory gap.
 > Built a 90-sec demo of the fix + an AIDL stub for Android in &lt;150
 > LOC. Live: out-ujjsjvxm.devinapps.com. 4 patents adjacent. Worth 15
 > minutes? — Akshay
@@ -54,7 +67,7 @@ after the original**)
 
 > Subject: Re: 90-second demo — the missing memory + optimisation layer for Moto AI
 
-> Hi [NAME],
+> Hi Mahmoud,
 >
 > Bumping this once. The demo is still up at
 > out-ujjsjvxm.devinapps.com and I added an OEM-pain audit that maps
@@ -77,7 +90,7 @@ after the original**, then stop and move to OnePlus / Nothing)
 
 > Subject: Last note — open-sourcing the Moto-AI optimisation layer
 
-> Hi [NAME],
+> Hi Mahmoud,
 >
 > Last note from me — I'm planning to open the discussion with OnePlus
 > / Nothing in the next 2 weeks since Moto's the natural first home
@@ -112,14 +125,12 @@ after the original**, then stop and move to OnePlus / Nothing)
 
 ## Personalisation checklist before sending
 
-- [ ] Pick the actual recipient by running the LinkedIn query in
-      [`../solo-founder-to-moto.md`](../solo-founder-to-moto.md):
-      `Director Software Engineering Motorola Mobility AI`. Aim for
-      *Director / Sr. Director / Principal Engineer*. **Avoid** VPs
-      and recruiters for the cold outreach (different job functions —
-      they'll re-route, slowing reply by 2 weeks).
-- [ ] Replace `[NAME]` with the recipient's first name (Lenovo / Moto
-      culture is first-name in email).
+- [ ] **Picked: Mahmoud Ebrahim** (VP MBG Software Development — Moto
+      AI is named in his own bio). If you'd rather avoid VPs and go
+      Director-level technical, switch to Thomas Gitzinger (#2 above)
+      and replace "Mahmoud" with "Thomas" everywhere.
+- [ ] Replace recipient name *only if changing from Mahmoud* (Lenovo /
+      Moto culture is first-name in email).
 - [ ] Confirm the demo URL <https://out-ujjsjvxm.devinapps.com> is
       still live the morning of send. (It's deployed on Devin Apps —
       free tier; if it's down, redeploy from the dashboard.)

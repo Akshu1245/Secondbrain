@@ -51,9 +51,10 @@ Sales Navigator (or free LinkedIn search):
 > - 60-second walkthrough: [Loom link — see README]
 >
 > On the test corpus (24 representative AI features, 30 days of simulated
-> usage), AOL hides ~25% of the surface and saves ~1.9 s of latency per call
-> via local routing. Extrapolated to 10K-device pilot scale, that's roughly
-> **$36K/month off your cloud-AI bill** before any other changes.
+> usage), AOL hides ~25% of the surface and routes ~45% of calls
+> on-device. At a 10K-device pilot scale, that eliminates
+> ~6.75M cloud-AI calls/month — **a low-five-figure $/month off your
+> cloud-AI bill** at realistic OEM cost-per-call.
 >
 > Worth 15 minutes? I'm happy to walk an engineer through the integration
 > AIDL stub (it's a single Foreground Service, drops in beside Moto AI).
@@ -74,7 +75,7 @@ Sales Navigator (or free LinkedIn search):
 > I've built a system-layer middleware called **AOL** whose explicit success
 > metric is **$ saved per device per month**, not "features shipped". It runs
 > rule-based, on-device, behind a single AIDL service. On a 10K-device pilot,
-> the math suggests ~$36K/month off the cloud bill, plus a measurable lift in
+> the math suggests low-five-figure $/month off the cloud bill, plus a measurable lift in
 > daily AI feature engagement (because we hide the long tail of features
 > users never touch).
 >

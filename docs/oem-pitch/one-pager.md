@@ -40,9 +40,10 @@ the memory layer Moto AI's "Remember This" / "Pay Attention" features lack.
 |---|---|
 | Surface size, before / after AOL | 24 → 17 features (–25%) |
 | Sample compute decisions | 11 |
-| Local / cloud split | 45.5% / 54.5% |
-| Avg latency saved per call | 1,904 ms |
-| Pilot scenario (10K devices × 50 invocations/day) | ~$36K/month cloud savings |
+| Local / cloud split | ~45% / ~55% |
+| Cloud calls eliminated at 10K-device × 50-inv/day pilot | ~6.75M / month |
+| Pilot savings at seed-data cost ($0.0008/call) | ~$5K / month |
+| Pilot savings at realistic OEM cost-per-call (3–10× higher) | low-five-figure $/month |
 
 ## Business model
 
