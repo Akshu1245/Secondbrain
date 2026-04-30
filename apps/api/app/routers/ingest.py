@@ -6,10 +6,20 @@ import logging
 
 from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, Request
 
+from .. import db
 from ..auth import require_token
 from ..ingest.pipeline import create_pending_item, process_item
 from ..models import IngestRequest, ItemOut
 from .items import _row_to_item
+
+
+def _log_episode(item_id: int, *, channel: str, request: Request) -> None:
+    """Episodic provenance — record which device / channel saved each item."""
+    ua = request.headers.get("user-agent", "")[:200]
+    db.execute(
+        "INSERT INTO episodes(item_id, actor, device, channel) VALUES(?,?,?,?)",
+        (item_id, "user", ua, channel),
+    )
 
 log = logging.getLogger(__name__)
 
@@ -17,10 +27,11 @@ router = APIRouter(prefix="/api", tags=["ingest"], dependencies=[Depends(require
 
 
 @router.post("/ingest", response_model=ItemOut)
-async def ingest(req: IngestRequest, background: BackgroundTasks) -> ItemOut:
+async def ingest(req: IngestRequest, request: Request, background: BackgroundTasks) -> ItemOut:
     if not (req.text or req.url):
         raise HTTPException(status_code=400, detail="provide text or url")
     item_id = create_pending_item(text=req.text, url=req.url, title=req.title)
+    _log_episode(item_id, channel="web", request=request)
     background.add_task(process_item, item_id, text=req.text, url=req.url, title=req.title)
     return _row_to_item(item_id)
 
@@ -48,5 +59,6 @@ async def share_target(
     if not payload:
         raise HTTPException(status_code=400, detail="empty share")
     item_id = create_pending_item(text=payload, url=url, title=title)
+    _log_episode(item_id, channel="share-target", request=request)
     background.add_task(process_item, item_id, text=payload, url=url, title=title)
     return {"ok": True, "item_id": item_id}

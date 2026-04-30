@@ -11,7 +11,7 @@ from typing import Any
 
 import httpx
 
-from .base import EnrichResult, ExtractedEntity, LLMProvider
+from .base import AtomicFact, EnrichResult, ExtractedEntity, LLMProvider
 
 log = logging.getLogger(__name__)
 
@@ -25,6 +25,10 @@ Given a piece of saved content (a video transcript, article, or note), produce S
   - entities: every concrete tool / app / website / book / person / place / concept
               mentioned. Each is {name, entity_type, description}. entity_type ∈
               {tool, app, website, book, person, place, concept}.
+  - facts:    0–10 atomic, self-contained sentences a future agent could quote
+              verbatim. Each is {text, fact_type} with fact_type ∈
+              {preference, identity, task, how_to, general}. Examples:
+              {"text": "User runs FastAPI for hobby projects.", "fact_type": "preference"}.
 
 Output JSON only, no preamble."""
 
@@ -91,11 +95,20 @@ class OpenAICompatProvider(LLMProvider):
             for e in (data.get("entities") or [])
             if e.get("name")
         ]
+        facts = [
+            AtomicFact(
+                text=str(f.get("text", "")).strip(),
+                fact_type=str(f.get("fact_type", "general")).strip().lower() or "general",
+            )
+            for f in (data.get("facts") or [])
+            if f.get("text")
+        ]
         return EnrichResult(
             summary=str(data.get("summary", "")).strip() or "(no summary)",
             tldr=str(data.get("tldr", "")).strip() or "(no tldr)",
             tags=[str(t).strip().lower() for t in (data.get("tags") or []) if t],
             entities=entities,
+            facts=facts,
             provider=self.name,
         )
 

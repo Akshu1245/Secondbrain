@@ -20,11 +20,20 @@ class ExtractedEntity:
 
 
 @dataclass
+class AtomicFact:
+    """Mem0-style standalone sentence: 'User prefers FastAPI for hobby projects.'"""
+    text: str
+    fact_type: str = "general"  # preference | identity | task | how_to | general
+    confidence: float = 1.0
+
+
+@dataclass
 class EnrichResult:
     summary: str
     tldr: str
     tags: list[str] = field(default_factory=list)
     entities: list[ExtractedEntity] = field(default_factory=list)
+    facts: list[AtomicFact] = field(default_factory=list)
     provider: str = "fallback"
 
 

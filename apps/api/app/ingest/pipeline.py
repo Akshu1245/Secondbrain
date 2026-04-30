@@ -99,17 +99,29 @@ def process_item(item_id: int, *, text: str | None, url: str | None, title: str 
         _save_tags(item_id, enrich.tags)
         _save_entities(item_id, [(e.name, e.entity_type, e.description, e.canonical_url) for e in enrich.entities])
 
-        # 4. embed
+        # 4. embed (item-level)
         text_for_embed = "\n".join(filter(None, [cap.title, enrich.tldr, enrich.summary, body[:4000]]))
+        item_vec: list[float] | None = None
         try:
-            vec = embed_one(text_for_embed)
+            item_vec = embed_one(text_for_embed)
             db.execute(
                 "INSERT OR REPLACE INTO item_vectors(item_id, embedding) VALUES(?, ?)",
-                (item_id, vec_to_blob(vec)),
+                (item_id, vec_to_blob(item_vec)),
             )
-            _log_event(item_id, "embed", "ok", f"dim={len(vec)}")
+            _log_event(item_id, "embed", "ok", f"dim={len(item_vec)}")
         except Exception as e:  # noqa: BLE001
             _log_event(item_id, "embed", "error", str(e))
+
+        # 5. atomic facts (Mem0-style): one row + embedding per fact
+        if enrich.facts:
+            _save_facts(item_id, enrich.facts)
+            _log_event(item_id, "facts", "ok", f"n={len(enrich.facts)}")
+
+        # 6. semantic dedupe — flag near-duplicates so the user can merge
+        if item_vec is not None:
+            dup_id = _find_near_duplicate(item_id, item_vec, threshold=0.95)
+            if dup_id is not None:
+                _log_event(item_id, "dedupe", "warn", f"near-duplicate of item {dup_id}")
 
         db.execute("UPDATE items SET status='ready', error=NULL WHERE id=?", (item_id,))
         publish_event({"type": "item.ready", "item_id": item_id})
@@ -166,3 +178,54 @@ def _save_entities(item_id: int, entities: list[tuple[str, str, Any, Any]]) -> N
                 "INSERT OR IGNORE INTO item_entities(item_id, entity_id) VALUES(?,?)",
                 (item_id, row["id"]),
             )
+
+
+def _save_facts(item_id: int, facts: list) -> None:
+    db.execute("DELETE FROM facts WHERE item_id=?", (item_id,))
+    for f in facts:
+        text = (getattr(f, "text", None) or "").strip()
+        if not text:
+            continue
+        cur = db.execute(
+            """
+            INSERT INTO facts(item_id, text, fact_type, confidence)
+            VALUES(?,?,?,?)
+            """,
+            (item_id, text, getattr(f, "fact_type", "general"), float(getattr(f, "confidence", 1.0))),
+        )
+        fact_id = cur.lastrowid
+        try:
+            v = embed_one(text)
+            db.execute(
+                "INSERT OR REPLACE INTO facts_vec(fact_id, embedding) VALUES(?, ?)",
+                (fact_id, vec_to_blob(v)),
+            )
+        except Exception:  # noqa: BLE001 — embeddings are best-effort
+            pass
+
+
+def _find_near_duplicate(item_id: int, vec: list[float], *, threshold: float) -> int | None:
+    """Return the id of an existing item whose embedding is ≥ threshold cosine
+    to ``vec``, ignoring ``item_id`` itself. Returns None when no match."""
+    try:
+        rows = db.query_all(
+            """
+            SELECT item_id, distance
+              FROM item_vectors
+             WHERE embedding MATCH ?
+               AND item_id != ?
+             ORDER BY distance
+             LIMIT 1
+            """,
+            (vec_to_blob(vec), item_id),
+        )
+    except Exception:  # noqa: BLE001
+        return None
+    if not rows:
+        return None
+    # sqlite-vec returns L2 distance for normalised vecs; map to cosine sim.
+    d = float(rows[0]["distance"])
+    cos_sim = 1.0 - (d * d) / 2.0
+    if cos_sim >= threshold:
+        return int(rows[0]["item_id"])
+    return None

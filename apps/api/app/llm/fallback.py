@@ -10,7 +10,7 @@ import re
 from collections import Counter
 from urllib.parse import urlparse
 
-from .base import EnrichResult, ExtractedEntity, LLMProvider
+from .base import AtomicFact, EnrichResult, ExtractedEntity, LLMProvider
 
 _STOPWORDS = {
     "the", "a", "an", "and", "or", "but", "if", "while", "of", "at", "by", "for", "with",
@@ -47,6 +47,14 @@ _KNOWN_TOOLS = {
 }
 
 _URL_RE = re.compile(r"https?://[^\s)>\]]+")
+_FACT_HINTS = re.compile(
+    r"\b(I\s+(?:like|love|prefer|hate|use|own|own a|need|want|believe|think|always|never)|"
+    r"my\s+\w+\s+(?:is|are|was|were)|"
+    r"the\s+best\s+\w+|"
+    r"never\s+\w+|"
+    r"always\s+\w+)\b",
+    re.IGNORECASE,
+)
 _HASHTAG_RE = re.compile(r"#([A-Za-z][\w-]{1,40})")
 _PROPER_RE = re.compile(r"\b([A-Z][a-zA-Z0-9]+(?:\s+[A-Z][a-zA-Z0-9]+){0,3})\b")
 
@@ -65,8 +73,10 @@ class FallbackProvider(LLMProvider):
         tldr = (sentences[0][:160] if sentences else (title or "")[:160]).strip() or "(no tldr)"
         tags = _auto_tags(text)
         entities = _extract_entities(text, source_url)
+        facts = _extract_facts(sentences)
         return EnrichResult(
-            summary=summary, tldr=tldr, tags=tags, entities=entities, provider="fallback"
+            summary=summary, tldr=tldr, tags=tags, entities=entities, facts=facts,
+            provider="fallback",
         )
 
 
@@ -115,6 +125,36 @@ def _auto_tags(text: str) -> list[str]:
             seen.add(t)
             dedup.append(t)
     return dedup[:7]
+
+
+def _extract_facts(sentences: list[str]) -> list[AtomicFact]:
+    """Heuristic atomic-fact extractor — picks short, self-contained sentences
+    that look like preferences, identity claims, or rules of thumb."""
+    out: list[AtomicFact] = []
+    seen: set[str] = set()
+    for s in sentences:
+        s = s.strip().rstrip(".") + "."
+        if len(s) < 8 or len(s) > 240:
+            continue
+        if s.lower() in seen:
+            continue
+        m = _FACT_HINTS.search(s)
+        if not m:
+            continue
+        hint = m.group(0).lower()
+        if hint.startswith("i ") or hint.startswith("my "):
+            kind = "preference"
+        elif "always" in hint or "never" in hint:
+            kind = "general"
+        elif "best" in hint:
+            kind = "preference"
+        else:
+            kind = "general"
+        out.append(AtomicFact(text=s, fact_type=kind, confidence=0.5))
+        seen.add(s.lower())
+        if len(out) >= 8:
+            break
+    return out
 
 
 def _extract_entities(text: str, source_url: str | None) -> list[ExtractedEntity]:

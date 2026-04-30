@@ -16,7 +16,7 @@ from .config import settings
 from .db import init_db
 from .events import bind_loop
 from .llm import get_provider
-from .routers import entities, graph, ingest, items, search, stream
+from .routers import entities, facts, graph, ingest, items, mcp, search, stream
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger(__name__)
@@ -65,6 +65,8 @@ def root() -> JSONResponse:
                 "tools": "GET /api/tools",
                 "graph": "GET /api/graph",
                 "events": "GET /api/events (SSE)",
+                "facts": "GET /api/facts",
+                "mcp": "POST /mcp/jsonrpc (Model Context Protocol)",
                 "docs": "/docs",
             },
         }
@@ -80,8 +82,10 @@ app.include_router(ingest.router)
 app.include_router(items.router)
 app.include_router(search.router)
 app.include_router(entities.router)
+app.include_router(facts.router)
 app.include_router(graph.router)
 app.include_router(stream.router)
+app.include_router(mcp.router)
 
 if settings.serve_frontend and settings.frontend_dir.exists():
     app.mount("/", StaticFiles(directory=str(settings.frontend_dir), html=True), name="frontend")

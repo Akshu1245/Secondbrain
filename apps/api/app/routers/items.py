@@ -6,8 +6,11 @@ from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
+from pydantic import BaseModel
+
 from .. import db
 from ..auth import require_token
+from ..embeddings import embed_one, vec_to_blob
 from ..models import EntityOut, ItemListOut, ItemOut, JobEvent, TagOut
 
 router = APIRouter(prefix="/api", tags=["items"], dependencies=[Depends(require_token)])
@@ -52,6 +55,70 @@ def list_items(
 
 @router.get("/items/{item_id}", response_model=ItemOut)
 def get_item(item_id: int) -> ItemOut:
+    return _row_to_item(item_id)
+
+
+class ItemPatch(BaseModel):
+    title: str | None = None
+    summary: str | None = None
+    tldr: str | None = None
+    tags: list[str] | None = None
+
+
+@router.patch("/items/{item_id}", response_model=ItemOut)
+def patch_item(item_id: int, patch: ItemPatch) -> ItemOut:
+    """Edit a saved item. Every change is logged as a few-shot exemplar so
+    future enrichments can pull (input → corrected output) pairs in-context
+    (DSPy-style correction loop)."""
+    row = db.query_one(
+        "SELECT title, summary, tldr, raw_text FROM items WHERE id=?", (item_id,)
+    )
+    if not row:
+        raise HTTPException(status_code=404, detail="not found")
+
+    fields: dict[str, str] = {}
+    if patch.title is not None and patch.title != row["title"]:
+        fields["title"] = patch.title
+    if patch.summary is not None and patch.summary != row["summary"]:
+        fields["summary"] = patch.summary
+    if patch.tldr is not None and patch.tldr != row["tldr"]:
+        fields["tldr"] = patch.tldr
+
+    if fields:
+        sets = ", ".join(f"{k}=?" for k in fields)
+        params = list(fields.values()) + [item_id]
+        db.execute(
+            f"UPDATE items SET {sets}, updated_at=CURRENT_TIMESTAMP WHERE id=?",
+            tuple(params),
+        )
+        # Record an exemplar per corrected field.
+        input_text = f"{row['title'] or ''}\n\n{(row['raw_text'] or '')[:4000]}"
+        for field, expected in fields.items():
+            cur = db.execute(
+                "INSERT INTO exemplars(field, input_text, expected) VALUES(?,?,?)",
+                (field, input_text, expected),
+            )
+            try:
+                v = embed_one(input_text)
+                db.execute(
+                    "INSERT OR REPLACE INTO exemplars_vec(exemplar_id, embedding) VALUES(?, ?)",
+                    (cur.lastrowid, vec_to_blob(v)),
+                )
+            except Exception:  # noqa: BLE001
+                pass
+
+    if patch.tags is not None:
+        # Replace the auto tag set with the user's curated set.
+        db.execute("DELETE FROM item_tags WHERE item_id=?", (item_id,))
+        for name in dict.fromkeys(t.strip().lower() for t in patch.tags if t.strip()):
+            db.execute("INSERT OR IGNORE INTO tags(name) VALUES(?)", (name,))
+            tag_row = db.query_one("SELECT id FROM tags WHERE name=?", (name,))
+            if tag_row:
+                db.execute(
+                    "INSERT OR IGNORE INTO item_tags(item_id, tag_id, source) VALUES(?,?, 'user')",
+                    (item_id, tag_row["id"]),
+                )
+
     return _row_to_item(item_id)
 
 

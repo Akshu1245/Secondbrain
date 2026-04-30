@@ -95,3 +95,75 @@ CREATE TABLE IF NOT EXISTS job_events (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_job_events_item ON job_events(item_id);
+
+-- ── v1: Agent Memory Edition ──────────────────────────────────────────────
+
+-- Atomic facts (Mem0-style): one item -> N facts. Agents query facts directly,
+-- which is far cheaper than re-reading whole items.
+CREATE TABLE IF NOT EXISTS facts (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id     INTEGER REFERENCES items(id) ON DELETE CASCADE,
+    text        TEXT NOT NULL,                  -- one self-contained sentence
+    fact_type   TEXT NOT NULL DEFAULT 'general',-- preference | identity | task | general | how_to
+    confidence  REAL NOT NULL DEFAULT 1.0,
+    last_seen_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_facts_item ON facts(item_id);
+CREATE INDEX IF NOT EXISTS idx_facts_type ON facts(fact_type);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS facts_vec USING vec0(
+    fact_id INTEGER PRIMARY KEY,
+    embedding FLOAT[384]
+);
+
+-- Episodic provenance: which agent / device / source dropped each item.
+CREATE TABLE IF NOT EXISTS episodes (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id    INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+    actor      TEXT,            -- 'user' | 'claude-code' | 'cursor' | 'cline' | ...
+    device     TEXT,            -- free-form: 'phone' | 'macbook' | 'render' | ...
+    channel    TEXT,            -- 'web' | 'mcp' | 'share-target' | 'telegram'
+    note       TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_episodes_item ON episodes(item_id);
+
+-- Correction loop / few-shot exemplars. Every time a user edits a summary,
+-- tldr, or tags, we record the (input -> expected output) pair. Future
+-- enrichments can pull the K most-similar exemplars in-context.
+CREATE TABLE IF NOT EXISTS exemplars (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    field       TEXT NOT NULL,         -- 'summary' | 'tldr' | 'tags' | 'entities'
+    input_text  TEXT NOT NULL,         -- the title + body that was being enriched
+    expected    TEXT NOT NULL,         -- the user's corrected value
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_exemplars_field ON exemplars(field);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS exemplars_vec USING vec0(
+    exemplar_id INTEGER PRIMARY KEY,
+    embedding FLOAT[384]
+);
+
+-- MCP tool registry for Tool Attention (ISO scoring + lazy schema loading).
+-- Schemas are stored as JSON; agents fetch tiny summaries by default and
+-- only pay the schema-token cost for top-k tools matched to their intent.
+CREATE TABLE IF NOT EXISTS mcp_tools (
+    name        TEXT PRIMARY KEY,
+    summary     TEXT NOT NULL,        -- one-line description used for ISO scoring
+    schema_json TEXT NOT NULL,        -- full JSON schema (returned only on demand)
+    state_predicates TEXT,            -- comma-separated: 'requires_items' etc.
+    enabled     INTEGER NOT NULL DEFAULT 1,
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS mcp_tools_vec USING vec0(
+    rowid INTEGER PRIMARY KEY,
+    embedding FLOAT[384]
+);
+CREATE TABLE IF NOT EXISTS mcp_tool_index (
+    rowid INTEGER PRIMARY KEY AUTOINCREMENT,
+    name  TEXT UNIQUE NOT NULL REFERENCES mcp_tools(name) ON DELETE CASCADE
+);
+
