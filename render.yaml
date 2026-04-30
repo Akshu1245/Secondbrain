@@ -1,0 +1,41 @@
+# Render Blueprint — one-click deploy for the Second Brain backend.
+#
+# 1. Click "New → Blueprint" in Render and point it at this repo.
+# 2. (Optional) Attach a 1 GB persistent disk to keep your SQLite + media on
+#    redeploy; the free plan has no disk and your DB is wiped on restart.
+# 3. Set environment variables (LLM keys, API token, allowed CORS origins)
+#    in the Render dashboard.
+
+services:
+  - type: web
+    name: second-brain-api
+    runtime: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: ./apps/api
+    plan: starter   # change to "free" for ephemeral demo
+    region: oregon
+    autoDeploy: true
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: DATA_DIR
+        value: /var/data
+      - key: CORS_ORIGINS
+        sync: false   # paste your Vercel URL(s) here, comma-separated
+      - key: API_TOKEN
+        generateValue: true
+      - key: LLM_PROVIDER
+        value: auto
+      - key: LLM_MODEL
+        sync: false   # e.g. "google/gemma-3-12b-it:free" or "gemma3:4b" or "gpt-4o-mini"
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1
