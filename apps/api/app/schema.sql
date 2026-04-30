@@ -167,3 +167,80 @@ CREATE TABLE IF NOT EXISTS mcp_tool_index (
     name  TEXT UNIQUE NOT NULL REFERENCES mcp_tools(name) ON DELETE CASCADE
 );
 
+-- ── v2: Stronger Memory ───────────────────────────────────────────────────
+
+-- Active fact decay / recall counter. ALTER-style additions are wrapped in a
+-- conditional so re-running the schema on a v1 db is idempotent.
+-- (The columns are NOT NULL with defaults; SQLite handles it on ALTER.)
+-- We use a separate "fact_stats" view-style table only when extending; here
+-- we just rely on `last_seen_at` (already in v1) plus new columns:
+--   recall_count, decayed_at
+-- Added directly to facts in v2 via add_column migrations done in cli.py.
+
+-- Skills / procedural memory: short, high-confidence "how I do X" notes.
+-- Skills are quoted verbatim by agents; treated separately from items so
+-- they don't get distilled away.
+CREATE TABLE IF NOT EXISTS skills (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    name        TEXT NOT NULL UNIQUE COLLATE NOCASE,
+    summary     TEXT NOT NULL,
+    body        TEXT NOT NULL,            -- the verbatim "how to" content
+    tags_json   TEXT,
+    use_count   INTEGER NOT NULL DEFAULT 0,
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE VIRTUAL TABLE IF NOT EXISTS skills_vec USING vec0(
+    skill_id INTEGER PRIMARY KEY,
+    embedding FLOAT[384]
+);
+
+-- Multi-hop links between memory primitives. Lets recall walk
+-- fact ↔ item ↔ entity ↔ fact in 2 hops (HippoRAG-ish).
+CREATE TABLE IF NOT EXISTS memory_links (
+    src_kind   TEXT NOT NULL,    -- 'item' | 'fact' | 'entity' | 'skill'
+    src_id     INTEGER NOT NULL,
+    dst_kind   TEXT NOT NULL,
+    dst_id     INTEGER NOT NULL,
+    relation   TEXT NOT NULL,    -- 'mentions' | 'derived_from' | 'similar_to' | 'merged_into'
+    weight     REAL NOT NULL DEFAULT 1.0,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (src_kind, src_id, dst_kind, dst_id, relation)
+);
+CREATE INDEX IF NOT EXISTS idx_links_src ON memory_links(src_kind, src_id);
+CREATE INDEX IF NOT EXISTS idx_links_dst ON memory_links(dst_kind, dst_id);
+
+-- GraphRAG-style community summaries written by the nightly rollup job.
+CREATE TABLE IF NOT EXISTS communities (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    label        TEXT NOT NULL,
+    summary      TEXT NOT NULL,         -- LLM-written paragraph
+    member_ids   TEXT NOT NULL,         -- JSON array of item ids
+    period_start TIMESTAMP,
+    period_end   TIMESTAMP,
+    created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Reflections: meta-facts the nightly job writes about itself
+-- ("user spent the week on FastAPI + agents → likely shipping a Second Brain").
+-- Stored separately so they don't pollute the user's atomic facts.
+CREATE TABLE IF NOT EXISTS reflections (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    text         TEXT NOT NULL,
+    period_start TIMESTAMP,
+    period_end   TIMESTAMP,
+    confidence   REAL NOT NULL DEFAULT 0.6,
+    created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Job runs: every nightly cron run leaves a row so we can track health.
+CREATE TABLE IF NOT EXISTS job_runs (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_name    TEXT NOT NULL,           -- 'consolidate' | 'distill' | 'reflect' | 'rollup' | 'decay'
+    status      TEXT NOT NULL,           -- 'ok' | 'error'
+    detail      TEXT,
+    started_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    finished_at TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_job_runs_name ON job_runs(job_name);
+

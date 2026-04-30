@@ -39,3 +39,24 @@ services:
       name: data
       mountPath: /var/data
       sizeGB: 1
+
+  # Nightly memory-upkeep cron — triggers the web service's POST /api/jobs/run
+  # endpoint via HTTP. We can't share the persistent disk between services on
+  # Render (disks are per-service), so the cron runs jobs *through* the API
+  # rather than against a separate empty SQLite file.
+  - type: cron
+    name: second-brain-nightly
+    runtime: image
+    image:
+      url: curlimages/curl:8.10.1
+    plan: starter
+    region: oregon
+    schedule: "23 3 * * *"   # 03:23 UTC daily
+    dockerCommand: >-
+      sh -c 'curl -fsS -X POST "$API_URL/api/jobs/run"
+      -H "Authorization: Bearer $API_TOKEN"'
+    envVars:
+      - key: API_URL
+        sync: false   # set to the public URL of second-brain-api, e.g. https://second-brain-api.onrender.com
+      - key: API_TOKEN
+        sync: false   # same value as the web service's API_TOKEN
