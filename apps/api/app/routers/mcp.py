@@ -171,7 +171,7 @@ def _rpc_response(req_id: Any, result: Any | None = None, error: dict | None = N
     return payload
 
 
-@router.post("/jsonrpc")
+@router.post("/jsonrpc", dependencies=[Depends(require_token)])
 async def jsonrpc(request: Request) -> dict[str, Any]:
     """JSON-RPC entrypoint compatible with the MCP Streamable HTTP transport."""
     payload = await request.json()

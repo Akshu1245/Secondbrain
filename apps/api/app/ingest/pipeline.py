@@ -206,26 +206,32 @@ def _save_facts(item_id: int, facts: list) -> None:
 
 def _find_near_duplicate(item_id: int, vec: list[float], *, threshold: float) -> int | None:
     """Return the id of an existing item whose embedding is ≥ threshold cosine
-    to ``vec``, ignoring ``item_id`` itself. Returns None when no match."""
+    to ``vec``, ignoring ``item_id`` itself. Returns None when no match.
+
+    sqlite-vec's vec0 virtual tables only support `MATCH` for KNN queries —
+    arbitrary `WHERE item_id != ?` filters are silently dropped — so we fetch
+    the top-2 nearest neighbours and post-filter the self-match in Python.
+    """
     try:
         rows = db.query_all(
             """
             SELECT item_id, distance
               FROM item_vectors
              WHERE embedding MATCH ?
-               AND item_id != ?
              ORDER BY distance
-             LIMIT 1
+             LIMIT 2
             """,
-            (vec_to_blob(vec), item_id),
+            (vec_to_blob(vec),),
         )
     except Exception:  # noqa: BLE001
         return None
-    if not rows:
+    for row in rows:
+        if int(row["item_id"]) == item_id:
+            continue
+        # sqlite-vec returns L2 distance for normalised vecs; map to cosine sim.
+        d = float(row["distance"])
+        cos_sim = 1.0 - (d * d) / 2.0
+        if cos_sim >= threshold:
+            return int(row["item_id"])
         return None
-    # sqlite-vec returns L2 distance for normalised vecs; map to cosine sim.
-    d = float(rows[0]["distance"])
-    cos_sim = 1.0 - (d * d) / 2.0
-    if cos_sim >= threshold:
-        return int(rows[0]["item_id"])
     return None
