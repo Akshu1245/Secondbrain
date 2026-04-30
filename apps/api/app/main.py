@@ -16,7 +16,20 @@ from .config import settings
 from .db import init_db
 from .events import bind_loop
 from .llm import get_provider
-from .routers import entities, facts, graph, ingest, items, mcp, search, stream
+from .routers import (
+    conversations,
+    entities,
+    episodes,
+    facts,
+    graph,
+    ingest,
+    items,
+    jobs,
+    mcp,
+    search,
+    skills,
+    stream,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger(__name__)
@@ -66,6 +79,12 @@ def root() -> JSONResponse:
                 "graph": "GET /api/graph",
                 "events": "GET /api/events (SSE)",
                 "facts": "GET /api/facts",
+                "skills": "GET /api/skills (procedural memory)",
+                "episodes": "GET /api/episodes (provenance queries)",
+                "communities": "GET /api/communities (GraphRAG rollups, via mcp)",
+                "reflections": "GET /api/reflections (meta-facts, via mcp)",
+                "jobs": "POST /api/jobs/run (memory-upkeep cron)",
+                "import_conversation": "POST /api/conversations/import",
                 "mcp": "POST /mcp/jsonrpc (Model Context Protocol)",
                 "docs": "/docs",
             },
@@ -86,6 +105,10 @@ app.include_router(facts.router)
 app.include_router(graph.router)
 app.include_router(stream.router)
 app.include_router(mcp.router)
+app.include_router(jobs.router)
+app.include_router(episodes.router)
+app.include_router(skills.router)
+app.include_router(conversations.router)
 
 if settings.serve_frontend and settings.frontend_dir.exists():
     app.mount("/", StaticFiles(directory=str(settings.frontend_dir), html=True), name="frontend")

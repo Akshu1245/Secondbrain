@@ -39,3 +39,33 @@ services:
       name: data
       mountPath: /var/data
       sizeGB: 1
+
+  # Nightly memory-upkeep cron — consolidates duplicates, decays unused facts,
+  # rewrites stale TLDRs tighter, rolls up themes, and writes weekly reflections.
+  # Mounts the same disk as the web service so it works on the same SQLite file.
+  - type: cron
+    name: second-brain-nightly
+    runtime: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: ./apps/api
+    plan: starter
+    region: oregon
+    schedule: "23 3 * * *"   # 03:23 UTC daily
+    dockerCommand: python -m app.cli run-jobs
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: API_TOKEN
+        sync: false
+      - key: LLM_PROVIDER
+        value: auto
+      - key: LLM_MODEL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1

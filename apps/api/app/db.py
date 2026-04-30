@@ -56,6 +56,19 @@ def init_db() -> None:
     # sqlite-vec virtual tables can't run inside a transaction with other DDL,
     # so just executescript — autocommit is on.
     conn.executescript(schema)
+    _apply_migrations(conn)
+
+
+def _apply_migrations(conn: sqlite3.Connection) -> None:
+    """Idempotent ALTER TABLE migrations for columns that can't go in
+    `CREATE TABLE IF NOT EXISTS` without losing data on existing rows."""
+    fact_cols = {row["name"] for row in conn.execute("PRAGMA table_info(facts)").fetchall()}
+    if "recall_count" not in fact_cols:
+        conn.execute("ALTER TABLE facts ADD COLUMN recall_count INTEGER NOT NULL DEFAULT 0")
+    if "decayed_at" not in fact_cols:
+        conn.execute("ALTER TABLE facts ADD COLUMN decayed_at TIMESTAMP")
+    if "merged_into" not in fact_cols:
+        conn.execute("ALTER TABLE facts ADD COLUMN merged_into INTEGER")
 
 
 def query_all(sql: str, params: tuple[Any, ...] = ()) -> list[sqlite3.Row]:

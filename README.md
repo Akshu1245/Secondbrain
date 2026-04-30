@@ -150,9 +150,70 @@ is rough but the whole pipeline runs.
 | `GET` | `/api/entities?entity_type=book` | Filtered entities |
 | `GET` | `/api/graph` | Knowledge graph as `{nodes, edges}` |
 | `GET` | `/api/events` | Server-Sent Events stream of changes |
+| `GET` | `/api/facts` | Atomic facts (Mem0-style); each carries `confidence`, `recall_count`, `last_seen_at` |
+| `GET` | `/api/skills` | Procedural memory (verbatim how-tos the agent quotes back) |
+| `POST` | `/api/skills` | Upsert a skill |
+| `GET` | `/api/episodes?actor=claude-code&days=7` | Episodic queries by actor/channel/time |
+| `GET` | `/api/communities` | GraphRAG-style theme rollups written by the nightly job |
+| `GET` | `/api/reflections` | Meta-facts the brain wrote about itself (weekly) |
+| `POST` | `/api/conversations/import` | Drop a ChatGPT/Claude/Cursor/Telegram transcript → memory items |
+| `POST` | `/api/jobs/run` | Manually trigger memory-upkeep jobs (`?name=consolidate` etc.) |
+| `GET` | `/api/jobs` | Recent job runs + their status |
+| `POST` | `/mcp/jsonrpc` | Model Context Protocol entry point — agents use this |
 
 All routes accept `Authorization: Bearer <API_TOKEN>` (and `?token=...` query
 arg, used by SSE since `EventSource` can't set headers).
+
+## Memory mechanics (v1 + v2)
+
+Second Brain isn't just a notes app — it's an *agent-grade memory store*:
+
+- **MCP server** — Claude Code, Cursor, Cline, ChatGPT-desktop add Second Brain
+  as a tool source. `search_memory`, `recall_facts` (multi-hop, HippoRAG-style),
+  `recall_skill`, `recall_episodes`, `list_communities`, `list_reflections`,
+  `add_note`, `get_item`, `delete_item`, `list_themes`.
+- **Tool Attention** ([Sadani & Kumar, 2026](https://arxiv.org/abs/...)) —
+  `/mcp/discover` ISO-scores tools against your intent and only expands the
+  top-k schemas, keeping per-turn cost <2k tokens.
+- **Atomic facts (Mem0-style)** — every item is decomposed into self-contained
+  sentences, each with its own embedding, `fact_type`, `confidence`,
+  `recall_count`, `last_seen_at`.
+- **Memory consolidation** — near-duplicate items (cosine ≥ 0.95) are *merged*
+  not warned: tags / facts / episodes are unioned, the older item kept as
+  canonical, the duplicate's vec rows cleaned up. Replaces the v1 dedupe-warn.
+- **Forgetting curve** — facts decay over time unless recalled. Recalling via
+  the MCP `recall_facts` tool bumps `last_seen_at` + `recall_count`, sparing
+  the fact from the nightly decay pass.
+- **Active distillation** — nightly LLM rewrites stale (>30 day, >12-word)
+  TLDRs tighter so token cost stays flat as the corpus grows for years.
+- **Reflective memory** — nightly job reads the last 7 days of items + facts
+  and writes 1–5 *meta-facts* into `reflections` ("user spent the week on
+  FastAPI + agents — likely shipping a Second Brain").
+- **GraphRAG community rollups** — items cluster by entity co-occurrence
+  (cheap union-find, no graph DB needed), each cluster gets an LLM-written
+  paragraph summary stored in `communities`.
+- **Multi-hop recall (HippoRAG-style)** — `recall_facts` walks
+  *fact → item → entity → linked items* in 2 hops by default, not 1.
+- **Episodic provenance** — every memory carries `actor` (which agent),
+  `device`, `channel` (mcp / share-target / web / conversation_import). Query
+  via `recall_episodes`.
+- **Conversation import** — paste a ChatGPT / Claude / Cursor / Telegram
+  export and every useful turn becomes a memory item with full provenance.
+- **Procedural memory** — `kind=skill` rows are quoted verbatim by agents and
+  exempt from distillation.
+- **Correction loop (DSPy-style)** — every user edit on title / summary /
+  TLDR / tags becomes an exemplar pair; future enrichments pull the K most
+  similar in-context.
+
+The nightly upkeep cron is shipped as a Render cron service in `render.yaml`.
+Run it manually any time with:
+
+```bash
+cd apps/api && uv run python -m app.cli run-jobs            # all jobs
+cd apps/api && uv run python -m app.cli run-jobs --name decay  # just one
+```
+
+Or via REST: `POST /api/jobs/run` (with bearer auth).
 
 ---
 
