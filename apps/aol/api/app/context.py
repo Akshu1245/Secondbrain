@@ -11,7 +11,7 @@ disagree, and tune it without ML expertise.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from . import store, usage
@@ -45,7 +45,7 @@ def _bucket_for(now: datetime) -> str:
 def suggest(*, time_of_day: str | None = None, activity: str | None = None,
             now: datetime | None = None) -> dict[str, Any]:
     state = store.get_state()
-    bucket = time_of_day or _bucket_for(now or datetime.now())
+    bucket = time_of_day or _bucket_for(now or datetime.now(tz=timezone.utc))
     act = activity or "leisure"
     ids = _RULES.get((bucket, act), _DEFAULT)
     # Personalise with the user's actual usage — if a recommended feature
