@@ -68,26 +68,8 @@ function Header() {
             Rule-based, observable, and built to drop in beside Moto AI / Galaxy AI / Bixby.
           </p>
         </div>
-        <ResetButton />
       </div>
     </header>
-  );
-}
-
-function ResetButton() {
-  const [busy, setBusy] = useState(false);
-  return (
-    <button
-      onClick={async () => {
-        setBusy(true);
-        try { await api.reset(); } finally { setBusy(false); window.location.reload(); }
-      }}
-      className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-300 hover:border-emerald-400/50 hover:text-emerald-300 disabled:opacity-50"
-      disabled={busy}
-      title="Re-seed the mock dataset and regenerate 30 days of usage"
-    >
-      {busy ? "Resetting…" : "Reset demo data"}
-    </button>
   );
 }
 

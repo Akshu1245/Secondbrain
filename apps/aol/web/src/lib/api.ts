@@ -102,5 +102,4 @@ export const api = {
     ),
   beforeAfter: () => fetch(`${BASE}/before-after`).then(j),
   analytics: () => fetch(`${BASE}/analytics`).then(j),
-  reset: () => fetch(`${BASE}/admin/reset`, { method: "POST" }).then(j),
 };
