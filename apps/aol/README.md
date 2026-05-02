@@ -126,6 +126,9 @@ Click **Reset demo data** in the dashboard header, or:
 
 ```bash
 curl -X POST https://aol-api-yfdwxezt.fly.dev/api/admin/reset
+# If AOL_ADMIN_TOKEN is set on the deploy:
+curl -X POST -H "Authorization: Bearer $AOL_ADMIN_TOKEN" \
+  https://aol-api-yfdwxezt.fly.dev/api/admin/reset
 ```
 
 ### Demo flow (the canonical "Input → Knowledge → Action" walk)
@@ -162,9 +165,31 @@ curl -X POST https://aol-api-yfdwxezt.fly.dev/api/admin/reset
 | `GET`  | `/api/feedback` | Entries + auto-generated improvement suggestions. |
 | `GET`  | `/api/before-after` | The canonical demo endpoint — raw vs. AOL-optimised side by side. |
 | `GET`  | `/api/analytics` | Category breakdown, top features, tail, compute stats, feedback hints. |
-| `POST` | `/api/admin/reset` | Wipe state, re-seed, replay 30 days. |
+| `POST` | `/api/admin/reset` | Wipe state, re-seed, replay 30 days. Gated by `AOL_ADMIN_TOKEN` when set. |
 
 Live Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>.
+
+## Hardening (production deploys)
+
+The API is open by default so the live demo and the dashboard's *Reset
+demo data* button keep working with zero config. For any non-demo deploy,
+flip the relevant env vars:
+
+| Env var | Default | What it does |
+|---|---|---|
+| `AOL_ADMIN_TOKEN` | unset (open + warn) | When set, `POST /api/admin/reset` requires `Authorization: Bearer <token>`. Constant-time compared. |
+| `AOL_ALLOWED_ORIGINS` | `*` | Comma-separated CORS allow-list (e.g. `https://your-dashboard.example.com,http://localhost:3001`). |
+| `AOL_RATE_LIMIT_DEFAULT` | `120/minute` | Per-IP cap on read endpoints. |
+| `AOL_RATE_LIMIT_WRITE` | `30/minute` | Per-IP cap on POST endpoints that mutate state. |
+| `AOL_RATE_LIMIT_ADMIN` | `5/minute` | Per-IP cap on `POST /api/admin/reset`. |
+
+On fly.io: `flyctl secrets set AOL_ADMIN_TOKEN=...` then `flyctl deploy`.
+
+Every response carries `X-Content-Type-Options: nosniff`,
+`X-Frame-Options: DENY`, and `Referrer-Policy: no-referrer`. All `int`
+query/body params on demo endpoints are bounded (`days` ≤ 365, `limit` ≤
+1000, `payload_kb` ≤ 16384) so a stray script can't drive the API into
+unbounded work.
 
 ## Repo layout
 

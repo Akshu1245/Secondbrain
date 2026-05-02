@@ -4,13 +4,15 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 from . import compute, context, feedback
 from . import filter as feature_filter
-from . import store, usage
+from . import security, store, usage
 
 app = FastAPI(
     title="AI Optimization Layer (AOL)",
@@ -22,13 +24,24 @@ app = FastAPI(
     ),
 )
 
+# Per-IP rate limiter (slowapi). Configurable via AOL_RATE_LIMIT_* env vars.
+limiter = security.make_limiter()
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# CORS allow-list — defaults to "*" (open) for backwards-compat with the
+# existing live frontend; tighten via AOL_ALLOWED_ORIGINS.
+_allowed = security.parse_allowed_origins()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_allowed,
     allow_credentials=False,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# Conservative response headers on every response.
+app.middleware("http")(security.security_headers_middleware)
 
 
 @app.on_event("startup")
@@ -54,7 +67,8 @@ def get_usage() -> dict[str, Any]:
 
 
 @app.post("/api/usage/event")
-def post_usage(event: UsageEventIn) -> dict[str, Any]:
+@limiter.limit(security.write_limit())
+def post_usage(request: Request, event: UsageEventIn) -> dict[str, Any]:
     state = store.get_state()
     if event.feature_id not in state["features"]:
         raise HTTPException(404, f"unknown feature: {event.feature_id}")
@@ -68,7 +82,11 @@ def post_usage(event: UsageEventIn) -> dict[str, Any]:
 
 
 @app.post("/api/usage/simulate")
-def post_simulate(days: int = 30) -> dict[str, Any]:
+@limiter.limit(security.write_limit())
+def post_simulate(
+    request: Request,
+    days: int = Query(default=30, ge=1, le=365),
+) -> dict[str, Any]:
     return usage.simulate(days=days)
 
 
@@ -91,7 +109,8 @@ def list_optimised() -> dict[str, Any]:
 
 
 @app.post("/api/features/{feature_id}/toggle")
-def toggle_feature(feature_id: str, payload: TogglePayload) -> dict[str, Any]:
+@limiter.limit(security.write_limit())
+def toggle_feature(request: Request, feature_id: str, payload: TogglePayload) -> dict[str, Any]:
     try:
         return feature_filter.toggle(feature_id, payload.enabled)
     except KeyError:
@@ -106,7 +125,8 @@ class PrefsPayload(BaseModel):
 
 
 @app.post("/api/prefs")
-def set_prefs(p: PrefsPayload) -> dict[str, Any]:
+@limiter.limit(security.write_limit())
+def set_prefs(request: Request, p: PrefsPayload) -> dict[str, Any]:
     return feature_filter.set_prefs(
         priority_categories=p.priority_categories,
         battery_saver=p.battery_saver,
@@ -128,11 +148,12 @@ def get_context(time_of_day: str | None = None, activity: str | None = None) -> 
 
 class RoutePayload(BaseModel):
     feature_id: str
-    payload_kb: int = 0
+    payload_kb: int = Field(default=0, ge=0, le=16384)
 
 
 @app.post("/api/compute/route")
-def compute_route(p: RoutePayload) -> dict[str, Any]:
+@limiter.limit(security.write_limit())
+def compute_route(request: Request, p: RoutePayload) -> dict[str, Any]:
     try:
         return compute.route(p.feature_id, payload_kb=p.payload_kb)
     except KeyError:
@@ -140,7 +161,7 @@ def compute_route(p: RoutePayload) -> dict[str, Any]:
 
 
 @app.get("/api/compute/log")
-def compute_log(limit: int = 50) -> dict[str, Any]:
+def compute_log(limit: int = Query(default=50, ge=1, le=1000)) -> dict[str, Any]:
     return {"log": compute.recent_log(limit), "stats": compute.aggregate()}
 
 
@@ -154,7 +175,8 @@ class FeedbackPayload(BaseModel):
 
 
 @app.post("/api/feedback")
-def post_feedback(p: FeedbackPayload) -> dict[str, Any]:
+@limiter.limit(security.write_limit())
+def post_feedback(request: Request, p: FeedbackPayload) -> dict[str, Any]:
     try:
         return feedback.submit(feature_id=p.feature_id, rating=p.rating, comment=p.comment)
     except (KeyError, ValueError) as e:
@@ -162,7 +184,7 @@ def post_feedback(p: FeedbackPayload) -> dict[str, Any]:
 
 
 @app.get("/api/feedback")
-def get_feedback(limit: int = 100) -> dict[str, Any]:
+def get_feedback(limit: int = Query(default=100, ge=1, le=1000)) -> dict[str, Any]:
     return {
         "entries": feedback.all_entries(limit),
         "improvement_suggestions": feedback.suggestions(),
@@ -222,8 +244,9 @@ def analytics() -> dict[str, Any]:
     }
 
 
-@app.post("/api/admin/reset")
-def reset_all() -> dict[str, Any]:
+@app.post("/api/admin/reset", dependencies=[Depends(security.require_admin)])
+@limiter.limit(security.admin_limit())
+def reset_all(request: Request) -> dict[str, Any]:
     store.reset()
     usage.simulate(days=30)
     return {"ok": True}
