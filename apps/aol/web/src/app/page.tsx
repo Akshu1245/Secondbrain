@@ -446,7 +446,7 @@ function FeedbackPanel() {
   const [pick, setPick] = useState("");
   const [rating, setRating] = useState("ok");
   const [comment, setComment] = useState("");
-  const [list, setList] = useState<{ entries: any[]; improvement_suggestions: any[] }>({ entries: [], improvement_suggestions: [] });
+  const [list, setList] = useState<{ entries: any[]; improvement_suggestions: any[]; memory_suggestions: any[] }>({ entries: [], improvement_suggestions: [], memory_suggestions: [] });
 
   const reload = useCallback(async () => {
     const [all, fb] = await Promise.all([api.features(), api.feedbackList()]);
@@ -513,6 +513,53 @@ function FeedbackPanel() {
               </li>
             ))}
           </ul>
+        </Card>
+      )}
+
+      {(list.memory_suggestions?.length ?? 0) > 0 && (
+        <Card
+          title="Memory-informed recommendations"
+          subtitle={"Second Brain × AOL — durable patterns in the last 90d, not flaps on a single bad day"}
+        >
+          <ul className="space-y-2">
+            {list.memory_suggestions.map((s: any, i: number) => (
+              <li
+                key={i}
+                className={
+                  "rounded-xl px-4 py-3 " +
+                  (s.confidence === "high"
+                    ? "border border-rose-500/40 bg-rose-500/5"
+                    : "border border-sky-500/30 bg-sky-500/5")
+                }
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  <Pill tone={s.confidence === "high" ? "off" : "on"}>
+                    {s.confidence === "high" ? "high confidence" : "medium confidence"}
+                  </Pill>
+                  <span className="font-medium">{s.name}</span>
+                  <span className="text-xs text-gray-400">
+                    · disabled {s.signals.disable_count}× · negative ratings {s.signals.negative_ratings}
+                  </span>
+                </div>
+                <ul className="mt-2 space-y-0.5 text-xs text-gray-400">
+                  {s.evidence.map((e: string, j: number) => (
+                    <li key={j}>• {e}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-3 rounded-md border border-ink-800 bg-ink-900/40 p-3 text-xs text-gray-400">
+            <span className="font-medium text-gray-300">How this wires up:</span>{" "}
+            AOL&apos;s Feedback Loop (Module 6) queries the Second Brain companion for
+            per-feature episodic history — every toggle-off, every rating, every
+            context hide in the last <span className="font-mono">{90}</span> days. A
+            recommendation surfaces here only when there are at least two durable
+            signals, so a single annoyed tap never produces a &quot;auto-hide this?&quot;
+            prompt. In production the backend proxies to the Second Brain MCP
+            endpoint <span className="font-mono">/recall?feature_id=…&amp;days=90</span>;
+            the demo reads the same local state AOL writes.
+          </div>
         </Card>
       )}
 
