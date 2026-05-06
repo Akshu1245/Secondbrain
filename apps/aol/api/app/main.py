@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
@@ -12,6 +13,15 @@ from . import compute, context, feedback
 from . import filter as feature_filter
 from . import store, usage
 
+
+@asynccontextmanager
+async def _lifespan(_app: FastAPI):
+    state = store.get_state()
+    if not state["events"]:
+        usage.simulate(days=30)
+    yield
+
+
 app = FastAPI(
     title="AI Optimization Layer (AOL)",
     version="0.1.0",
@@ -20,6 +30,7 @@ app = FastAPI(
         "assistant. Filters features, suggests by context, routes compute "
         "between local + cloud, and learns from feedback. Rule-based, no ML."
     ),
+    lifespan=_lifespan,
 )
 
 app.add_middleware(
@@ -29,13 +40,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-def _ensure_seeded() -> None:
-    state = store.get_state()
-    if not state["events"]:
-        usage.simulate(days=30)
 
 
 # ── Module 1: Usage Tracker ───────────────────────────────────────────────
