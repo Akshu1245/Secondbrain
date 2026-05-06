@@ -4,6 +4,9 @@ import { useEffect, useState, useCallback } from "react";
 import { api, type ComputeLog, type Feature, type Optimised, type Suggestion, type ComputeStat } from "@/lib/api";
 import { Card, Stat } from "@/components/Card";
 import { Pill } from "@/components/Pill";
+import { Architecture } from "@/components/Architecture";
+import { LiveStats } from "@/components/LiveStats";
+import { ScenarioPresets } from "@/components/ScenarioPresets";
 
 type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "pitch";
 
@@ -22,6 +25,13 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
       <Header />
+      <div className="mt-4">
+        <LiveStats />
+      </div>
+      <div className="mt-4 space-y-4">
+        <Architecture />
+        <ScenarioPresets />
+      </div>
       <nav className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {TABS.map((t) => (
           <button
@@ -54,21 +64,62 @@ export default function Home() {
 function Header() {
   return (
     <header className="rounded-2xl border border-ink-800 bg-gradient-to-br from-ink-900 via-ink-950 to-ink-900 p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-emerald-400/80">
-            AI Optimization Layer
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-emerald-300">
+              AI Optimization Layer
+            </span>
+            <span className="rounded-full border border-ink-700 bg-ink-900 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-gray-400">
+              v0.4 · live demo
+            </span>
+            <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-sky-300">
+              Second Brain × AOL wired
+            </span>
           </div>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-            AOL — middleware between user &amp; OEM AI
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+            One middleware between your apps and the OEM AI assistant.
           </h1>
-          <p className="mt-2 max-w-2xl text-sm text-gray-400">
-            Filters low-value AI features, surfaces context-relevant ones, routes
-            compute between on-device and cloud, and learns from user feedback.
-            Rule-based, observable, and built to drop in beside Moto AI / Galaxy AI / Bixby.
+          <p className="mt-2 max-w-3xl text-sm text-gray-400">
+            AOL filters low-value features, surfaces context-relevant ones,
+            routes compute between on-device and cloud, and remembers what the
+            user actually liked. Rule-based, observable, ~131 LOC drop-in.
+            Built to ship beside <span className="text-gray-300">Moto AI</span>,
+            <span className="text-gray-300"> Galaxy AI</span>, or
+            <span className="text-gray-300"> Bixby</span>.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a
+              href="https://github.com/Akshu1245/Secondbrain/tree/main/docs/oem-pitch"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-emerald-400/50 bg-emerald-400/10 px-3 py-1.5 text-sm font-medium text-emerald-200 hover:bg-emerald-400/20"
+            >
+              Read the pitch package →
+            </a>
+            <a
+              href="https://github.com/Akshu1245/Secondbrain"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-200 hover:border-emerald-400/40"
+            >
+              GitHub repo
+            </a>
+            <a
+              href="#how-it-fits-in"
+              className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-200 hover:border-emerald-400/40"
+            >
+              View architecture ↓
+            </a>
+          </div>
+        </div>
+        <div className="flex shrink-0 flex-col items-start gap-2 lg:items-end">
+          <ResetButton />
+          <p className="max-w-xs text-right text-[11px] text-gray-500">
+            Re-seeds 24 named Moto AI features + 30d of usage so every visitor
+            sees the same baseline.
           </p>
         </div>
-        <ResetButton />
       </div>
     </header>
   );
