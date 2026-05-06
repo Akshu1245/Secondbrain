@@ -8,16 +8,18 @@ import { Architecture } from "@/components/Architecture";
 import { LiveStats } from "@/components/LiveStats";
 import { ScenarioPresets } from "@/components/ScenarioPresets";
 import { PitchCard } from "@/components/PitchCard";
+import { IntegrateCard } from "@/components/IntegrateCard";
+import { ForwardCard } from "@/components/ForwardCard";
 
 type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "pitch";
 
 const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
-  { id: "control",      n: 1, label: "Hide what nobody uses",            sub: "Plain English: declutter the AI menu" },
-  { id: "context",      n: 2, label: "Show the right thing right now",    sub: "Plain English: morning ≠ evening" },
-  { id: "compute",      n: 3, label: "Run on phone vs cloud",             sub: "Plain English: free + private when possible" },
-  { id: "before-after", n: 4, label: "Before vs after AOL",               sub: "Plain English: see the win" },
-  { id: "feedback",     n: 5, label: "Learn what the user hates",         sub: "Plain English: never come back if disabled" },
-  { id: "pitch",        n: 6, label: "The pitch — numbers",                sub: "Plain English: the cold-email page" },
+  { id: "control",      n: 1, label: "Hide what nobody uses",          sub: "declutter the AI menu" },
+  { id: "context",      n: 2, label: "Show the right thing right now",  sub: "morning ≠ evening" },
+  { id: "compute",      n: 3, label: "Run on phone vs cloud",           sub: "free + private when possible" },
+  { id: "before-after", n: 4, label: "Before vs after AOL",             sub: "see the win, side-by-side" },
+  { id: "feedback",     n: 5, label: "Learn what the user hates",       sub: "never come back if disabled" },
+  { id: "pitch",        n: 6, label: "The pitch — numbers",              sub: "what to say to Mahmoud" },
 ];
 
 export default function Home() {
@@ -38,6 +40,9 @@ export default function Home() {
       <div className="mt-4 space-y-4">
         <Architecture />
         <ScenarioPresets />
+      </div>
+      <div className="mt-4">
+        <IntegrateCard />
       </div>
       <div className="mt-6">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
@@ -74,6 +79,12 @@ export default function Home() {
         {tab === "feedback"     && <FeedbackPanel />}
         {tab === "pitch"        && <PitchEvidence />}
       </div>
+      <div className="mt-8">
+        <ForwardCard />
+      </div>
+      <p className="mt-6 text-center text-xs text-gray-500">
+        Built by Akshay · <a className="hover:text-emerald-300" href="https://github.com/Akshu1245/Secondbrain" target="_blank" rel="noreferrer">github.com/Akshu1245/Secondbrain</a> · open-source, drop-in, no SDK
+      </p>
     </main>
   );
 }
