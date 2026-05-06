@@ -21,8 +21,8 @@ Snapshot of state so you can resume from exactly where we left off.
 
 | Asset | URL |
 |---|---|
-| Live dashboard | <https://out-ujjsjvxm.devinapps.com> |
-| Live API + Swagger | <https://aol-api-yfdwxezt.fly.dev/docs> |
+| Live dashboard | <https://out-gwumfbso.devinapps.com> |
+| Live API + Swagger | <https://aol-api-enqcpqaq.fly.dev/docs> |
 | GitHub PR | <https://github.com/Akshu1245/Secondbrain/pull/4> |
 | Repo root | <https://github.com/Akshu1245/Secondbrain> |
 
@@ -86,7 +86,7 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
 - Backend just got the compute.py fix redeployed. The dashboard now reads from honest data.
 - I started recording, then stopped because the dashboard still showed the stale 1,904 ms number from before the redeploy — the recording would have shown an inflated stat as the first impression. That was the right call.
 - **Next time we resume:**
-  1. Hit `POST https://aol-api-yfdwxezt.fly.dev/api/admin/reset` (or click "Reset demo data" in the dashboard top-right) to clear the routing log
+  1. Hit `POST https://aol-api-enqcpqaq.fly.dev/api/admin/reset` (or click "Reset demo data" in the dashboard top-right) to clear the routing log
   2. Run a fresh sequence of routings via the Compute Router tab (~10 features) so the log shows realistic decisions
   3. Start a new screen recording, walk through the 6 tabs in the order: Control Panel → Before / After → Compute Router → Why This Matters (skip Context Engine and Feedback Loop on a 90-sec take, they're nice-to-have)
   4. Stop, upload the .mp4, embed the URL in: top-level `README.md`, `pitch-deck.md` slide 5, `one-pager.md`, all 3 outreach drafts
@@ -137,7 +137,7 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
    - `docs/oem-pitch/outreach-drafts/lenovo-mbg-ai-productization.md`
    - `docs/oem-pitch/outreach-drafts/lenovo-ai-cloud-bangalore.md`
 
-3. **Click around the live demo** (no install needed): <https://out-ujjsjvxm.devinapps.com>
+3. **Click around the live demo** (no install needed): <https://out-gwumfbso.devinapps.com>
 
 4. **The pitch you walk Moto through, in 90 seconds:**
    - "Two gaps in Moto AI today: memory doesn't persist; cloud spend is 100% (Google subsidy ends, then it's all on Lenovo's books)."

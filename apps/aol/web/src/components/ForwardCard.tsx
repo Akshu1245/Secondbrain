@@ -76,7 +76,7 @@ export function ForwardCard() {
           </div>
         </div>
 
-        <div className="flex items-end gap-2">
+        <div className="flex flex-wrap items-end gap-2">
           <a
             href={mailtoHref}
             className="rounded-lg border border-sky-400/50 bg-sky-400/10 px-3 py-2 text-sm text-sky-200 hover:bg-sky-400/20"

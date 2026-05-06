@@ -9,8 +9,8 @@ scale numbers, not generic "OEM" hand-waving.
 > hides features the user never touches, and surfaces the right feature at
 > the right time. Drop-in via AIDL in **131 LOC** (Kotlin + AIDL,
 > [reproducible](./integration/verify-loc.sh)). Live demo:
-> <https://out-ujjsjvxm.devinapps.com> · API:
-> <https://aol-api-yfdwxezt.fly.dev/docs>.
+> <https://out-gwumfbso.devinapps.com> · API:
+> <https://aol-api-enqcpqaq.fly.dev/docs>.
 
 ---
 

@@ -46,8 +46,8 @@ Sales Navigator (or free LinkedIn search):
 > low-value features, routes compute between local and cloud per-call, and
 > exposes a Control Panel users actually own. There's a working demo:
 >
-> - Live dashboard: <https://out-ujjsjvxm.devinapps.com>
-> - API: <https://aol-api-yfdwxezt.fly.dev/docs>
+> - Live dashboard: <https://out-gwumfbso.devinapps.com>
+> - API: <https://aol-api-enqcpqaq.fly.dev/docs>
 > - 60-second walkthrough: [Loom link — see README]
 >
 > On the test corpus (24 representative AI features, 30 days of simulated
@@ -79,7 +79,7 @@ Sales Navigator (or free LinkedIn search):
 > daily AI feature engagement (because we hide the long tail of features
 > users never touch).
 >
-> Live demo + numbers: <https://out-ujjsjvxm.devinapps.com>
+> Live demo + numbers: <https://out-gwumfbso.devinapps.com>
 >
 > Could I get 15 minutes with whoever owns AI product / platform strategy at
 > [OEM]?

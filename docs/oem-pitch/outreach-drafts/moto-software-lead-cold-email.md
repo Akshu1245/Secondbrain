@@ -13,16 +13,16 @@ Pay-Attention, Remember-This).
 | 4 | **Edward Benyukhis** | Director, SW/FW Engineering, Platform Software (Android products) at Motorola | (search by name on LinkedIn) | Owns the Platform Software layer where AOL would integrate. Strong fit if Mahmoud's calendar is closed. |
 | 5 | **Robert Yesudass Divya** | Engineering Lead SME at Motorola Mobility | <https://linkedin.com/in/robertydivya> | IC-level lead; useful only as a *referral source* into the org, not as a primary recipient. |
 
-**Send order:** **Mahmoud first** (Tuesday May 5). If no reply by **May 19**, follow-up #1 to Mahmoud and a *fresh first-touch* to Thomas Gitzinger on the same day. If neither replies by **June 2**, pivot to OnePlus / Nothing per [`../solo-founder-to-moto.md`](../solo-founder-to-moto.md). **Do not** send to all five at once — Moto is a relatively small org and they will see the cross-CC.
+**Send order:** **Mahmoud first.** If no reply within ~2 weeks (14 days), send follow-up #1 to Mahmoud and a *fresh first-touch* to Thomas Gitzinger on the same day. If neither replies by ~4 weeks (28 days), pivot to OnePlus / Nothing per [`../solo-founder-to-moto.md`](../solo-founder-to-moto.md). **Do not** send to all five at once — Moto is a relatively small org and they will see the cross-CC.
 
 *Typical title pattern to confirm: Director / Sr. Director of Software Engineering, Mobile AI; Principal Engineer, Mobile AI; VP, MBG Software Development.*
 
-**Send window:** **Tuesday, May 5, 2026 — 4:00–5:00 PM IST** (Mars day;
-date 5 = Mercury, communication-favoured).
+**Send window:** A Tuesday, **4:00–5:00 PM IST**. Tuesday is the day VPs
+clear inbox backlog from Monday and reply same-day; 4–5 PM IST is
+mid-morning US Central (Mahmoud's tz).
 
 **Pick 1–2 leads from `oem-targets.md` and send to them first.** Do
-**not** mass-blast. One quality send beats five generic sends in a Mars
-chart.
+**not** mass-blast. One quality send beats five generic sends.
 
 ---
 
@@ -35,16 +35,20 @@ chart.
 > Built a working middleware that routes ~45% of Moto AI invocations on-
 > device (Catch Me Up, Smart Reply, Remember This stay local; Pay
 > Attention + Image Studio stay cloud), and an AIDL + Kotlin reference
-> your team can drop in in **131 LOC**. Per-feature mapping with the
-> $/month at Moto's Q2 2025 shipment scale here:
+> your team can drop in in **131 LOC**. At Moto's 14.5 M phones / quarter
+> that's ~$1.6 M/yr in cloud bills, before counting battery + churn.
+> Per-feature mapping:
 > <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md>.
-> Live demo: <https://out-ujjsjvxm.devinapps.com> · Repo: <https://github.com/Akshu1245/Secondbrain>.
-> 4 provisional patents in adjacent AI territory.
+> Live demo: <https://out-gwumfbso.devinapps.com> · Repo + buildable APK:
+> <https://github.com/Akshu1245/Secondbrain>.
+>
+> 4 provisional AI patents (API-security + LLM-cost optimisation — same
+> problem class as on-device routing). Solo founder, ships fast.
 >
 > Worth 15 minutes on the calendar?
 >
 > Best,
-> K S Akshay
+> **K S Akshay** · Founder, Rashi Technologies
 > `rashisolutions1245@gmail.com` · `[YOUR LINKEDIN URL]`
 
 *If sending to a different target from the table above, change "Mahmoud" to that recipient's first name. **Do not** keep "Mahmoud" if you're sending to Thomas / Eric / Edward.*
@@ -57,7 +61,7 @@ chart.
 > on-device + an AIDL stub in 131 LOC. Per-feature mapping +
 > $/month at Moto's Q2 25 scale:
 > github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md.
-> Live: out-ujjsjvxm.devinapps.com. Worth 15 min? — Akshay
+> Live: out-gwumfbso.devinapps.com. Worth 15 min? — Akshay
 
 (287 chars including spaces. Drop "+ an AIDL stub for Android in &lt;150
 LOC" if your target's profile suggests they'd rather see the product
@@ -65,15 +69,14 @@ side first.)
 
 ---
 
-## Follow-up #1 (send only if no reply by **May 19, 2026 — 14 days
-after the original**)
+## Follow-up #1 (send only if no reply ~14 days after the original)
 
 > Subject: Re: 90-second demo — the missing memory + optimisation layer for Moto AI
 
 > Hi Mahmoud,
 >
 > Bumping this once. The demo is still up at
-> out-ujjsjvxm.devinapps.com and I added an OEM-pain audit that maps
+> out-gwumfbso.devinapps.com and I added an OEM-pain audit that maps
 > Reddit / press complaints 1:1 onto the fixes:
 > <https://github.com/Akshu1245/Secondbrain/blob/devin/1777538026-aol-pitch/docs/oem-pitch/user-pain-audit.md>
 >
@@ -88,8 +91,7 @@ audit doc — so it isn't a nag.)
 
 ---
 
-## Follow-up #2 (send only if no reply by **June 2, 2026 — 28 days
-after the original**, then stop and move to OnePlus / Nothing)
+## Follow-up #2 (send only if no reply ~28 days after the original, then stop and move to OnePlus / Nothing)
 
 > Subject: Last note — open-sourcing the Moto-AI optimisation layer
 
@@ -100,7 +102,7 @@ after the original**, then stop and move to OnePlus / Nothing)
 > for this. Final ask: 15 minutes on the calendar this week or next?
 > If a hard no — totally fine, I'll leave you alone after this.
 >
-> Demo still live: out-ujjsjvxm.devinapps.com.
+> Demo still live: out-gwumfbso.devinapps.com.
 >
 > Best,
 > Akshay
@@ -134,7 +136,7 @@ after the original**, then stop and move to OnePlus / Nothing)
       and replace "Mahmoud" with "Thomas" everywhere.
 - [ ] Replace recipient name *only if changing from Mahmoud* (Lenovo /
       Moto culture is first-name in email).
-- [ ] Confirm the demo URL <https://out-ujjsjvxm.devinapps.com> is
+- [ ] Confirm the demo URL <https://out-gwumfbso.devinapps.com> is
       still live the morning of send. (It's deployed on Devin Apps —
       free tier; if it's down, redeploy from the dashboard.)
 - [ ] Confirm the repo URL <https://github.com/Akshu1245/Secondbrain>

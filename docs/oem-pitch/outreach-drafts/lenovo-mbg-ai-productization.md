@@ -3,7 +3,7 @@
 **Target:** Lenovo job req **WD00086274 / 69831**
 **URL:** <https://jobs.lenovo.com/en_US/careers/JobDetail/Software-Engineer-AI-Productization/69831>
 **Location:** Chicago, IL (open to Bangalore relocation if posted)
-**Send window:** **Thursday, May 7, 2026, 10:00–11:00 AM IST** (Jupiter day; date 7 = Mercury / Ketu — research-favoured)
+**Send window:** Thursday morning IST (10:00–11:00 AM IST). Thursdays are the highest open-rate day for hiring inboxes; mid-morning IST hits the start of US Central business day.
 
 ---
 
@@ -30,8 +30,8 @@ Catch-Me-Up, Pay-Attention, and Remember-This.
   and OEM AI assistant). Six rule-based modules: Usage Tracker, Smart
   Feature Filter, Context Engine, Compute Optimizer, Control Panel,
   Feedback Loop. Live demo + Swagger:
-    * Demo: <https://out-ujjsjvxm.devinapps.com>
-    * API + docs: <https://aol-api-yfdwxezt.fly.dev/docs>
+    * Demo: <https://out-gwumfbso.devinapps.com>
+    * API + docs: <https://aol-api-enqcpqaq.fly.dev/docs>
   * Cuts feature-surface noise by 25% and routes 45% of cloud-AI calls
     on-device on the seeded dataset. Includes a drop-in **AIDL +
     Kotlin reference** so an MBG Android engineer can integrate it in
@@ -63,15 +63,21 @@ Catch-Me-Up, Pay-Attention, and Remember-This.
 
 **Credentials:**
 
-* **4 provisional AI patents** in adjacent territory:
+* **4 provisional AI patents** filed via Rashi Technologies, all in
+  adjacent AI-systems territory (API security, LLM cost optimisation
+  — the same problem class as on-device vs cloud routing):
     * `[PATENT 1 TITLE]`
     * `[PATENT 2 TITLE]`
     * `[PATENT 3 TITLE]`
     * `[PATENT 4 TITLE]`
-* Solo-shipped 4 PRs of working code on the project before this
-  application landed (link above) — not a course project, deployed
-  infrastructure with public URLs.
-* `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]`
+* Solo-shipped 7 PRs of working code on the AOL project before this
+  application landed — not a course project. Deployed FastAPI backend,
+  Next.js dashboard, buildable Android APK, 53 passing pytest tests.
+* **Education:** `[BRIEF EDUCATION LINE — e.g. "BCA, 2nd year, XYZ
+  University, expected 2027"]`. I am candid that I'm early-career; the
+  artefact above is the work I'd hand any senior engineer for review.
+  No-opportunity-cost hire — ships fast, fully present, no parallel
+  full-time employer.
 
 **What I'd want to do in the first 90 days at MBG:**
 
@@ -93,11 +99,12 @@ Thank you for reading.
 
 Best regards,
 **K S Akshay**
+Founder, Rashi Technologies
 `rashisolutions1245@gmail.com`
 LinkedIn: `[YOUR LINKEDIN URL]`
 GitHub: <https://github.com/Akshu1245>
 Repo for this application: <https://github.com/Akshu1245/Secondbrain>
-Live demo: <https://out-ujjsjvxm.devinapps.com>
+Live demo: <https://out-gwumfbso.devinapps.com>
 
 ---
 
@@ -109,7 +116,7 @@ Live demo: <https://out-ujjsjvxm.devinapps.com>
 > Optimizer, Control Panel, Feedback Loop). Cut feature-surface noise
 > 25% and routed 45% of cloud-AI calls on-device on the seeded dataset.
 > Shipped a drop-in AIDL + Kotlin reference for native Android
-> integration. **Live demo: out-ujjsjvxm.devinapps.com.** **Repo:
+> integration. **Live demo: out-gwumfbso.devinapps.com.** **Repo:
 > github.com/Akshu1245/Secondbrain.**
 
 ---
@@ -125,7 +132,7 @@ Live demo: <https://out-ujjsjvxm.devinapps.com>
 - [ ] If the application form has a 200-character "why this role" box,
       paste this short version: *"I built AOL — the missing memory +
       optimisation layer for Moto AI — as a solo project. Live demo:
-      out-ujjsjvxm.devinapps.com. Want to bring it inside the AI
+      out-gwumfbso.devinapps.com. Want to bring it inside the AI
       Productization team."*
 - [ ] If the form has a "ready to relocate" question — answer **yes**
       to Chicago and Bangalore (both reqs are MBG and the same team).

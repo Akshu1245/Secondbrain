@@ -33,8 +33,8 @@ This is the asset list you walk in with. Don't pitch without all five.
 
 1. **A working live demo, deployed on a public URL, that an OEM PM can
    click *right now*.**
-   - Demo: <https://out-ujjsjvxm.devinapps.com>
-   - API + Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>
+   - Demo: <https://out-gwumfbso.devinapps.com>
+   - API + Swagger: <https://aol-api-enqcpqaq.fly.dev/docs>
 2. **A repo with shipped code, not a README.**
    - <https://github.com/Akshu1245/Secondbrain>
    - 4 PRs (v0, v1, v2 of the memory layer, plus this AOL pitch PR).

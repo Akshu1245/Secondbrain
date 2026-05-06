@@ -8,8 +8,8 @@ their feature roadmap.
 
 | | |
 |---|---|
-| Live demo | https://out-ujjsjvxm.devinapps.com |
-| Live API + Swagger | https://aol-api-yfdwxezt.fly.dev/docs |
+| Live demo | https://out-gwumfbso.devinapps.com |
+| Live API + Swagger | https://aol-api-enqcpqaq.fly.dev/docs |
 | Pitch deck | [`../../docs/oem-pitch/pitch-deck.md`](../../docs/oem-pitch/pitch-deck.md) |
 | One-pager | [`../../docs/oem-pitch/one-pager.md`](../../docs/oem-pitch/one-pager.md) |
 | OEM targets (ranked) | [`../../docs/oem-pitch/oem-targets.md`](../../docs/oem-pitch/oem-targets.md) |
@@ -125,7 +125,7 @@ deployed static build).
 Click **Reset demo data** in the dashboard header, or:
 
 ```bash
-curl -X POST https://aol-api-yfdwxezt.fly.dev/api/admin/reset
+curl -X POST https://aol-api-enqcpqaq.fly.dev/api/admin/reset
 ```
 
 ### Demo flow (the canonical "Input → Knowledge → Action" walk)
@@ -164,7 +164,7 @@ curl -X POST https://aol-api-yfdwxezt.fly.dev/api/admin/reset
 | `GET`  | `/api/analytics` | Category breakdown, top features, tail, compute stats, feedback hints. |
 | `POST` | `/api/admin/reset` | Wipe state, re-seed, replay 30 days. |
 
-Live Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>.
+Live Swagger: <https://aol-api-enqcpqaq.fly.dev/docs>.
 
 ## Repo layout
 

@@ -1,14 +1,20 @@
-# Second Brain
+# Second Brain (the repo) · AOL (the product being pitched)
+
+> **Heads up:** the repo is named *Second Brain* because it started as a
+> memory-layer project. The headline product being pitched to OEMs is
+> **AOL — AI Optimization Layer** (in [`apps/aol/`](apps/aol/)). Second
+> Brain is the on-device memory companion that AOL's Feedback Loop
+> reads from. Two artefacts, one repo, one pitch.
 
 A two-layer AI infrastructure for smartphones. Built for the OEM AI pitch
 (Motorola, OnePlus, Nothing, ASUS, Jio).
 
 | Layer | What it is | Where to read |
 |---|---|---|
-| **Memory layer** — Second Brain | On-device knowledge memory: capture (reels, screenshots, conversations), embed, dedupe, consolidate, decay, multi-hop recall, episodic provenance. Exposed to agents via MCP. | [`apps/api/`](apps/api/) (PR #3) |
-| **Optimisation layer** — AOL (AI Optimization Layer) | System-layer middleware between user and OEM AI assistant. Filters low-value features, surfaces context-relevant ones, routes compute between local and cloud, ships a Control Panel. Live demo + AIDL stub for native Moto integration. | [`apps/aol/`](apps/aol/) |
+| **Optimisation layer** — AOL (AI Optimization Layer) — **★ headline product** | System-layer middleware between user and OEM AI assistant. Filters low-value features, surfaces context-relevant ones, routes compute between local and cloud, ships a Control Panel. Live demo + AIDL drop-in (~131 LOC) + buildable Android APK. | [`apps/aol/`](apps/aol/) |
+| **Memory layer** — Second Brain — companion | On-device knowledge memory: capture (reels, screenshots, conversations), embed, dedupe, consolidate, decay, multi-hop recall, episodic provenance. Exposed to agents via MCP. AOL's Feedback Loop reads from it (≥2 durable signals → auto-hide recommendation). | [`apps/api/`](apps/api/) |
 
-**Live AOL demo:** <https://out-ujjsjvxm.devinapps.com> · **AOL API:** <https://aol-api-yfdwxezt.fly.dev/docs>
+**Live AOL demo:** <https://out-gwumfbso.devinapps.com> · **AOL API:** <https://aol-api-enqcpqaq.fly.dev/docs> · **Pitch package:** [`docs/oem-pitch/`](docs/oem-pitch/)
 
 ## Why both layers exist
 
@@ -69,8 +75,8 @@ Secondbrain/
 | Memory layer v2 (Stronger Memory: consolidation, decay, distill, reflect, rollups, multi-hop, skills, conversation import) | shipped — PR [#3](https://github.com/Akshu1245/Secondbrain/pull/3) |
 | AOL backend (6 modules, 14 endpoints) | shipped — this PR |
 | AOL dashboard (6-tab Next.js) | shipped — this PR |
-| AOL deployed (live demo URL) | live — <https://out-ujjsjvxm.devinapps.com> |
-| AOL deployed (live API URL) | live — <https://aol-api-yfdwxezt.fly.dev> |
+| AOL deployed (live demo URL) | live — <https://out-gwumfbso.devinapps.com> |
+| AOL deployed (live API URL) | live — <https://aol-api-enqcpqaq.fly.dev> |
 | Pitch deck + one-pager + OEM targets + outreach + user-pain audit + AIDL stub | shipped — this PR |
 
 ## Author

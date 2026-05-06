@@ -3,7 +3,7 @@
 **Target:** Lenovo job req **WD00098064 / 76696**
 **URL:** <https://jobs.lenovo.com/en_US/careers/JobDetail/Software-Engineer-AI-Cloud/76696>
 **Location:** Bangalore, Karnataka, India
-**Send window:** **Thursday, May 7, 2026, 10:00–11:00 AM IST** (Jupiter day; paired submission with the MBG req)
+**Send window:** Thursday morning IST (10:00–11:00 AM IST), paired with the MBG submission so the same name shows up in both queues the same day.
 
 ---
 
@@ -36,8 +36,8 @@ local inference and the cloud and audits the decision per call.
   (light / medium / heavy). Every decision is logged with the rule
   that fired, the chosen-vs-alternate latency, and the per-call cloud
   cost.
-    * Demo: <https://out-ujjsjvxm.devinapps.com>
-    * API + Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>
+    * Demo: <https://out-gwumfbso.devinapps.com>
+    * API + Swagger: <https://aol-api-enqcpqaq.fly.dev/docs>
     * Repo: <https://github.com/Akshu1245/Secondbrain> (subdir
       `apps/aol/`)
 * On the seeded 24-feature dataset the router keeps **~45% of calls
@@ -77,15 +77,20 @@ local inference and the cloud and audits the decision per call.
 
 **Credentials:**
 
-* **4 provisional AI patents** in adjacent territory:
+* **4 provisional AI patents** filed via Rashi Technologies, all in
+  adjacent AI-systems territory (API security, LLM cost optimisation —
+  the same problem class as on-device vs cloud routing):
     * `[PATENT 1 TITLE]`
     * `[PATENT 2 TITLE]`
     * `[PATENT 3 TITLE]`
     * `[PATENT 4 TITLE]`
-* Solo-shipped 4 PRs of working code on the same project before this
-  application landed (link above) — not a course project, deployed
-  infrastructure with public URLs.
-* `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]`
+* Solo-shipped 7 PRs of working code on the AOL project before this
+  application landed — not a course project. Deployed FastAPI backend,
+  Next.js dashboard, buildable Android APK, 53 passing pytest tests.
+* **Education:** `[BRIEF EDUCATION LINE — e.g. "BCA, 2nd year, XYZ
+  University, expected 2027"]`. Early-career and candid about it; the
+  artefact above is what I'd hand any senior engineer for review.
+  No-opportunity-cost hire — ships fast, fully present.
 
 **What I'd want to do in the first 90 days:**
 
@@ -107,11 +112,12 @@ Thank you for reading.
 
 Best regards,
 **K S Akshay**
+Founder, Rashi Technologies
 `rashisolutions1245@gmail.com`
 LinkedIn: `[YOUR LINKEDIN URL]`
 GitHub: <https://github.com/Akshu1245>
 Repo for this application: <https://github.com/Akshu1245/Secondbrain>
-Live demo: <https://out-ujjsjvxm.devinapps.com>
+Live demo: <https://out-gwumfbso.devinapps.com>
 
 ---
 
@@ -125,7 +131,7 @@ Live demo: <https://out-ujjsjvxm.devinapps.com>
 > calls routed on-device** on the seeded dataset, eliminating those
 > cloud-AI calls entirely; pilot-scale savings are illustrative and
 > documented in the repo. FastAPI + Fly.io + Next.js static export.
-> Live demo: out-ujjsjvxm.devinapps.com. Repo:
+> Live demo: out-gwumfbso.devinapps.com. Repo:
 > github.com/Akshu1245/Secondbrain.
 
 ---
@@ -142,5 +148,5 @@ Live demo: <https://out-ujjsjvxm.devinapps.com>
       paste this short version: *"Built a rule-based local-vs-cloud
       router (AOL Compute Optimizer) that keeps 45% of OEM-AI calls on-
       device and logs every decision auditably. Live demo:
-      out-ujjsjvxm.devinapps.com. Want to bring it inside Lenovo AI
+      out-gwumfbso.devinapps.com. Want to bring it inside Lenovo AI
       Cloud."*

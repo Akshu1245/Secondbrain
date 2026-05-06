@@ -7,7 +7,7 @@ OEM's AI assistant (Moto AI, Galaxy AI, OxygenOS AI, Nothing AI). It cuts
 cloud-AI spend, hides features users never touch, surfaces context-relevant
 ones, and gives users a Control Panel they actually own.
 
-**Live demo:** <https://out-ujjsjvxm.devinapps.com> • **API:** <https://aol-api-yfdwxezt.fly.dev/docs>
+**Live demo:** <https://out-gwumfbso.devinapps.com> • **API:** <https://aol-api-enqcpqaq.fly.dev/docs>
 
 ## Problem
 
@@ -40,10 +40,12 @@ the memory layer Moto AI's "Remember This" / "Pay Attention" features lack.
 |---|---|
 | Surface size, before / after AOL | 24 → 17 features (–25%) |
 | Sample compute decisions | 11 |
-| Local / cloud split | ~45% / ~55% |
+| Local / cloud split | ~**45%** / ~55% |
+| Drop-in size into the OEM AI assistant module | **~131 LOC** (AIDL + Kotlin) |
 | Cloud calls eliminated at 10K-device × 50-inv/day pilot | ~6.75M / month |
 | Pilot savings at seed-data cost ($0.0008/call) | ~$5K / month |
 | Pilot savings at realistic OEM cost-per-call (3–10× higher) | low-five-figure $/month |
+| Extrapolated at Moto's **14.5 M phones / quarter** (Q2 2025) | ~**$1.6 M / year** in cloud bills, before battery + churn |
 
 ## Business model
 
@@ -56,4 +58,4 @@ bundled at partnership tier.
 15 minutes with the OEM AI / software / product lead. Live demo, integration
 walk-through, three numbers you didn't have before.
 
-— Akshay K S (rashisolutions1245@gmail.com)
+— K S Akshay · Founder, Rashi Technologies · rashisolutions1245@gmail.com
