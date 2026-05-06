@@ -1,37 +1,36 @@
-"""Pytest config for the AOL backend.
+"""Shared pytest fixtures.
 
-Each test gets a clean, isolated runtime state so we don't pollute the real
-on-disk JSON store. The session-wide tmpdir is set via ``AOL_DATA_DIR`` *before*
-the ``app.store`` module is imported, since ``store.STATE_PATH`` is computed
-at import time. The directory is removed in a session-scoped teardown so we
-don't leak ``aol-tests-*`` directories across runs.
+Each test gets a fresh in-memory AOL state so memory / feedback / toggle
+tests don't leak into each other.
 """
 
 from __future__ import annotations
 
-import os
-import shutil
-import tempfile
+import pathlib
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 import pytest
+from fastapi.testclient import TestClient
 
-# Must run before any `from app import ...` in test modules.
-_TMPDIR = tempfile.mkdtemp(prefix="aol-tests-")
-os.environ["AOL_DATA_DIR"] = _TMPDIR
+from app import store
+from app.main import app
 
 
-@pytest.fixture(scope="session", autouse=True)
-def _cleanup_tmpdir():
-    """Remove the per-session tmpdir after the suite finishes."""
+@pytest.fixture()
+def _reset(tmp_path, monkeypatch):
+    """Point AOL at a tmp data dir and re-seed from scratch."""
+    monkeypatch.setenv("AOL_DATA_DIR", str(tmp_path))
+    monkeypatch.setattr(store, "STATE_PATH", tmp_path / "state.json")
+    monkeypatch.setattr(store, "_state", None)
+    store.get_state()
     yield
-    shutil.rmtree(_TMPDIR, ignore_errors=True)
+    monkeypatch.setattr(store, "_state", None)
 
 
-@pytest.fixture(autouse=True)
-def fresh_state():
-    """Reset the in-memory + on-disk state before every test."""
-    from app import store
-
-    store.reset()
-    yield
-    store.reset()
+@pytest.fixture()
+def client(_reset):
+    return TestClient(app)

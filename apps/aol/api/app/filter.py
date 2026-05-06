@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from . import store, usage
+from . import memory, store, usage
 
 LOW_USAGE_THRESHOLD = 3
 
@@ -68,6 +68,7 @@ def toggle(feature_id: str, enabled: bool) -> dict[str, Any]:
     if feature_id not in state["features"]:
         raise KeyError(feature_id)
     state["features"][feature_id]["enabled"] = enabled
+    memory.record_toggle(feature_id, enabled=enabled)
     store.save()
     return {"feature_id": feature_id, "enabled": enabled}
 
