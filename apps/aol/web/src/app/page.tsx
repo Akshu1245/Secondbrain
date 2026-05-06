@@ -4,16 +4,20 @@ import { useEffect, useState, useCallback } from "react";
 import { api, type ComputeLog, type Feature, type Optimised, type Suggestion, type ComputeStat } from "@/lib/api";
 import { Card, Stat } from "@/components/Card";
 import { Pill } from "@/components/Pill";
+import { Architecture } from "@/components/Architecture";
+import { LiveStats } from "@/components/LiveStats";
+import { ScenarioPresets } from "@/components/ScenarioPresets";
+import { PitchCard } from "@/components/PitchCard";
 
 type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "pitch";
 
-const TABS: { id: Tab; label: string; sub: string }[] = [
-  { id: "control",      label: "Control Panel",  sub: "Toggle / prioritise features" },
-  { id: "context",      label: "Context Engine", sub: "What to surface right now" },
-  { id: "compute",      label: "Compute Router", sub: "Local vs cloud decisions" },
-  { id: "before-after", label: "Before / After", sub: "Optimisation impact, demo screen" },
-  { id: "feedback",     label: "Feedback Loop",  sub: "User-driven improvement" },
-  { id: "pitch",        label: "Why This Matters", sub: "OEM-pitch evidence" },
+const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
+  { id: "control",      n: 1, label: "Hide what nobody uses",            sub: "Plain English: declutter the AI menu" },
+  { id: "context",      n: 2, label: "Show the right thing right now",    sub: "Plain English: morning ≠ evening" },
+  { id: "compute",      n: 3, label: "Run on phone vs cloud",             sub: "Plain English: free + private when possible" },
+  { id: "before-after", n: 4, label: "Before vs after AOL",               sub: "Plain English: see the win" },
+  { id: "feedback",     n: 5, label: "Learn what the user hates",         sub: "Plain English: never come back if disabled" },
+  { id: "pitch",        n: 6, label: "The pitch — numbers",                sub: "Plain English: the cold-email page" },
 ];
 
 export default function Home() {
@@ -22,22 +26,45 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
       <Header />
-      <nav className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`rounded-xl border px-3 py-2 text-left transition ${
-              tab === t.id
-                ? "border-emerald-400/60 bg-emerald-400/10"
-                : "border-ink-800 bg-ink-900 hover:border-ink-700"
-            }`}
-          >
-            <div className="text-sm font-semibold text-gray-100">{t.label}</div>
-            <div className="text-xs text-gray-400">{t.sub}</div>
-          </button>
-        ))}
-      </nav>
+      <div className="mt-4">
+        <LiveStats />
+        <p className="mt-2 text-xs text-gray-500">
+          ↑ Live numbers from the demo backend. Click around in the tabs below — the numbers move.
+        </p>
+      </div>
+      <div className="mt-4">
+        <PitchCard />
+      </div>
+      <div className="mt-4 space-y-4">
+        <Architecture />
+        <ScenarioPresets />
+      </div>
+      <div className="mt-6">
+        <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          Six tabs · click each to see one thing AOL does
+        </h3>
+        <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`rounded-xl border px-3 py-2 text-left transition ${
+                tab === t.id
+                  ? "border-emerald-400/60 bg-emerald-400/10"
+                  : "border-ink-800 bg-ink-900 hover:border-ink-700"
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="rounded-md border border-emerald-400/40 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
+                  {t.n}
+                </span>
+                <span className="text-sm font-semibold text-gray-100">{t.label}</span>
+              </div>
+              <div className="mt-1 text-xs text-gray-400">{t.sub}</div>
+            </button>
+          ))}
+        </nav>
+      </div>
 
       <div className="mt-6 space-y-6">
         {tab === "control"      && <ControlPanel />}
@@ -54,21 +81,64 @@ export default function Home() {
 function Header() {
   return (
     <header className="rounded-2xl border border-ink-800 bg-gradient-to-br from-ink-900 via-ink-950 to-ink-900 p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-emerald-400/80">
-            AI Optimization Layer
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-emerald-300">
+              AI Optimization Layer
+            </span>
+            <span className="rounded-full border border-ink-700 bg-ink-900 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-gray-400">
+              v0.4 · live demo
+            </span>
+            <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-sky-300">
+              Second Brain × AOL wired
+            </span>
           </div>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-            AOL — middleware between user &amp; OEM AI
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+            Phones ship too much AI nobody uses. AOL fixes that.
           </h1>
-          <p className="mt-2 max-w-2xl text-sm text-gray-400">
-            Filters low-value AI features, surfaces context-relevant ones, routes
-            compute between on-device and cloud, and learns from user feedback.
-            Rule-based, observable, and built to drop in beside Moto AI / Galaxy AI / Bixby.
+          <p className="mt-2 max-w-3xl text-base text-gray-300">
+            One drop-in layer the OEM (<span className="text-gray-100">Moto</span>,{" "}
+            <span className="text-gray-100">Samsung</span>, <span className="text-gray-100">OnePlus</span>) ships beside its AI assistant. It{" "}
+            <span className="text-emerald-300">hides features the user never opens</span>,{" "}
+            <span className="text-emerald-300">runs the rest on-device</span> when it can (faster, free, private),
+            and <span className="text-emerald-300">remembers what the user disabled</span> so it doesn&rsquo;t come back.
+          </p>
+          <p className="mt-2 max-w-3xl text-sm text-gray-500">
+            ~131 lines of Kotlin · rule-based · live demo below · open-source on GitHub.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a
+              href="https://github.com/Akshu1245/Secondbrain/tree/main/docs/oem-pitch"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-emerald-400/50 bg-emerald-400/10 px-3 py-1.5 text-sm font-medium text-emerald-200 hover:bg-emerald-400/20"
+            >
+              Read the pitch package →
+            </a>
+            <a
+              href="https://github.com/Akshu1245/Secondbrain"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-200 hover:border-emerald-400/40"
+            >
+              GitHub repo
+            </a>
+            <a
+              href="#how-it-fits-in"
+              className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-200 hover:border-emerald-400/40"
+            >
+              View architecture ↓
+            </a>
+          </div>
+        </div>
+        <div className="flex shrink-0 flex-col items-start gap-2 lg:items-end">
+          <ResetButton />
+          <p className="max-w-xs text-right text-[11px] text-gray-500">
+            Re-seeds 24 named Moto AI features + 30d of usage so every visitor
+            sees the same baseline.
           </p>
         </div>
-        <ResetButton />
       </div>
     </header>
   );
