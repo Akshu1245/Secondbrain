@@ -31,6 +31,7 @@ Snapshot of state so you can resume from exactly where we left off.
 ## What's done — everything below is on GitHub
 
 ### 1. Code (working, deployed)
+- **AOL Android demo APK** — `apps/aol-android/` (PR #7) — buildable Kotlin + Compose app that exercises the AIDL surface end-to-end on-device. `./gradlew assembleDebug` produces a 9.5 MB `app-debug.apk`. Includes the in-process AOL middleware service so the demo runs without a second install.
 - **AOL backend** — FastAPI, Python 3.12, 6 modules
   - `apps/aol/api/app/usage.py` — usage tracker (~630 events / 30d, simulated)
   - `apps/aol/api/app/filter.py` — Smart Feature Filter (24 → 18 features)
