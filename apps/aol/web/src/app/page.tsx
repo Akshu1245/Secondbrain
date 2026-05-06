@@ -7,16 +7,17 @@ import { Pill } from "@/components/Pill";
 import { Architecture } from "@/components/Architecture";
 import { LiveStats } from "@/components/LiveStats";
 import { ScenarioPresets } from "@/components/ScenarioPresets";
+import { PitchCard } from "@/components/PitchCard";
 
 type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "pitch";
 
-const TABS: { id: Tab; label: string; sub: string }[] = [
-  { id: "control",      label: "Control Panel",  sub: "Toggle / prioritise features" },
-  { id: "context",      label: "Context Engine", sub: "What to surface right now" },
-  { id: "compute",      label: "Compute Router", sub: "Local vs cloud decisions" },
-  { id: "before-after", label: "Before / After", sub: "Optimisation impact, demo screen" },
-  { id: "feedback",     label: "Feedback Loop",  sub: "User-driven improvement" },
-  { id: "pitch",        label: "Why This Matters", sub: "OEM-pitch evidence" },
+const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
+  { id: "control",      n: 1, label: "Hide what nobody uses",            sub: "Plain English: declutter the AI menu" },
+  { id: "context",      n: 2, label: "Show the right thing right now",    sub: "Plain English: morning ≠ evening" },
+  { id: "compute",      n: 3, label: "Run on phone vs cloud",             sub: "Plain English: free + private when possible" },
+  { id: "before-after", n: 4, label: "Before vs after AOL",               sub: "Plain English: see the win" },
+  { id: "feedback",     n: 5, label: "Learn what the user hates",         sub: "Plain English: never come back if disabled" },
+  { id: "pitch",        n: 6, label: "The pitch — numbers",                sub: "Plain English: the cold-email page" },
 ];
 
 export default function Home() {
@@ -27,27 +28,43 @@ export default function Home() {
       <Header />
       <div className="mt-4">
         <LiveStats />
+        <p className="mt-2 text-xs text-gray-500">
+          ↑ Live numbers from the demo backend. Click around in the tabs below — the numbers move.
+        </p>
+      </div>
+      <div className="mt-4">
+        <PitchCard />
       </div>
       <div className="mt-4 space-y-4">
         <Architecture />
         <ScenarioPresets />
       </div>
-      <nav className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`rounded-xl border px-3 py-2 text-left transition ${
-              tab === t.id
-                ? "border-emerald-400/60 bg-emerald-400/10"
-                : "border-ink-800 bg-ink-900 hover:border-ink-700"
-            }`}
-          >
-            <div className="text-sm font-semibold text-gray-100">{t.label}</div>
-            <div className="text-xs text-gray-400">{t.sub}</div>
-          </button>
-        ))}
-      </nav>
+      <div className="mt-6">
+        <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          Six tabs · click each to see one thing AOL does
+        </h3>
+        <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`rounded-xl border px-3 py-2 text-left transition ${
+                tab === t.id
+                  ? "border-emerald-400/60 bg-emerald-400/10"
+                  : "border-ink-800 bg-ink-900 hover:border-ink-700"
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="rounded-md border border-emerald-400/40 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
+                  {t.n}
+                </span>
+                <span className="text-sm font-semibold text-gray-100">{t.label}</span>
+              </div>
+              <div className="mt-1 text-xs text-gray-400">{t.sub}</div>
+            </button>
+          ))}
+        </nav>
+      </div>
 
       <div className="mt-6 space-y-6">
         {tab === "control"      && <ControlPanel />}
@@ -78,15 +95,17 @@ function Header() {
             </span>
           </div>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-            One middleware between your apps and the OEM AI assistant.
+            Phones ship too much AI nobody uses. AOL fixes that.
           </h1>
-          <p className="mt-2 max-w-3xl text-sm text-gray-400">
-            AOL filters low-value features, surfaces context-relevant ones,
-            routes compute between on-device and cloud, and remembers what the
-            user actually liked. Rule-based, observable, ~131 LOC drop-in.
-            Built to ship beside <span className="text-gray-300">Moto AI</span>,
-            <span className="text-gray-300"> Galaxy AI</span>, or
-            <span className="text-gray-300"> Bixby</span>.
+          <p className="mt-2 max-w-3xl text-base text-gray-300">
+            One drop-in layer the OEM (<span className="text-gray-100">Moto</span>,{" "}
+            <span className="text-gray-100">Samsung</span>, <span className="text-gray-100">OnePlus</span>) ships beside its AI assistant. It{" "}
+            <span className="text-emerald-300">hides features the user never opens</span>,{" "}
+            <span className="text-emerald-300">runs the rest on-device</span> when it can (faster, free, private),
+            and <span className="text-emerald-300">remembers what the user disabled</span> so it doesn&rsquo;t come back.
+          </p>
+          <p className="mt-2 max-w-3xl text-sm text-gray-500">
+            ~131 lines of Kotlin · rule-based · live demo below · open-source on GitHub.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             <a

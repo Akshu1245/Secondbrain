@@ -9,12 +9,12 @@
 export function Architecture() {
   return (
     <div id="how-it-fits-in" className="rounded-2xl border border-ink-800 bg-ink-950/60 p-5">
-      <div className="mb-3 flex items-baseline justify-between gap-3">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400/80">
-          How it fits in
+          Where AOL sits
         </h2>
         <span className="text-xs text-gray-500">
-          One middleware, six modules, drops in beside Moto AI / Galaxy AI / Bixby
+          The user&rsquo;s apps don&rsquo;t talk to the AI assistant directly. AOL is in between, and decides what happens.
         </span>
       </div>
       <svg
@@ -96,20 +96,20 @@ export function Architecture() {
             strokeOpacity="0.5"
           />
           <text x="440" y="42" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="700" letterSpacing="3">
-            AOL MIDDLEWARE
+            AOL — THE LAYER WE&apos;RE PITCHING
           </text>
           <text x="440" y="62" textAnchor="middle" fill="#e5e7eb" fontSize="13">
-            rule-based · observable · ~131 LOC drop-in
+            ~131 lines of Kotlin · drops in once · runs in front of every AI call
           </text>
 
           {/* 6 module pills, 3x2 grid */}
           {[
-            { x: 260, y: 88,  k: "1", label: "Smart Filter" },
-            { x: 380, y: 88,  k: "2", label: "Context Engine" },
-            { x: 500, y: 88,  k: "3", label: "Compute Router" },
-            { x: 260, y: 144, k: "4", label: "Decision Log" },
-            { x: 380, y: 144, k: "5", label: "Feedback Loop" },
-            { x: 500, y: 144, k: "6", label: "Memory (SB)" },
+            { x: 260, y: 88,  k: "1", label: "Hide unused" },
+            { x: 380, y: 88,  k: "2", label: "Right-time" },
+            { x: 500, y: 88,  k: "3", label: "Phone vs cloud" },
+            { x: 260, y: 144, k: "4", label: "Log every call" },
+            { x: 380, y: 144, k: "5", label: "Listen to user" },
+            { x: 500, y: 144, k: "6", label: "Remember" },
           ].map((m) => (
             <g key={m.k}>
               <rect

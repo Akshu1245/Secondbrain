@@ -52,27 +52,27 @@ export function LiveStats() {
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
       <Cell
-        label="Hidden by AOL"
+        label="Features hidden"
         value={stats ? `${stats.hidden.hidden} / ${stats.hidden.total}` : "—"}
-        sub={stats ? `${stats.hidden.pct}% of catalog` : "loading…"}
+        sub={stats ? `${stats.hidden.pct}% of the AI menu auto-hidden` : "loading…"}
         accent="emerald"
       />
       <Cell
-        label="Local routes"
+        label="Ran on phone"
         value={stats ? `${stats.compute.local_pct}%` : "—"}
-        sub={stats && stats.compute.total > 0 ? `${stats.compute.total} decisions` : "tap a feature"}
+        sub={stats && stats.compute.total > 0 ? `out of ${stats.compute.total} AI calls` : "tap a feature in tab 3"}
         accent="emerald"
       />
       <Cell
-        label="$ saved (demo)"
+        label="Cloud bill saved"
         value={stats ? `$${stats.compute.saved_usd.toFixed(4)}` : "—"}
-        sub="vs all-cloud baseline"
+        sub="vs running it all in the cloud"
         accent="amber"
       />
       <Cell
-        label="Per-call ms saved"
+        label="Faster by"
         value={stats ? `${Math.round(stats.compute.saved_ms_avg)} ms` : "—"}
-        sub="local vs cloud avg"
+        sub="per AI call, on average"
         accent="sky"
       />
     </div>

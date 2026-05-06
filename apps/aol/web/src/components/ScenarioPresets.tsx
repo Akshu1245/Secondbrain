@@ -48,12 +48,12 @@ export function ScenarioPresets() {
 
   return (
     <div className="rounded-2xl border border-ink-800 bg-ink-950/60 p-4">
-      <div className="mb-2 flex items-baseline justify-between gap-3">
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-3">
         <div className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400/80">
-          Try a scenario
+          Click one — see AOL react
         </div>
         <div className="text-xs text-gray-500">
-          One-click context · reloads dashboard
+          Pretends the user&rsquo;s phone is in this state, then reloads the page so you can see what changes.
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
