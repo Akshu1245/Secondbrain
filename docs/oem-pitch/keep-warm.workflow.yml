@@ -1,0 +1,53 @@
+# Drop this file at .github/workflows/keep-warm.yml in your fork and enable
+# Actions on the repo. It pings the demo + API every 10 minutes so the
+# free-tier hosts (devinapps + Fly.io) do not cold-start when an OEM
+# reviewer clicks the link in the cold email.
+#
+# Devin could not push this file directly because the GitHub PAT in this
+# session does not have the `workflow` scope. Move it into place once,
+# commit, push — done.
+#
+#   mkdir -p .github/workflows
+#   mv docs/oem-pitch/keep-warm.workflow.yml .github/workflows/keep-warm.yml
+#   git add .github/workflows/keep-warm.yml
+#   git commit -m "ci: keep-demo-warm cron"
+#   git push
+
+name: keep-demo-warm
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping demo dashboard
+        run: |
+          for i in 1 2 3; do
+            if curl -fsSL --max-time 20 https://out-gwumfbso.devinapps.com/ -o /dev/null; then
+              echo "demo: ok"
+              break
+            fi
+            echo "demo: attempt $i failed, retrying"
+            sleep 5
+          done
+
+      - name: Ping API root
+        run: |
+          for i in 1 2 3; do
+            if curl -fsSL --max-time 20 https://aol-api-enqcpqaq.fly.dev/ -o /dev/null; then
+              echo "api: ok"
+              break
+            fi
+            echo "api: attempt $i failed, retrying"
+            sleep 5
+          done
+
+      - name: Warm key API endpoints
+        run: |
+          curl -fsSL --max-time 20 https://aol-api-enqcpqaq.fly.dev/api/features -o /dev/null || true
+          curl -fsSL --max-time 20 https://aol-api-enqcpqaq.fly.dev/api/analytics -o /dev/null || true

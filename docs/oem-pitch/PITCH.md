@@ -303,7 +303,16 @@ Payback period at the conservative tier: **< 1 quarter** post-pilot.
 
 * **Test coverage.** 53 pytest tests, deterministic, 100 % of routing
   rules covered. CI pipeline is GitHub Actions, single workflow,
-  < 60 s wall-clock.
+  < 60 s wall-clock. The suite caught a savings-aggregation bug
+  during development — early versions summed `alt_ms − chosen_ms`
+  across the full call log, inflating reported latency savings by
+  ~1900 ms per cloud-routed heavy task because the "alternative"
+  on-device path would have been slower, not faster. The fix
+  (aggregating only over locally-routed calls) is documented in
+  `compute.py` and was caught in CI before any deployment. We
+  surface this here because measurement integrity is the precondition
+  for any ROI claim — a routing layer that lies to its own
+  dashboard is worse than no routing layer at all.
 
 * **Observability.** Per-call decision log: `feature_id`, `route`,
   `rule_fired`, `chosen_latency_ms`, `alternate_latency_ms`,

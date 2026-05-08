@@ -7,3 +7,4 @@ node_modules/
 data/runtime/
 *.log
 .DS_Store
+apps/aol/web/tsconfig.tsbuildinfo
