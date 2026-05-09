@@ -39,7 +39,7 @@ const PRESETS: Preset[] = [
 
 /**
  * One-click context flips for the demo. A Moto PM should never have to
- * scroll through three checkboxes to see what AOL does on a low-battery
+ * scroll through three checkboxes to see what Second Brain does on a low-battery
  * device — they should click "Low battery" and see it.
  */
 export function ScenarioPresets() {
@@ -50,7 +50,7 @@ export function ScenarioPresets() {
     <div className="rounded-2xl border border-ink-800 bg-ink-950/60 p-4">
       <div className="mb-2 flex flex-wrap items-baseline justify-between gap-3">
         <div className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400/80">
-          Click one — see AOL react
+          Click one — see Second Brain react
         </div>
         <div className="text-xs text-gray-500">
           Pretends the user&rsquo;s phone is in this state, then reloads the page so you can see what changes.

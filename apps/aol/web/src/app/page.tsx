@@ -17,7 +17,7 @@ const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
   { id: "control",      n: 1, label: "Hide what nobody uses",          sub: "declutter the AI menu" },
   { id: "context",      n: 2, label: "Show the right thing right now",  sub: "morning ≠ evening" },
   { id: "compute",      n: 3, label: "Run on phone vs cloud",           sub: "free + private when possible" },
-  { id: "before-after", n: 4, label: "Before vs after AOL",             sub: "see the win, side-by-side" },
+  { id: "before-after", n: 4, label: "Before vs after Second Brain",             sub: "see the win, side-by-side" },
   { id: "feedback",     n: 5, label: "Learn what the user hates",       sub: "never come back if disabled" },
   { id: "pitch",        n: 6, label: "The pitch — numbers",              sub: "what to say to Mahmoud" },
 ];
@@ -46,7 +46,7 @@ export default function Home() {
       </div>
       <div className="mt-6">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-          Six tabs · click each to see one thing AOL does
+          Six tabs · click each to see one thing Second Brain does
         </h3>
         <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
           {TABS.map((t) => (
@@ -96,17 +96,17 @@ function Header() {
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-emerald-300">
-              AI Optimization Layer
+              Second Brain
             </span>
             <span className="rounded-full border border-ink-700 bg-ink-900 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-gray-400">
               v0.4 · live demo
             </span>
             <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-sky-300">
-              Second Brain × AOL wired
+              memory + routing layer for OEM AI
             </span>
           </div>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Phones ship too much AI nobody uses. AOL fixes that.
+            Phones ship too much AI nobody uses. Second Brain fixes that.
           </h1>
           <p className="mt-2 max-w-3xl text-base text-gray-300">
             One drop-in layer the OEM (<span className="text-gray-100">Moto</span>,{" "}
@@ -248,7 +248,7 @@ function ControlPanel() {
         <>
           <Card
             title={`Visible features (${data.visible.length})`}
-            subtitle="What the OEM AI assistant should surface, after AOL applies the rules"
+            subtitle="What the OEM AI assistant should surface, after Second Brain applies the rules"
           >
             <ul className="divide-y divide-ink-800">
               {data.visible.map((f) => (
@@ -257,7 +257,7 @@ function ControlPanel() {
             </ul>
           </Card>
           <Card
-            title={`AOL recommends hiding (${data.hide_recommended.length})`}
+            title={`Second Brain recommends hiding (${data.hide_recommended.length})`}
             subtitle={`Used < ${data.rules.low_usage_threshold_events_30d} times in last 30 days and not in your priority categories`}
           >
             <ul className="divide-y divide-ink-800">
@@ -329,7 +329,7 @@ function ContextEngine() {
   return (
     <Card
       title="Context-aware suggestions"
-      subtitle="What AOL would surface to the user given the current context"
+      subtitle="What Second Brain would surface to the user given the current context"
     >
       <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Selector label="Time of day" value={tod} onChange={setTod}
@@ -397,7 +397,7 @@ function ComputeRouter() {
     <>
       <Card
         title="Routing decision"
-        subtitle="Pick a feature; AOL decides whether to run it on-device or in the cloud, and explains why"
+        subtitle="Pick a feature; Second Brain decides whether to run it on-device or in the cloud, and explains why"
       >
         <div className="flex flex-wrap items-end gap-3">
           <label className="flex flex-col gap-1">
@@ -483,13 +483,13 @@ function BeforeAfter() {
     <>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Stat label="Surface size — before" value={data.before.feature_count} hint="every default-on feature" />
-        <Stat label="Surface size — after"  value={data.after.feature_count} hint="AOL-optimised" />
+        <Stat label="Surface size — after"  value={data.after.feature_count} hint="Second Brain-optimised" />
         <Stat label="Features hidden" value={`${data.savings.features_hidden_pct}%`} hint={`${data.after.hidden_count} features`} />
         <Stat label="Cloud calls saved" value={`$${data.savings.compute.saved_usd.toFixed(4)}`} hint={`${data.savings.compute.local_pct}% on-device`} />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <Card title="Before AOL" subtitle="OEM default — every AI feature surfaced equally" right={<Pill tone="off">noisy</Pill>}>
+        <Card title="Before Second Brain" subtitle="OEM default — every AI feature surfaced equally" right={<Pill tone="off">noisy</Pill>}>
           <ul className="space-y-2">
             {data.before.features.map((f) => (
               <li key={f.id} className="flex items-center justify-between gap-3 rounded-lg border border-ink-800 bg-ink-950 px-3 py-2">
@@ -502,7 +502,7 @@ function BeforeAfter() {
             ))}
           </ul>
         </Card>
-        <Card title="After AOL" subtitle="Visible to user, ordered by relevance" right={<Pill tone="on">clean</Pill>}>
+        <Card title="After Second Brain" subtitle="Visible to user, ordered by relevance" right={<Pill tone="on">clean</Pill>}>
           <ul className="space-y-2">
             {data.after.features.map((f) => (
               <li key={f.id} className="flex items-center justify-between gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/5 px-3 py-2">
@@ -580,7 +580,7 @@ function FeedbackPanel() {
       </Card>
 
       {list.improvement_suggestions.length > 0 && (
-        <Card title="System-layer recommendations" subtitle="What AOL would change in the next optimisation cycle">
+        <Card title="System-layer recommendations" subtitle="What Second Brain would change in the next optimisation cycle">
           <ul className="space-y-2">
             {list.improvement_suggestions.map((s, i) => (
               <li key={i} className="rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3">
@@ -600,7 +600,7 @@ function FeedbackPanel() {
       {(list.memory_suggestions?.length ?? 0) > 0 && (
         <Card
           title="Memory-informed recommendations"
-          subtitle={"Second Brain × AOL — durable patterns in the last 90d, not flaps on a single bad day"}
+          subtitle={"Memory-backed — durable patterns in the last 90d, not flaps on a single bad day"}
         >
           <ul className="space-y-2">
             {list.memory_suggestions.map((s: any, i: number) => (
@@ -632,14 +632,14 @@ function FeedbackPanel() {
           </ul>
           <div className="mt-3 rounded-md border border-ink-800 bg-ink-900/40 p-3 text-xs text-gray-400">
             <span className="font-medium text-gray-300">How this wires up:</span>{" "}
-            AOL&apos;s Feedback Loop (Module 6) queries the Second Brain companion for
+            Second Brain&apos;s Feedback Loop (Module 6) queries the memory layer for
             per-feature episodic history — every toggle-off, every rating, every
             context hide in the last <span className="font-mono">{90}</span> days. A
             recommendation surfaces here only when there are at least two durable
             signals, so a single annoyed tap never produces a &quot;auto-hide this?&quot;
-            prompt. In production the backend proxies to the Second Brain MCP
+            prompt. In production the backend proxies to the memory layer&apos;s MCP
             endpoint <span className="font-mono">/recall?feature_id=…&amp;days=90</span>;
-            the demo reads the same local state AOL writes.
+            the demo reads the same local state the memory layer writes.
           </div>
         </Card>
       )}
@@ -671,7 +671,7 @@ function FeedbackPanel() {
 function PitchEvidence() {
   return (
     <>
-      <Card title="The problem AOL solves" subtitle="Independently sourced; receipts in docs/oem-targets.md">
+      <Card title="The problem Second Brain solves" subtitle="Independently sourced; receipts in docs/oem-targets.md">
         <ul className="space-y-3 text-sm">
           <Bullet>
             <strong>73% of iPhone users and 87% of Samsung users</strong> say AI features add little to no value.
@@ -692,10 +692,10 @@ function PitchEvidence() {
         </ul>
       </Card>
 
-      <Card title="Where AOL plugs in" subtitle="Same surface, two complementary layers">
+      <Card title="Where Second Brain plugs in" subtitle="Same surface, two complementary layers">
         <ul className="space-y-3 text-sm">
           <Bullet>
-            <strong>For OEMs (B2B):</strong> AOL sits between user and their AI assistant. Cuts cloud-compute spend by routing every request through Compute Optimizer; lifts engagement by hiding feature clutter; surfaces context-relevant features instead of dumping all 20+ on the home screen.
+            <strong>For OEMs (B2B):</strong> Second Brain sits between user and their AI assistant. Cuts cloud-compute spend by routing every request through Compute Optimizer; lifts engagement by hiding feature clutter; surfaces context-relevant features instead of dumping all 20+ on the home screen.
           </Bullet>
           <Bullet>
             <strong>For users (B2C-feel):</strong> Control Panel they actually own. Toggle off the AI Wallpaper Studio nobody uses, prioritise the categories that match their day. Battery / data / private modes that *the AI assistant respects*.
@@ -709,7 +709,7 @@ function PitchEvidence() {
       <Card title="Why now" subtitle="Read this in any cold email">
         <p className="text-sm text-gray-300">
           Every OEM is paying for cloud AI compute users won&apos;t pay for. That&apos;s an unsustainable subsidy.
-          AOL is the only middleware whose explicit success metric is{" "}
+          Second Brain is the only middleware whose explicit success metric is{" "}
           <strong className="text-emerald-300">$ saved per device per month</strong>, not features shipped.
           A pilot on 10,000 devices is a measurable line in next quarter&apos;s P&amp;L.
         </p>

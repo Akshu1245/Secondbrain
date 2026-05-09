@@ -71,7 +71,7 @@ export function IntegrateCard() {
             <>
               <CodeBlock code={STEP_3_CODE} />
               <p className="mt-2 text-xs text-gray-500">
-                If AOL is not installed or crashes, every call returns the
+                If Second Brain is not installed or crashes, every call returns the
                 unfiltered list + a &ldquo;cloud&rdquo; route — the OEM
                 assistant keeps working exactly as today.
               </p>

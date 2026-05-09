@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AOL × Moto AI — 60-second tour",
+  title: "Second Brain × Moto AI — 60-second tour",
   description:
-    "Self-guided walkthrough of how AOL improves each Moto AI surface — for an OEM PM who has 60 seconds.",
+    "Self-guided walkthrough of how Second Brain improves each Moto AI surface — for an OEM PM who has 60 seconds.",
 };
 
 const REPO_BASE = "https://github.com/Akshu1245/Secondbrain/blob/main";
@@ -144,7 +144,7 @@ export default function TourPage() {
           60-second tour · for an OEM PM with no time
         </p>
         <h1 className="mt-2 text-3xl font-semibold text-gray-50 sm:text-4xl">
-          AOL × Moto AI
+          Second Brain × Moto AI
         </h1>
         <p className="mt-3 max-w-3xl text-base text-gray-300">
           A 6-module middleware that routes ~45% of Moto AI calls on-device,
@@ -214,7 +214,7 @@ export default function TourPage() {
               </div>
               <div className="rounded-xl border border-emerald-700/40 bg-emerald-900/15 p-4">
                 <div className="text-xs uppercase tracking-wide text-emerald-300">
-                  With AOL
+                  With Second Brain
                 </div>
                 <p className="mt-1 text-sm text-gray-200">{m.withAol}</p>
               </div>
@@ -263,7 +263,7 @@ export default function TourPage() {
         </p>
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
           <a
-            href="mailto:rashisolutions1245@gmail.com?subject=Moto%20AI%20%C3%97%20AOL%20pilot%20%E2%80%94%20intro%20call"
+            href="mailto:rashisolutions1245@gmail.com?subject=Moto%20AI%20%C3%97%20Second Brain%20pilot%20%E2%80%94%20intro%20call"
             className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-emerald-300 hover:bg-emerald-500/20"
           >
             Email Akshay (rashisolutions1245@gmail.com) →

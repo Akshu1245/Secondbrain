@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const SUBJECT = "AOL — one drop-in layer that hides the AI features users never open";
+const SUBJECT = "Second Brain — one drop-in layer that hides the AI features users never open";
 
 const BODY = `Hey,
 
@@ -17,7 +17,7 @@ https://out-gwumfbso.devinapps.com/
 Repo + buildable Android APK + the 131-line drop-in:
 https://github.com/Akshu1245/Secondbrain
 
-Why it matters: ~45% of Moto AI calls land on-device after AOL runs in
+Why it matters: ~45% of Moto AI calls land on-device after Second Brain runs in
 front of them. At Moto's 14.5 M phones / quarter that's roughly
 $1.6 M/year in cloud bills saved — before counting battery and churn.
 Same architecture works for Galaxy AI / OnePlus / Nothing.
@@ -47,7 +47,7 @@ export function ForwardCard() {
 
   const mailtoHref = `mailto:?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BODY)}`;
   const linkedInHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://out-gwumfbso.devinapps.com/")}`;
-  const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent("AOL — a drop-in layer that hides the AI features phone users never open, and runs the rest on-device. Working demo + APK:")}&url=${encodeURIComponent("https://out-gwumfbso.devinapps.com/")}`;
+  const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent("Second Brain — a drop-in layer that hides the AI features phone users never open, and runs the rest on-device. Working demo + APK:")}&url=${encodeURIComponent("https://out-gwumfbso.devinapps.com/")}`;
 
   return (
     <section className="rounded-2xl border border-sky-500/30 bg-gradient-to-br from-sky-500/5 via-ink-900 to-ink-900 p-5">

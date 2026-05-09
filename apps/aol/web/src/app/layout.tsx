@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AOL — AI Optimization Layer",
+  title: "Second Brain — the memory + routing layer for OEM AI",
   description:
-    "Middleware that filters, contextualises, and routes the OEM AI assistant.",
+    "Plugs into an OEM AI assistant. Persistent memory under Catch-Me-Up / Pay-Attention / Remember-This + per-call on-device-vs-cloud routing.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

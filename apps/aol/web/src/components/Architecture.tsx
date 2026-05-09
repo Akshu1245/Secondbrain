@@ -1,9 +1,9 @@
 "use client";
 
 /**
- * Compact architecture diagram for the AOL landing area.
+ * Compact architecture diagram for the Second Brain landing area.
  * Reads a 3-second story: the user's apps and the OEM AI assistant
- * never talk directly — every call passes through AOL, which decides
+ * never talk directly — every call passes through Second Brain, which decides
  * what to surface, where to compute, and what to remember.
  */
 export function Architecture() {
@@ -11,16 +11,16 @@ export function Architecture() {
     <div id="how-it-fits-in" className="rounded-2xl border border-ink-800 bg-ink-950/60 p-5">
       <div className="mb-3 flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-400/80">
-          Where AOL sits
+          Where Second Brain sits
         </h2>
         <span className="text-xs text-gray-500">
-          The user&rsquo;s apps don&rsquo;t talk to the AI assistant directly. AOL is in between, and decides what happens.
+          The user&rsquo;s apps don&rsquo;t talk to the AI assistant directly. Second Brain is in between, and decides what happens.
         </span>
       </div>
       <svg
         viewBox="0 0 880 240"
         role="img"
-        aria-label="AOL middleware sits between the user's apps and the OEM AI assistant"
+        aria-label="Second Brain middleware sits between the user's apps and the OEM AI assistant"
         className="h-auto w-full max-w-full"
       >
         <defs>
@@ -72,7 +72,7 @@ export function Architecture() {
           </text>
         </g>
 
-        {/* arrow user → AOL */}
+        {/* arrow user → Second Brain */}
         <line
           x1="170"
           y1="120"
@@ -83,7 +83,7 @@ export function Architecture() {
           markerEnd="url(#arrow)"
         />
 
-        {/* ──────────────── Middle: AOL middleware ──────────────── */}
+        {/* ──────────────── Middle: Second Brain middleware ──────────────── */}
         <g>
           <rect
             x="240"
@@ -96,7 +96,7 @@ export function Architecture() {
             strokeOpacity="0.5"
           />
           <text x="440" y="42" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="700" letterSpacing="3">
-            AOL — THE LAYER WE&apos;RE PITCHING
+            Second Brain — THE LAYER WE&apos;RE PITCHING
           </text>
           <text x="440" y="62" textAnchor="middle" fill="#e5e7eb" fontSize="13">
             ~131 lines of Kotlin · drops in once · runs in front of every AI call
@@ -135,7 +135,7 @@ export function Architecture() {
           </text>
         </g>
 
-        {/* arrow AOL → OEM */}
+        {/* arrow Second Brain → OEM */}
         <line
           x1="640"
           y1="100"
@@ -145,7 +145,7 @@ export function Architecture() {
           strokeWidth="2"
           markerEnd="url(#arrow)"
         />
-        {/* arrow AOL → Cloud */}
+        {/* arrow Second Brain → Cloud */}
         <line
           x1="640"
           y1="160"

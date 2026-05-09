@@ -35,7 +35,7 @@ export function PitchCard() {
             Solution
           </span>
           <span>
-            AOL is <span className="font-semibold text-gray-50">one drop-in layer</span> — about{" "}
+            Second Brain is <span className="font-semibold text-gray-50">one drop-in layer</span> — about{" "}
             <span className="font-semibold text-gray-50">131 lines of Kotlin</span> the OEM AI assistant calls before it does anything.
             It <span className="text-gray-50">hides features the user doesn&rsquo;t use</span>, picks{" "}
             <span className="text-gray-50">on-device vs cloud</span> per call, and{" "}
