@@ -216,8 +216,8 @@ Secondbrain/
 
 ## Author
 
-Akshay K S — `rashisolutions1245@gmail.com` — 4 provisional patents in
-adjacent AI territory; built `Second Brain` v0 → v2 (PRs
+Akshay K S — `rashisolutions1245@gmail.com` — Founder, Rashi
+Technologies. Built `Second Brain` v0 → v2 (PRs
 [#1](https://github.com/Akshu1245/Secondbrain/pull/1),
 [#2](https://github.com/Akshu1245/Secondbrain/pull/2),
 [#3](https://github.com/Akshu1245/Secondbrain/pull/3)) before this pitch

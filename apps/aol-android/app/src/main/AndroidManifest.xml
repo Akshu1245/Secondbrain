@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AolDemo"
+        android:allowBackup="false"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+          The AOL middleware service. In production this would ship in a
+          separate APK ("ai.aol") and the OEM AI assistant would bind across
+          processes. For this demo we host it in-process so the whole flow
+          (AIDL bind → filterSurface / routeCompute / recordOutcome) is
+          exercised end-to-end with no extra install.
+        -->
+        <service
+            android:name=".AolMiddlewareService"
+            android:exported="true"
+            android:permission="">
+            <intent-filter>
+                <action android:name="ai.aol.IAolMiddleware" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

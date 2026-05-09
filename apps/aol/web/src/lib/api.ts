@@ -51,6 +51,32 @@ export type ComputeLog = {
   cost_usd: number;
 };
 
+export type MemorySuggestion = {
+  feature_id: string;
+  name: string;
+  action: "auto_hide_durable";
+  confidence: "high" | "medium";
+  evidence: string[];
+  window_days: number;
+  signals: {
+    disable_count: number;
+    negative_ratings: number;
+    positive_ratings: number;
+  };
+};
+
+export type MemoryRecall = {
+  feature_id: string;
+  window_days: number;
+  disable_count: number;
+  rating_counts: Record<string, number>;
+  negative_ratings: number;
+  positive_ratings: number;
+  context_hide_count: number;
+  disables: Array<{ ts: string; feature_id: string; enabled: boolean }>;
+  ratings: Array<{ ts: string; feature_id: string; rating: string }>;
+};
+
 export type Suggestion = {
   id: string;
   name: string;
@@ -98,9 +124,82 @@ export const api = {
     }).then(j),
   feedbackList: () =>
     fetch(`${BASE}/feedback`).then(
-      j<{ entries: any[]; improvement_suggestions: any[] }>,
+      j<{
+        entries: any[];
+        improvement_suggestions: any[];
+        memory_suggestions: MemorySuggestion[];
+      }>,
+    ),
+  memoryRecall: (feature_id: string, days = 90) => {
+    const q = new URLSearchParams({ feature_id, days: String(days) });
+    return fetch(`${BASE}/memory/recall?${q}`).then(j<MemoryRecall>);
+  },
+  memorySuggestions: (days = 90) =>
+    fetch(`${BASE}/memory/suggestions?days=${days}`).then(
+      j<{ window_days: number; suggestions: MemorySuggestion[] }>,
     ),
   beforeAfter: () => fetch(`${BASE}/before-after`).then(j),
   analytics: () => fetch(`${BASE}/analytics`).then(j),
   reset: () => fetch(`${BASE}/admin/reset`, { method: "POST" }).then(j),
+  learnedStatus: () => fetch(`${BASE}/learned/status`).then(j<LearnedStatus>),
+  learnedTrain: () =>
+    fetch(`${BASE}/learned/train`, { method: "POST" }).then(j<LearnedTrainResult>),
+  learnedPredict: (feature_id: string) =>
+    fetch(`${BASE}/learned/predict?feature_id=${encodeURIComponent(feature_id)}`).then(
+      j<LearnedPrediction>,
+    ),
+  learnedRank: (limit = 12) =>
+    fetch(`${BASE}/learned/rank?limit=${limit}`).then(j<{ ranked: LearnedRanked[] }>),
+};
+
+export type LearnedFactor = {
+  name: string;
+  value: number;
+  weight: number;
+  contribution: number;
+};
+
+export type LearnedPrediction = {
+  feature_id: string;
+  prob_engaged: number;
+  model: string;
+  top_factors: LearnedFactor[];
+};
+
+export type LearnedRanked = LearnedPrediction & {
+  name: string;
+  category: string;
+};
+
+export type LearnedMetrics = {
+  train_accuracy: number;
+  test_accuracy: number;
+  train_log_loss: number;
+  test_log_loss: number;
+  majority_baseline: number;
+  calibration: { mean_pred: number; mean_actual: number; abs_gap: number };
+};
+
+export type LearnedStatus = {
+  trained: boolean;
+  n_rows?: number | null;
+  n_rows_train?: number | null;
+  n_rows_test?: number | null;
+  version?: number | null;
+  metrics?: LearnedMetrics | null;
+  feature_names?: string[] | null;
+  weights?: number[] | null;
+};
+
+export type LearnedTrainResult = LearnedStatus & {
+  beats_baseline?: boolean;
+  rows_train?: number;
+  rows_test?: number;
+  train_accuracy?: number;
+  test_accuracy?: number;
+  train_log_loss?: number;
+  test_log_loss?: number;
+  majority_baseline?: number;
+  calibration?: LearnedMetrics["calibration"];
+  loss_curve_first_last?: [number | null, number | null];
 };

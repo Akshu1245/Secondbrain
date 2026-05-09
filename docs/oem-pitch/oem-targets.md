@@ -44,8 +44,8 @@ between "Remember This" sessions.
   student/independent projects).
 - Motorola India dev-relations on LinkedIn (search: *"Motorola India"
   developer relations* OR *Lenovo India AI*).
-- Patent-portfolio cold email to Moto AI product managers (search: *"Product
-  Manager Motorola AI"*).
+- Cold email to Moto AI product managers, leading with the live demo
+  + buildable APK (search: *"Product Manager Motorola AI"*).
 
 **Why-they-listen line:** *"Moto AI ships memory features that don't persist.
 We built the persistence layer + an optimisation layer. 15 minutes."*

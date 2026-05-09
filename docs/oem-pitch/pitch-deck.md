@@ -63,8 +63,15 @@ it, and where to run it.**
 | 5. Control Panel | Per-user toggles + priority categories + battery / data / private modes | Users feel ownership; OEM gets feedback |
 | 6. Feedback Loop | "love / ok / annoying / never_use" → auto-disable / re-enable suggestions | Continuous improvement, no model retraining |
 
-All rule-based, runs on-device, no extra ML. Logs every decision. Plugs into a
-real OEM AI via an Android Service (AIDL stub in `docs/integration/`).
+All rule-based by default, runs on-device, logs every decision. Phase-2
+optional: a 150-line pure-Python logistic-regression engagement model
+(`apps/aol/api/app/learned.py`) that re-ranks the Smart Filter's output
+using the user's own usage + feedback log — with per-feature top-3
+explainability and an automatic fallback to the rule-based engagement
+estimate when training data is thin or the model would underperform the
+baseline. Plugs into a real OEM AI via an Android Service (AIDL stub at
+`docs/oem-pitch/integration/`; buildable reference APK at
+`apps/aol-android/`).
 
 ---
 
@@ -124,7 +131,6 @@ Gemini / Perplexity contracts.
 
 **Why this team**
 
-- 4 provisional AI patents in adjacent territory.
 - Already shipped `Second Brain` v0 → v2 (memory consolidation, decay,
   multi-hop recall, episodic provenance) on a public repo with 3 PRs and 7+
   commits before this pitch landed. (Ask for the repo URL — it's not the empty
