@@ -1,79 +1,105 @@
-# Second Brain
+# Second Brain — the memory + routing layer for OEM AI
 
-A two-layer AI infrastructure for smartphones. Built for the OEM AI pitch
-(Motorola, OnePlus, Nothing, ASUS, Jio).
+> **Repo note.** The repository is named `Secondbrain` because that
+> *is* the product. Inside the codebase you will see legacy module
+> names (`aol/`, references to "AOL", an earlier "Plexus" working
+> name) — those are subsystems and historical positioning attempts.
+> The headline product, the brand on every outbound asset, and the
+> name on the cold email is **Second Brain**.
 
-| Layer | What it is | Where to read |
-|---|---|---|
-| **Memory layer** — Second Brain | On-device knowledge memory: capture (reels, screenshots, conversations), embed, dedupe, consolidate, decay, multi-hop recall, episodic provenance. Exposed to agents via MCP. | [`apps/api/`](apps/api/) (PR #3) |
-| **Optimisation layer** — AOL (AI Optimization Layer) | System-layer middleware between user and OEM AI assistant. Filters low-value features, surfaces context-relevant ones, routes compute between local and cloud, ships a Control Panel. Live demo + AIDL stub for native Moto integration. | [`apps/aol/`](apps/aol/) |
+---
 
-**Live AOL demo:** <https://out-ujjsjvxm.devinapps.com> · **AOL API:** <https://aol-api-yfdwxezt.fly.dev/docs>
+## What this is
 
-## Why both layers exist
+Second Brain is a memory + routing layer that plugs into an OEM AI
+assistant (Moto AI · Galaxy AI · OxygenOS AI · Nothing AI · …) and
+gives it two things that current first-party AI assistants ship
+half-built:
 
-Phone AI is broken. The numbers from independent surveys say so:
+1. **Persistent memory.** Catch-Me-Up, Pay-Attention, and Remember-
+   This are the right product surface, but the persistence layer
+   underneath is missing — sessions don't carry, signals don't
+   reinforce. Second Brain is that persistence layer.
+2. **Per-call routing.** A rule-based system layer (codename "AOL"
+   in the codebase) decides per inference whether the call runs
+   on-device or in the cloud, with full audit trail.
 
-* 73% of iPhone users + 87% of Galaxy AI users say built-in AI features add
-  little to no value.
-* 86.5% / 94.5% of those users won't pay for AI features.
-* 11% of US adults would upgrade their phone for AI — **down 7 pts YoY**.
-* Top complaints across Reddit / Twitter / press: bloatware, irrelevance,
-  cloud cost, no persistence.
+**Outcome on a 14.5 M-shipment quarterly fleet:** $9–24 M / year
+of recoverable cloud inference spend, via a **131-line MVP
+integration shim**.
 
-Every flagship is shipping more AI features. None of them is solving the
-two structural problems behind those numbers: there's no **memory layer**
-(features can't remember what the user did last week) and there's no
-**optimisation layer** (everything fires regardless of context, and most
-of it goes to the cloud unnecessarily).
+---
 
-This repo ships both — as one pitch, two technical artefacts.
+## Where to read
 
-## OEM pitch package
-
-| File | What it is |
+| Document | Purpose |
 |---|---|
-| [`docs/oem-pitch/pitch-deck.md`](docs/oem-pitch/pitch-deck.md) | 10-slide deck. Read in &lt; 5 min. |
-| [`docs/oem-pitch/one-pager.md`](docs/oem-pitch/one-pager.md) | One-pager for warm intros. |
-| [`docs/oem-pitch/oem-targets.md`](docs/oem-pitch/oem-targets.md) | Ranked OEM targets (Moto → OnePlus → Nothing → ASUS → Jio) with entry points and sourced citations. |
-| [`docs/oem-pitch/oem-outreach.md`](docs/oem-pitch/oem-outreach.md) | Week-by-week outreach playbook + 2 cold-email templates + LinkedIn DM. |
-| [`docs/oem-pitch/user-pain-audit.md`](docs/oem-pitch/user-pain-audit.md) | Reddit / Twitter / Instagram / Facebook pain audit with direct links to public complaints. |
-| [`docs/oem-pitch/what-users-want.md`](docs/oem-pitch/what-users-want.md) | The mirror of the pain audit — what users explicitly say *would* make them stay or switch to Moto. The doc to put in front of a Moto Product Lead. |
-| [`docs/oem-pitch/solo-founder-to-moto.md`](docs/oem-pitch/solo-founder-to-moto.md) | 90-day campaign plan for a solo founder to land at Moto — partnership track + job track in parallel, with named roles and live req IDs. |
-| [`docs/oem-pitch/integration/`](docs/oem-pitch/integration/) | `IAolMiddleware.aidl` + `AolClient.kt` — drop-in Kotlin reference for native integration into a Moto / OnePlus / Nothing AI assistant. |
+| [`docs/oem-pitch/PITCH.md`](docs/oem-pitch/PITCH.md) | Master enterprise pitch — 13 sections, executive-ready. |
+| [`docs/oem-pitch/one-pager.md`](docs/oem-pitch/one-pager.md) | One-page summary for inbox-attention scanners. |
+| [`docs/oem-pitch/FINANCIAL-MODEL.md`](docs/oem-pitch/FINANCIAL-MODEL.md) | Formula-driven, three-tier ROI model with full assumption log. |
+| [`docs/oem-pitch/USER-JOURNEY.md`](docs/oem-pitch/USER-JOURNEY.md) | 90-day adaptation narrative — how Second Brain learns one user's behaviour and reduces cloud dependency. |
+| [`docs/oem-pitch/OUTREACH.md`](docs/oem-pitch/OUTREACH.md) | Cold emails (OEM + investor), demo narration, taglines, follow-up sequence. |
+| [`docs/oem-pitch/moto-specific.md`](docs/oem-pitch/moto-specific.md) | Per-OEM appendix — named Moto AI features, $/month at Lenovo-Motorola Q2 2025 scale. |
+| [`docs/oem-pitch/integration/`](docs/oem-pitch/integration/) | The 131-line integration shim — AIDL contract + Kotlin client + reproducibility script. |
 
-## Repo layout
+---
+
+## Live artefacts
+
+* **Demo:** <https://out-gwumfbso.devinapps.com/>
+* **API + Swagger:** <https://aol-api-enqcpqaq.fly.dev/docs>
+* **Buildable APK:** `apps/aol-android/` → `./gradlew assembleDebug`
+
+---
+
+## Architecture
 
 ```
-Secondbrain/
-├── apps/
-│   ├── api/                         Second Brain memory layer (FastAPI + MCP)
-│   │   └── app/                     ingestion, embeddings, recall, episodes,
-│   │                                consolidation, decay, distillation,
-│   │                                reflection, GraphRAG rollups, skills,
-│   │                                conversation import, multi-hop recall
-│   └── aol/                         AOL — AI Optimization Layer
-│       ├── api/                     FastAPI middleware (6 modules)
-│       ├── web/                     Next.js dashboard (Control Panel)
-│       └── README.md                AOL-specific quickstart
-└── docs/
-    └── oem-pitch/                   one-stop pitch package for OEM outreach
+   USER → OEM AI ASSISTANT → ┌────────────────────────────────┐
+                             │  SECOND BRAIN                  │
+                             │   ├── Memory Layer             │
+                             │   ├── Context Engine           │
+                             │   ├── Feature Prioritizer      │
+                             │   ├── AI Router (codename AOL) │
+                             │   ├── Telemetry Engine         │
+                             │   └── Learning Loop            │
+                             └─────────┬───────────┬──────────┘
+                                       │           │
+                                  ON-DEVICE     CLOUD AI
 ```
+
+Six rule-based modules, deterministic, per-call decision log,
+fail-safe fallback if the Second Brain APK is uninstalled.
+
+---
+
+## Repository layout
+
+```
+apps/
+  aol/api/         — FastAPI backend (memory + routing policy + decision log)
+  aol/web/         — Next.js dashboard (live demo)
+  aol-android/     — Android module (AIDL contract + Compose UI + buildable APK)
+  api/             — Second Brain memory companion (earlier prototype)
+
+docs/
+  oem-pitch/       — Master pitch package, financial model, outreach
+  oem-pitch/integration/  — 131-line shim, drop-in for the OEM assistant
+```
+
+The `aol/` directory prefix is internal naming for the routing
+subsystem and is preserved to keep the live demo + APK builds
+working unchanged. Brand-level code rename is a tracked follow-up.
+
+---
 
 ## Status
 
-| Item | Status |
-|---|---|
-| Memory layer v0 (FastAPI + Next.js PWA scaffold) | shipped — PR [#1](https://github.com/Akshu1245/Secondbrain/pull/1) |
-| Memory layer v1 (Agent Memory Edition: MCP + Tool Attention + facts/episodes/correction) | shipped — PR [#2](https://github.com/Akshu1245/Secondbrain/pull/2) |
-| Memory layer v2 (Stronger Memory: consolidation, decay, distill, reflect, rollups, multi-hop, skills, conversation import) | shipped — PR [#3](https://github.com/Akshu1245/Secondbrain/pull/3) |
-| AOL backend (6 modules, 14 endpoints) | shipped — this PR |
-| AOL dashboard (6-tab Next.js) | shipped — this PR |
-| AOL deployed (live demo URL) | live — <https://out-ujjsjvxm.devinapps.com> |
-| AOL deployed (live API URL) | live — <https://aol-api-yfdwxezt.fly.dev> |
-| Pitch deck + one-pager + OEM targets + outreach + user-pain audit + AIDL stub | shipped — this PR |
+* Prototype, live, demoable end-to-end in under five minutes.
+* First OEM pilot conversations in flight (Motorola MBG primary,
+  OnePlus / Nothing / Samsung India in pipeline).
+* Pre-seed raise opening to convert pilot → production.
 
-## Author
+---
 
-Akshay K S — `rashisolutions1245@gmail.com` — 4 provisional patents in
-adjacent AI territory.
+— **K S Akshay** · Founder, Rashi Technologies · `rashisolutions1245@gmail.com`

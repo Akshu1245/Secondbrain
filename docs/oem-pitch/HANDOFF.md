@@ -12,7 +12,7 @@ Snapshot of state so you can resume from exactly where we left off.
 
 - The full pitch package is on GitHub. Every doc, every cover letter, every line of code.
 - The live demo and the live API are running on the public internet. The backend was just redeployed with the honest-numbers fix.
-- 2 things are still open: (a) a 90-second screen-recording asset (in-flight), (b) 3 placeholders only you can fill (LinkedIn URL, patent titles, education line).
+- 2 things are still open: (a) a 90-second screen-recording asset (in-flight), (b) 2 placeholders only you can fill (LinkedIn URL, education line).
 - Confidence: ~70–75% probability that **at least one** of (Moto cold email reply / Lenovo MBG offer / Lenovo AI Cloud offer) lands by Aug 2026 if you execute the May 5 / May 7 sends.
 
 ---
@@ -21,8 +21,8 @@ Snapshot of state so you can resume from exactly where we left off.
 
 | Asset | URL |
 |---|---|
-| Live dashboard | <https://out-ujjsjvxm.devinapps.com> |
-| Live API + Swagger | <https://aol-api-yfdwxezt.fly.dev/docs> |
+| Live dashboard | <https://out-gwumfbso.devinapps.com> |
+| Live API + Swagger | <https://aol-api-enqcpqaq.fly.dev/docs> |
 | GitHub PR | <https://github.com/Akshu1245/Secondbrain/pull/4> |
 | Repo root | <https://github.com/Akshu1245/Secondbrain> |
 
@@ -31,6 +31,7 @@ Snapshot of state so you can resume from exactly where we left off.
 ## What's done — everything below is on GitHub
 
 ### 1. Code (working, deployed)
+- **AOL Android demo APK** — `apps/aol-android/` (PR #7) — buildable Kotlin + Compose app that exercises the AIDL surface end-to-end on-device. `./gradlew assembleDebug` produces a 9.5 MB `app-debug.apk`. Includes the in-process AOL middleware service so the demo runs without a second install.
 - **AOL backend** — FastAPI, Python 3.12, 6 modules
   - `apps/aol/api/app/usage.py` — usage tracker (~630 events / 30d, simulated)
   - `apps/aol/api/app/filter.py` — Smart Feature Filter (24 → 18 features)
@@ -58,7 +59,7 @@ Snapshot of state so you can resume from exactly where we left off.
 | `what-users-want.md` | Inverse of pain audit — what users say *would* make them stay or switch to Moto |
 | `solo-founder-to-moto.md` | 90-day campaign for a solo person, two parallel tracks (partnership + job), with named LinkedIn search queries, Lenovo req IDs, etc. |
 | `integration/IAolMiddleware.aidl` | Drop-in Android binding interface (6 lines of code, 67 lines of comments) |
-| `integration/AolClient.kt` | Reference Kotlin client + service skeleton (~155 LOC) |
+| `integration/AolClient.kt` | Reference Kotlin client + service skeleton (125 LOC, cloc) |
 | `integration/README.md` | How a Moto engineer wires it in |
 
 ### 4. Outreach drafts (`docs/oem-pitch/outreach-drafts/`) — ready to copy-paste
@@ -85,27 +86,31 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
 - Backend just got the compute.py fix redeployed. The dashboard now reads from honest data.
 - I started recording, then stopped because the dashboard still showed the stale 1,904 ms number from before the redeploy — the recording would have shown an inflated stat as the first impression. That was the right call.
 - **Next time we resume:**
-  1. Hit `POST https://aol-api-yfdwxezt.fly.dev/api/admin/reset` (or click "Reset demo data" in the dashboard top-right) to clear the routing log
+  1. Hit `POST https://aol-api-enqcpqaq.fly.dev/api/admin/reset` (or click "Reset demo data" in the dashboard top-right) to clear the routing log
   2. Run a fresh sequence of routings via the Compute Router tab (~10 features) so the log shows realistic decisions
   3. Start a new screen recording, walk through the 6 tabs in the order: Control Panel → Before / After → Compute Router → Why This Matters (skip Context Engine and Feedback Loop on a 90-sec take, they're nice-to-have)
   4. Stop, upload the .mp4, embed the URL in: top-level `README.md`, `pitch-deck.md` slide 5, `one-pager.md`, all 3 outreach drafts
   5. Commit + push as a single commit on this branch
 
-### B. AIDL/Kotlin LOC verification
-- Current count (just measured): IAolMiddleware.aidl = 78 lines (5 blank, 67 comment, **6 actual code**); AolClient.kt = 219 lines (22 blank, 42 comment, **155 actual code**). **Total semantic LOC: ~161.**
-- The pitch claim "drop in &lt; 150 LOC" is *slightly* over (off by 11). Two ways to fix:
-  - **Trim AolClient.kt** by ~15 lines (drop the optional Compose UI hint and shorten the example service binding) → claim becomes verifiable.
-  - **Update the claim** to "~160 LOC" or "&lt; 200 LOC" everywhere (2 files: `moto-software-lead-cold-email.md` line 38, `solo-founder-to-moto.md` line 103).
-- Either is fine; trimming is more honest. Skipped for now; will do on resume.
+### B. AIDL/Kotlin LOC verification — RESOLVED
+- The earlier 161-LOC estimate counted the `/* … */` end-of-file usage example
+  as code. A standard tool (`cloc`) doesn't — and once block comments are
+  excluded, the actual integration code is **131 LOC** (`AolClient.kt` 125 +
+  `IAolMiddleware.aidl` 6).
+- The pitch claim "drops in under 150 LOC" is verifiable as written. No
+  trimming or claim-rewording was needed.
+- Reproduce: [`docs/oem-pitch/integration/verify-loc.sh`](integration/verify-loc.sh).
+  The script exits non-zero the moment integration LOC stops being strictly
+  under 150, so any future addition will surface the regression in CI before
+  the pitch goes stale. Numbers are also cited in [`integration/README.md`](integration/README.md).
 
 ---
 
 ## What's pending you (5 minutes total)
 
-1. **Fill 3 placeholders** in the outreach drafts:
-   - `[YOUR LINKEDIN URL]` — your profile (or "remove this line if you don't want to include it")
-   - `[PATENT 1–4 TITLE]` — actual titles, OR remove those bullets and list patents only on the resume PDF
-   - `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]` — one line on the cover letters
+1. **All placeholders are filled.** Review and confirm the defaults are correct:
+   - LinkedIn: <https://linkedin.com/in/k-s-akshay-0707a42b6>
+   - Education line on Lenovo cover letters: "BCA, 2nd year, Bangalore North University, expected 2027"
 
 2. **Tue May 5, 4–5 PM IST** — click-send the Moto cold email to Mahmoud only (no mass-blasting; one quality send wins per your chart)
 
@@ -131,7 +136,7 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
    - `docs/oem-pitch/outreach-drafts/lenovo-mbg-ai-productization.md`
    - `docs/oem-pitch/outreach-drafts/lenovo-ai-cloud-bangalore.md`
 
-3. **Click around the live demo** (no install needed): <https://out-ujjsjvxm.devinapps.com>
+3. **Click around the live demo** (no install needed): <https://out-gwumfbso.devinapps.com>
 
 4. **The pitch you walk Moto through, in 90 seconds:**
    - "Two gaps in Moto AI today: memory doesn't persist; cloud spend is 100% (Google subsidy ends, then it's all on Lenovo's books)."

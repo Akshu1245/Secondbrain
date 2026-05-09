@@ -5,5 +5,7 @@ __pycache__/
 out/
 node_modules/
 data/runtime/
+apps/aol/api/app/data/runtime/
 *.log
 .DS_Store
+apps/aol/web/tsconfig.tsbuildinfo

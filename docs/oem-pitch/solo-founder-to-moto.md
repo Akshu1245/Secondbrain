@@ -10,8 +10,8 @@ and the door to walk through if the front-door pitch doesn't get a reply.
 > people they have never heard of. They hire people, and *those people*
 > ship products. So the best path is to **run two tracks in parallel** —
 > a partnership pitch (long shot, big upside) and a job pitch (short
-> shot, near-certain upside) — using the *same* repo + demo + patent
-> portfolio as the credential for both.
+> shot, near-certain upside) — using the *same* repo + demo + shipped
+> artefacts as the credential for both.
 >
 > Treat this doc as a campaign plan, not a wish list. Every step has a
 > deliverable and a deadline.
@@ -21,11 +21,11 @@ and the door to walk through if the front-door pitch doesn't get a reply.
 | Track | Outcome | Probability (solo, no intro) | Time to outcome |
 |---|---|---|---|
 | **A. Partnership** — Moto licenses or integrates AOL / Second Brain into Moto AI | Equity-style upside, mention in the keynote, real revenue | Low (~5%) | 6–18 months, lots of "no replies" |
-| **B. Job** — Moto / Lenovo MBG hires the founder into the AI team | Salary, learn the inside of the org, ship the same idea from inside | Medium (~30–40%) once you have a working demo + patents | 2–6 months |
+| **B. Job** — Moto / Lenovo MBG hires the founder into the AI team | Salary, learn the inside of the org, ship the same idea from inside | Medium (~30–40%) once you have a working demo + shipped artefacts | 2–6 months |
 
-You **run both at the same time**. The same repo, demo, patent list, and
-LinkedIn post serve both audiences. Never narrow to only one before you
-have at least one written reply.
+You **run both at the same time**. The same repo, demo, shipped
+artefacts, and LinkedIn post serve both audiences. Never narrow to only
+one before you have at least one written reply.
 
 ## What you already have (the credential pack)
 
@@ -33,8 +33,8 @@ This is the asset list you walk in with. Don't pitch without all five.
 
 1. **A working live demo, deployed on a public URL, that an OEM PM can
    click *right now*.**
-   - Demo: <https://out-ujjsjvxm.devinapps.com>
-   - API + Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>
+   - Demo: <https://out-gwumfbso.devinapps.com>
+   - API + Swagger: <https://aol-api-enqcpqaq.fly.dev/docs>
 2. **A repo with shipped code, not a README.**
    - <https://github.com/Akshu1245/Secondbrain>
    - 4 PRs (v0, v1, v2 of the memory layer, plus this AOL pitch PR).
@@ -43,9 +43,9 @@ This is the asset list you walk in with. Don't pitch without all five.
 4. **A native-integration stub.** A 250-line Kotlin reference + AIDL
    interface so a Moto Android engineer can map the demo to a sprint.
    - [`integration/`](./integration/)
-5. **4 provisional patents in adjacent AI territory.** The single
-   biggest credential a solo person can wave; reuse it for both tracks.
-   - List them by number + title in the resume / cold email.
+5. **End-to-end shipped artefacts.** Live deployed demo + API,
+   buildable APK, 53 passing pytest tests, GitHub Actions CI — the
+   credential a solo person can wave; reuse it for both tracks.
 
 ## Track A — Partnership pitch (the long shot)
 
@@ -100,8 +100,7 @@ work. The opening hook for Moto specifically:
 
 > *"Saw the Moto AI Catch-Me-Up / Remember-This memory gap. I built a
 > 90-second demo of the fix and an AIDL stub your Android team can drop
-> in in &lt; 150 LOC. 4 provisional patents in adjacent AI territory.
-> Worth 15 minutes?"*
+> in in &lt; 150 LOC. Live, buildable, open-source. Worth 15 minutes?"*
 
 Three rules:
 
@@ -190,7 +189,7 @@ or no reply.
 Write the resume around the credential pack:
 
 * **Top of page 1**: live URL of AOL demo, live URL of Second Brain
-  repo, list of 4 patent numbers + titles. Put it *above* education.
+  repo, link to the buildable APK. Put it *above* education.
 * **Bullet structure**: *"Built X. Shipped Y. Measured Z."* — never
   "responsible for" / "involved in".
 * **Sample bullet** (use this verbatim if true):

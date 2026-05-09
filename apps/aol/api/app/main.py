@@ -2,15 +2,25 @@
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from . import compute, context, feedback
+from . import compute, context, feedback, memory
 from . import filter as feature_filter
 from . import store, usage
+
+
+@asynccontextmanager
+async def _lifespan(_app: FastAPI):
+    state = store.get_state()
+    if not state["events"]:
+        usage.simulate(days=30)
+    yield
+
 
 app = FastAPI(
     title="AI Optimization Layer (AOL)",
@@ -20,6 +30,7 @@ app = FastAPI(
         "assistant. Filters features, suggests by context, routes compute "
         "between local + cloud, and learns from feedback. Rule-based, no ML."
     ),
+    lifespan=_lifespan,
 )
 
 app.add_middleware(
@@ -29,13 +40,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-def _ensure_seeded() -> None:
-    state = store.get_state()
-    if not state["events"]:
-        usage.simulate(days=30)
 
 
 # ── Module 1: Usage Tracker ───────────────────────────────────────────────
@@ -166,6 +170,35 @@ def get_feedback(limit: int = 100) -> dict[str, Any]:
     return {
         "entries": feedback.all_entries(limit),
         "improvement_suggestions": feedback.suggestions(),
+        "memory_suggestions": memory.memory_suggestions(),
+    }
+
+
+# ── Second Brain × AOL — memory-informed feedback ────────────────────────
+
+
+@app.get("/api/memory/recall")
+def memory_recall(feature_id: str, days: int = 90) -> dict[str, Any]:
+    """Episodic recall for a single feature, matching the Second Brain
+    companion product's ``/recall`` MCP endpoint shape. In production this
+    proxies to the SB service; for the demo it reads the same local state
+    the rest of AOL writes to so the integration runs end-to-end without
+    a second service."""
+    try:
+        return memory.recall(feature_id, days=days)
+    except KeyError:
+        raise HTTPException(404, f"unknown feature: {feature_id}")
+
+
+@app.get("/api/memory/suggestions")
+def memory_suggestions_endpoint(days: int = 90) -> dict[str, Any]:
+    """Memory-informed 'auto-hide this?' recommendations for the Control
+    Panel. Strictly stronger than the raw feedback-only suggestions:
+    requires durable evidence (≥ 2 disables or ≥ 2 negative ratings
+    spread over time) before a feature is flagged."""
+    return {
+        "window_days": days,
+        "suggestions": memory.memory_suggestions(days=days),
     }
 
 

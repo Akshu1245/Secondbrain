@@ -4,16 +4,22 @@ import { useEffect, useState, useCallback } from "react";
 import { api, type ComputeLog, type Feature, type Optimised, type Suggestion, type ComputeStat } from "@/lib/api";
 import { Card, Stat } from "@/components/Card";
 import { Pill } from "@/components/Pill";
+import { Architecture } from "@/components/Architecture";
+import { LiveStats } from "@/components/LiveStats";
+import { ScenarioPresets } from "@/components/ScenarioPresets";
+import { PitchCard } from "@/components/PitchCard";
+import { IntegrateCard } from "@/components/IntegrateCard";
+import { ForwardCard } from "@/components/ForwardCard";
 
 type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "pitch";
 
-const TABS: { id: Tab; label: string; sub: string }[] = [
-  { id: "control",      label: "Control Panel",  sub: "Toggle / prioritise features" },
-  { id: "context",      label: "Context Engine", sub: "What to surface right now" },
-  { id: "compute",      label: "Compute Router", sub: "Local vs cloud decisions" },
-  { id: "before-after", label: "Before / After", sub: "Optimisation impact, demo screen" },
-  { id: "feedback",     label: "Feedback Loop",  sub: "User-driven improvement" },
-  { id: "pitch",        label: "Why This Matters", sub: "OEM-pitch evidence" },
+const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
+  { id: "control",      n: 1, label: "Hide what nobody uses",          sub: "declutter the AI menu" },
+  { id: "context",      n: 2, label: "Show the right thing right now",  sub: "morning ≠ evening" },
+  { id: "compute",      n: 3, label: "Run on phone vs cloud",           sub: "free + private when possible" },
+  { id: "before-after", n: 4, label: "Before vs after AOL",             sub: "see the win, side-by-side" },
+  { id: "feedback",     n: 5, label: "Learn what the user hates",       sub: "never come back if disabled" },
+  { id: "pitch",        n: 6, label: "The pitch — numbers",              sub: "what to say to Mahmoud" },
 ];
 
 export default function Home() {
@@ -22,22 +28,48 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
       <Header />
-      <nav className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`rounded-xl border px-3 py-2 text-left transition ${
-              tab === t.id
-                ? "border-emerald-400/60 bg-emerald-400/10"
-                : "border-ink-800 bg-ink-900 hover:border-ink-700"
-            }`}
-          >
-            <div className="text-sm font-semibold text-gray-100">{t.label}</div>
-            <div className="text-xs text-gray-400">{t.sub}</div>
-          </button>
-        ))}
-      </nav>
+      <div className="mt-4">
+        <LiveStats />
+        <p className="mt-2 text-xs text-gray-500">
+          ↑ Live numbers from the demo backend. Click around in the tabs below — the numbers move.
+        </p>
+      </div>
+      <div className="mt-4">
+        <PitchCard />
+      </div>
+      <div className="mt-4 space-y-4">
+        <Architecture />
+        <ScenarioPresets />
+      </div>
+      <div className="mt-4">
+        <IntegrateCard />
+      </div>
+      <div className="mt-6">
+        <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          Six tabs · click each to see one thing AOL does
+        </h3>
+        <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`rounded-xl border px-3 py-2 text-left transition ${
+                tab === t.id
+                  ? "border-emerald-400/60 bg-emerald-400/10"
+                  : "border-ink-800 bg-ink-900 hover:border-ink-700"
+              }`}
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="rounded-md border border-emerald-400/40 bg-emerald-400/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
+                  {t.n}
+                </span>
+                <span className="text-sm font-semibold text-gray-100">{t.label}</span>
+              </div>
+              <div className="mt-1 text-xs text-gray-400">{t.sub}</div>
+            </button>
+          ))}
+        </nav>
+      </div>
 
       <div className="mt-6 space-y-6">
         {tab === "control"      && <ControlPanel />}
@@ -47,6 +79,12 @@ export default function Home() {
         {tab === "feedback"     && <FeedbackPanel />}
         {tab === "pitch"        && <PitchEvidence />}
       </div>
+      <div className="mt-8">
+        <ForwardCard />
+      </div>
+      <p className="mt-6 text-center text-xs text-gray-500">
+        Built by Akshay · <a className="hover:text-emerald-300" href="https://github.com/Akshu1245/Secondbrain" target="_blank" rel="noreferrer">github.com/Akshu1245/Secondbrain</a> · open-source, drop-in, no SDK
+      </p>
     </main>
   );
 }
@@ -54,21 +92,64 @@ export default function Home() {
 function Header() {
   return (
     <header className="rounded-2xl border border-ink-800 bg-gradient-to-br from-ink-900 via-ink-950 to-ink-900 p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-emerald-400/80">
-            AI Optimization Layer
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-emerald-300">
+              AI Optimization Layer
+            </span>
+            <span className="rounded-full border border-ink-700 bg-ink-900 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-gray-400">
+              v0.4 · live demo
+            </span>
+            <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-sky-300">
+              Second Brain × AOL wired
+            </span>
           </div>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-            AOL — middleware between user &amp; OEM AI
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+            Phones ship too much AI nobody uses. AOL fixes that.
           </h1>
-          <p className="mt-2 max-w-2xl text-sm text-gray-400">
-            Filters low-value AI features, surfaces context-relevant ones, routes
-            compute between on-device and cloud, and learns from user feedback.
-            Rule-based, observable, and built to drop in beside Moto AI / Galaxy AI / Bixby.
+          <p className="mt-2 max-w-3xl text-base text-gray-300">
+            One drop-in layer the OEM (<span className="text-gray-100">Moto</span>,{" "}
+            <span className="text-gray-100">Samsung</span>, <span className="text-gray-100">OnePlus</span>) ships beside its AI assistant. It{" "}
+            <span className="text-emerald-300">hides features the user never opens</span>,{" "}
+            <span className="text-emerald-300">runs the rest on-device</span> when it can (faster, free, private),
+            and <span className="text-emerald-300">remembers what the user disabled</span> so it doesn&rsquo;t come back.
+          </p>
+          <p className="mt-2 max-w-3xl text-sm text-gray-500">
+            ~131 lines of Kotlin · rule-based · live demo below · open-source on GitHub.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <a
+              href="https://github.com/Akshu1245/Secondbrain/tree/main/docs/oem-pitch"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-emerald-400/50 bg-emerald-400/10 px-3 py-1.5 text-sm font-medium text-emerald-200 hover:bg-emerald-400/20"
+            >
+              Read the pitch package →
+            </a>
+            <a
+              href="https://github.com/Akshu1245/Secondbrain"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-200 hover:border-emerald-400/40"
+            >
+              GitHub repo
+            </a>
+            <a
+              href="#how-it-fits-in"
+              className="rounded-lg border border-ink-700 bg-ink-900 px-3 py-1.5 text-sm text-gray-200 hover:border-emerald-400/40"
+            >
+              View architecture ↓
+            </a>
+          </div>
+        </div>
+        <div className="flex shrink-0 flex-col items-start gap-2 lg:items-end">
+          <ResetButton />
+          <p className="max-w-xs text-right text-[11px] text-gray-500">
+            Re-seeds 24 named Moto AI features + 30d of usage so every visitor
+            sees the same baseline.
           </p>
         </div>
-        <ResetButton />
       </div>
     </header>
   );
@@ -324,7 +405,7 @@ function ComputeRouter() {
             <select
               value={pick}
               onChange={(e) => setPick(e.target.value)}
-              className="rounded-lg border border-ink-700 bg-ink-950 px-3 py-2 text-sm min-w-[18rem]"
+              className="w-full rounded-lg border border-ink-700 bg-ink-950 px-3 py-2 text-sm sm:min-w-[18rem] sm:w-auto"
             >
               {features.map((f) => (
                 <option key={f.id} value={f.id}>
@@ -446,7 +527,7 @@ function FeedbackPanel() {
   const [pick, setPick] = useState("");
   const [rating, setRating] = useState("ok");
   const [comment, setComment] = useState("");
-  const [list, setList] = useState<{ entries: any[]; improvement_suggestions: any[] }>({ entries: [], improvement_suggestions: [] });
+  const [list, setList] = useState<{ entries: any[]; improvement_suggestions: any[]; memory_suggestions: any[] }>({ entries: [], improvement_suggestions: [], memory_suggestions: [] });
 
   const reload = useCallback(async () => {
     const [all, fb] = await Promise.all([api.features(), api.feedbackList()]);
@@ -513,6 +594,53 @@ function FeedbackPanel() {
               </li>
             ))}
           </ul>
+        </Card>
+      )}
+
+      {(list.memory_suggestions?.length ?? 0) > 0 && (
+        <Card
+          title="Memory-informed recommendations"
+          subtitle={"Second Brain × AOL — durable patterns in the last 90d, not flaps on a single bad day"}
+        >
+          <ul className="space-y-2">
+            {list.memory_suggestions.map((s: any, i: number) => (
+              <li
+                key={i}
+                className={
+                  "rounded-xl px-4 py-3 " +
+                  (s.confidence === "high"
+                    ? "border border-rose-500/40 bg-rose-500/5"
+                    : "border border-sky-500/30 bg-sky-500/5")
+                }
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  <Pill tone={s.confidence === "high" ? "off" : "on"}>
+                    {s.confidence === "high" ? "high confidence" : "medium confidence"}
+                  </Pill>
+                  <span className="font-medium">{s.name}</span>
+                  <span className="text-xs text-gray-400">
+                    · disabled {s.signals.disable_count}× · negative ratings {s.signals.negative_ratings}
+                  </span>
+                </div>
+                <ul className="mt-2 space-y-0.5 text-xs text-gray-400">
+                  {s.evidence.map((e: string, j: number) => (
+                    <li key={j}>• {e}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-3 rounded-md border border-ink-800 bg-ink-900/40 p-3 text-xs text-gray-400">
+            <span className="font-medium text-gray-300">How this wires up:</span>{" "}
+            AOL&apos;s Feedback Loop (Module 6) queries the Second Brain companion for
+            per-feature episodic history — every toggle-off, every rating, every
+            context hide in the last <span className="font-mono">{90}</span> days. A
+            recommendation surfaces here only when there are at least two durable
+            signals, so a single annoyed tap never produces a &quot;auto-hide this?&quot;
+            prompt. In production the backend proxies to the Second Brain MCP
+            endpoint <span className="font-mono">/recall?feature_id=…&amp;days=90</span>;
+            the demo reads the same local state AOL writes.
+          </div>
         </Card>
       )}
 

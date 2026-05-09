@@ -13,8 +13,8 @@ Middleware that sits between the user and the OEM AI assistant. Cuts cloud-AI
 spend, hides feature clutter, surfaces context-relevant capabilities, and ships
 a Control Panel users actually own.
 
-Live demo: <https://out-ujjsjvxm.devinapps.com>
-API: <https://aol-api-yfdwxezt.fly.dev/docs>
+Live demo: <https://out-gwumfbso.devinapps.com>
+API: <https://aol-api-enqcpqaq.fly.dev/docs>
 
 ---
 
@@ -70,7 +70,7 @@ real OEM AI via an Android Service (AIDL stub in `docs/integration/`).
 
 ## Slide 5 — Demo metrics (from the deployed MVP, not slides)
 
-Numbers below are **live** from <https://out-ujjsjvxm.devinapps.com>.
+Numbers below are **live** from <https://out-gwumfbso.devinapps.com>.
 
 - **Surface size: 24 → 17 features (–25%)** after AOL applies the filter.
 - **Compute router on a sample run of 11 invocations:** ~45% local,
@@ -124,7 +124,6 @@ Gemini / Perplexity contracts.
 
 **Why this team**
 
-- 4 provisional AI patents in adjacent territory.
 - Already shipped `Second Brain` v0 → v2 (memory consolidation, decay,
   multi-hop recall, episodic provenance) on a public repo with 3 PRs and 7+
   commits before this pitch landed. (Ask for the repo URL — it's not the empty
@@ -168,8 +167,8 @@ bloated and cost less to run.
 
 That's AOL.
 
-- Live demo: <https://out-ujjsjvxm.devinapps.com>
-- API: <https://aol-api-yfdwxezt.fly.dev/docs>
+- Live demo: <https://out-gwumfbso.devinapps.com>
+- API: <https://aol-api-enqcpqaq.fly.dev/docs>
 - Integration stub: [`docs/oem-pitch/integration/`](./integration/)
 - One-pager: [`docs/oem-pitch/one-pager.md`](./one-pager.md)
 - OEM targets + outreach: [`docs/oem-pitch/oem-targets.md`](./oem-targets.md), [`docs/oem-pitch/oem-outreach.md`](./oem-outreach.md)
