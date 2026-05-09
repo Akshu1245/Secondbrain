@@ -28,28 +28,33 @@ mid-morning US Central (Mahmoud's tz).
 
 ## Cold email — primary version (3 sentences, ≤ 120 words)
 
-> Subject: 45% of Moto AI calls on-device — 90-sec demo + AIDL stub
+> Subject: Moto AI memory — the persistence + routing layer it's missing (90-sec demo)
 
 > Hi Mahmoud,
 >
-> Built a working middleware that routes ~45% of Moto AI invocations on-
-> device (Catch Me Up, Smart Reply, Remember This stay local; Pay
-> Attention + Image Studio stay cloud), and an AIDL + Kotlin reference
-> your team can drop in in **131 LOC**. At Moto's 14.5 M phones / quarter
-> that's ~$1.6 M/yr in cloud bills, before counting battery + churn.
-> Per-feature mapping:
-> <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md>.
-> Live demo: <https://out-gwumfbso.devinapps.com> · Repo + buildable APK:
-> <https://github.com/Akshu1245/Secondbrain>.
+> The Catch-Me-Up / Pay-Attention / Remember-This surface in Moto AI
+> is the right product direction — it's the persistence underneath
+> that's currently missing (sessions don't carry, signals don't
+> reinforce). I built **Second Brain** — a memory + routing layer
+> that plugs into the OEM AI assistant and (a) keeps Catch-Me-Up
+> coherent across sessions, (b) routes ~45% of inferences on-device
+> per call, (c) ships as a 131-line MVP integration shim (AIDL +
+> Kotlin). At Moto's 14.5 M phones / quarter that's ~$1.6 M/yr in
+> cloud-AI bills before counting battery + churn.
 >
-> Solo founder, ships fast — built and deployed the demo, API,
-> Android shim, and 53-test pytest suite end-to-end before this email.
+> Live demo: <https://out-gwumfbso.devinapps.com> ·
+> Per-feature mapping at Moto's scale:
+> <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md> ·
+> Repo + buildable APK: <https://github.com/Akshu1245/Secondbrain>.
+>
+> Solo founder — demo, API, Android shim, and 53-test pytest suite
+> are end-to-end deployed before this email.
 >
 > Worth 15 minutes on the calendar?
 >
 > Best,
 > **K S Akshay** · Founder, Rashi Technologies
-> `rashisolutions1245@gmail.com` · `[YOUR LINKEDIN URL]`
+> `rashisolutions1245@gmail.com` · <https://linkedin.com/in/k-s-akshay-0707a42b6>
 
 *If sending to a different target from the table above, change "Mahmoud" to that recipient's first name. **Do not** keep "Mahmoud" if you're sending to Thomas / Eric / Edward.*
 
@@ -57,11 +62,11 @@ mid-morning US Central (Mahmoud's tz).
 
 ## LinkedIn DM version (≤ 300 chars — fits the connection-request limit)
 
-> Hi Mahmoud — built a middleware that routes ~45% of Moto AI calls
-> on-device + an AIDL stub in 131 LOC. Per-feature mapping +
-> $/month at Moto's Q2 25 scale:
-> github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md.
-> Live: out-gwumfbso.devinapps.com. Worth 15 min? — Akshay
+> Hi Mahmoud — built Second Brain, the persistence + routing layer
+> the Catch-Me-Up / Remember-This surface is missing. ~45% of calls
+> on-device, 131-LOC AIDL shim, live demo + buildable APK:
+> out-gwumfbso.devinapps.com ·
+> github.com/Akshu1245/Secondbrain. Worth 15 min? — Akshay
 
 (287 chars including spaces. Drop "+ an AIDL stub for Android in &lt;150
 LOC" if your target's profile suggests they'd rather see the product
@@ -141,9 +146,13 @@ audit doc — so it isn't a nag.)
       still live the morning of send. (It's deployed on Devin Apps —
       free tier; if it's down, redeploy from the dashboard.)
 - [ ] Confirm the repo URL <https://github.com/Akshu1245/Secondbrain>
-      is public (it is) and that the README on `main` describes both
-      AOL and Second Brain (it does).
-- [ ] Replace `[YOUR LINKEDIN URL]`.
+      is public (it is) and that the README on `main` leads with the
+      Second Brain headline (it does).
+- [ ] (Optional) Confirm the LinkedIn URL
+      <https://linkedin.com/in/k-s-akshay-0707a42b6> resolves to your
+      profile.
+- [ ] Run `bash docs/oem-pitch/DEMO-WARMUP.sh` 2-3 minutes before
+      sending to wake the free-tier hosts.
 - [ ] **Do not CC anyone.** Single recipient. If you want a second
       person in the loop, send a separate email — never CC on the
       first send.

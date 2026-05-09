@@ -70,11 +70,12 @@ Referral note (200 chars):
       at <https://jobs.lenovo.com>. If either is closed, find the
       nearest equivalent on the same team and update the cover letter
       subject line + opening.
-- [ ] Replace `[YOUR LINKEDIN URL]` with your own profile (any valid
-      `https://linkedin.com/in/...` link).
+- [ ] (Optional) Confirm <https://linkedin.com/in/k-s-akshay-0707a42b6>
+      resolves to your profile.
 
-- [ ] Replace `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]`
-      with a single-line credentials summary.
+- [ ] (Optional) Update the education line if the placeholder default
+      ("BCA, 2nd year, Bangalore North University, expected 2027") is
+      not exactly right.
 - [ ] Send a test email to yourself first to confirm formatting in
       Gmail / Outlook (markdown does NOT render — copy-paste the
       rendered version, or convert to plaintext).

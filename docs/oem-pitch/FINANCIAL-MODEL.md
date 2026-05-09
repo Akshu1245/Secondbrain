@@ -1,4 +1,4 @@
-# Plexus — Financial Model
+# Second Brain — Financial Model
 
 Conservative, formula-driven, single-page. All assumptions sourced or
 flagged. No hand-waving.
@@ -11,8 +11,8 @@ flagged. No hand-waving.
 |---|---|---|---|
 | `D` | Devices in the deployed fleet (per quarter) | **14.5 M** | TechInsights, Sep 2025 — Lenovo-Motorola Q2 2025 shipments. |
 | `C` | AI calls per device per day | **6** | Conservative. Internal seed-data avg = 8.2; Galaxy AI public benchmarks suggest 12–18. We use 6. |
-| `R₀` | % of AI calls routed to cloud **today** (without Plexus) | **75 %** | Industry default. Galaxy AI / Pixel AI both ship cloud-first dispatch unless explicitly opted into on-device. |
-| `R₁` | % of AI calls routed to cloud **with Plexus** | **45 %** | Live demo measured value across the 24-feature seed catalogue. |
+| `R₀` | % of AI calls routed to cloud **today** (without Second Brain) | **75 %** | Industry default. Galaxy AI / Pixel AI both ship cloud-first dispatch unless explicitly opted into on-device. |
+| `R₁` | % of AI calls routed to cloud **with Second Brain** | **45 %** | Live demo measured value across the 24-feature seed catalogue. |
 | `H` | % of feature calls suppressed by the Feature Prioritizer (never fire at all) | **20 %** | Conservative. Live demo shows 25 % surface reduction; some of those features still fire if user navigates to them, so we discount by 5 pp. |
 | `I_low` | Cost per cloud inference, low end | **$0.0008** | Public commodity-tier inference pricing. Floor case. |
 | `I_mid` | Cost per cloud inference, mid case | **$0.002** | Realistic mobile-AI per-call cost (e.g., Gemini Nano fallback, Samsung Bixby cloud calls). |
@@ -30,7 +30,7 @@ Calls_total = D × C × 365
             = 31.76 B / year
 ```
 
-Calls that actually fire after Plexus's Feature Prioritizer:
+Calls that actually fire after Second Brain's Feature Prioritizer:
 
 ```
 Calls_fired = Calls_total × (1 − H)
@@ -38,7 +38,7 @@ Calls_fired = Calls_total × (1 − H)
             = 25.41 B / year
 ```
 
-Cloud calls **today** (no Plexus):
+Cloud calls **today** (no Second Brain):
 
 ```
 Cloud_before = Calls_total × R₀
@@ -46,7 +46,7 @@ Cloud_before = Calls_total × R₀
              = 23.82 B / year
 ```
 
-Cloud calls **with Plexus**:
+Cloud calls **with Second Brain**:
 
 ```
 Cloud_after = Calls_fired × R₁
@@ -107,14 +107,14 @@ Two-component, aligned to the OEM's incentive to drive the saving:
 
 | Component | Amount | Logic |
 |---|---|---|
-| **Base licence** | $0.05 / device / year | Recovers Plexus engineering, support, policy authoring, audit-log certification. |
-| **Shared savings** | 15–25 % of audited cloud-spend delta, post-pilot | Pure variable. Plexus only earns more if the OEM's bill goes down more. |
+| **Base licence** | $0.05 / device / year | Recovers Second Brain engineering, support, policy authoring, audit-log certification. |
+| **Shared savings** | 15–25 % of audited cloud-spend delta, post-pilot | Pure variable. Second Brain only earns more if the OEM's bill goes down more. |
 
 At mid-case ($1.71 / device / year saving):
 
 ```
 OEM_keeps    = 75–85 % × $1.71 = $1.28 – $1.45 / device / year
-Plexus_earns = 15–25 % × $1.71 + $0.05 base
+Second Brain_earns = 15–25 % × $1.71 + $0.05 base
              = $0.31 – $0.48 / device / year
 ```
 
@@ -126,7 +126,7 @@ auditable from the per-call decision log.
 
 ## Pilot economics
 
-| Phase | Length | Cost to OEM | What Plexus delivers |
+| Phase | Length | Cost to OEM | What Second Brain delivers |
 |---|---|---|---|
 | **Pilot** | 90 days, 250 K device cohort | **Capped fixed fee** (six-figure USD) | Live deployment, audit log, full delta vs control cohort, cost recovery report. |
 | **Production** | 12-month renewal | Base licence + shared savings (above) | Production policy registry, anonymized cross-OEM learning, quarterly policy refresh. |
@@ -151,7 +151,7 @@ above and will compound in the OEM's favour:
   less of your battery for AI".
 * **Compliance cost avoidance** under EU AI Act, DPDP, SB-1047. A
   per-call audit log is a five-figure line item in legal review even
-  if Plexus is free.
+  if Second Brain is free.
 * **Optionality value** of a clean orchestration substrate for
   wearables / automotive / laptops over the 24-month horizon.
 

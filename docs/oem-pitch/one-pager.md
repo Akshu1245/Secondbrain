@@ -1,4 +1,4 @@
-# Plexus — AI Orchestration Layer for OEMs
+# Second Brain — the memory + routing layer for OEM AI
 
 **One page. Read in 90 seconds.**
 
@@ -6,12 +6,15 @@
 
 ## Executive summary
 
-Plexus is a vendor-neutral AI orchestration middleware for smartphone
-OEMs. It sits between the OEM AI assistant and its compute backends
-and decides — per call — which features reach the user and whether
-inference runs on-device or in the cloud. **Outcome: $9–24 M / year
-of recoverable cloud spend on a 14.5 M-shipment quarterly fleet, via
-a 131-line MVP integration shim.**
+Second Brain is a memory + routing layer that plugs into an OEM AI
+assistant (Moto AI · Galaxy AI · OxygenOS AI · Nothing AI). It gives
+the assistant two primitives the first-party stack ships half-built:
+(1) **persistent memory** — the layer underneath Catch-Me-Up,
+Pay-Attention, and Remember-This that currently doesn't carry sessions
+or reinforce signals — and (2) **per-call routing** that decides
+on-device vs cloud per inference, with full audit trail. **Outcome:
+$9–24 M / year of recoverable cloud spend on a 14.5 M-shipment
+quarterly fleet, via a 131-line MVP integration shim.**
 
 ---
 
@@ -37,10 +40,11 @@ auditable per call:
 
 ```
        USER → OEM ASSISTANT → ┌─────────────────────────────┐
-                              │  PLEXUS                     │
+                              │  SECOND BRAIN               │
+                              │   ├── Memory Layer          │
                               │   ├── Context Engine        │
                               │   ├── Feature Prioritizer   │
-                              │   ├── AI Router             │
+                              │   ├── AI Router ("AOL")     │
                               │   ├── Telemetry Engine      │
                               │   └── Learning Loop         │
                               └────────┬───────────┬────────┘
@@ -50,8 +54,8 @@ auditable per call:
 
 * **Integration:** AIDL contract (38 LOC) + Kotlin client (93 LOC) =
   131-line MVP integration shim. Drop in, bind once, wrap every AI
-  call. Fail-safe fallback if Plexus is uninstalled.
-* **Deployment:** Plexus ships as a separable APK. No model
+  call. Fail-safe fallback if Second Brain is uninstalled.
+* **Deployment:** Second Brain ships as a separable APK. No model
   dependencies, no SDK, no third-party telemetry.
 * **Compliance:** Per-call audit log designed for EU AI Act, DPDP,
   SB-1047 review without ML expertise.
@@ -68,7 +72,7 @@ auditable per call:
 | Cloud calls eliminated / yr | 12.39 B |
 | Annual cost recovery (low / mid / high) | **$9.9 M / $24.8 M / $62.0 M** |
 | OEM integration cost | ~131 LOC, one sprint |
-| Plexus pricing | $0.05 / device / yr base + 15–25 % shared savings |
+| Second Brain pricing | $0.05 / device / yr base + 15–25 % shared savings |
 | Payback period | < 1 quarter post-pilot |
 
 Full formulas in `FINANCIAL-MODEL.md`. Live measurements at

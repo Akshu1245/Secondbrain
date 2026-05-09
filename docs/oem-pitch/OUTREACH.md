@@ -1,28 +1,19 @@
-# Plexus — Outreach Package
+# Second Brain — Outreach Package
 
 Refined, enterprise-grade outbound assets. Use as-is or template
 inside.
 
 ---
 
-## 1. Naming — final shortlist
+## 1. Naming
 
-The product currently ships under the working name "AOL" (AI
-Optimization Layer). That name has a fatal brand collision with
-America Online and reads dated. Replace before any external send.
-
-Ranked recommendation, after weighing OEM positioning, trademark
-defensibility, domain availability, and pronunciation across markets:
-
-| # | Name | Why it works | Risk |
-|---|---|---|---|
-| **1** | **Plexus** | Neural plexus → orchestration of many AI nerves. Premium, technical, ownable as `plexus.ai` / `plexus-os`. Pairs well with "Plexus Layer" / "Plexus OS". | Generic word; needs a strong wordmark. |
-| 2 | **Conduit** | The conduit between user and AI surface. Clean, descriptive, OEM-grade. | Salesforce uses "Conduit" in some products — secondary collision risk. |
-| 3 | **Inferna** | Coined: inference + native. Maximum trademark defensibility. | Slight pharma feel; needs careful design treatment. |
-| 4 | **Locus** | Focal point of AI on a device. Short, clean. | Common word; trademark on tech is partly occupied. |
-| 5 | **Ravel** | Orchestrate / unravel complexity. Clean, ownable. | Less obvious meaning; takes a tagline to land. |
-
-**Working name across the rest of this package: Plexus.**
+The product brand is **Second Brain**. The repository (`Secondbrain`)
+carries the same name. Earlier sessions explored an "AOL / Plexus /
+Conduit / Inferna" alternate-naming track for the OEM-facing
+middleware framing; that exploration is retired. **AOL** survives
+only as an internal codename for the routing subsystem inside
+Second Brain (`apps/aol/` in the codebase, the "AI Router" module
+in the architecture diagram).
 
 ---
 
@@ -45,11 +36,11 @@ demo footer.
 
 ## 3. One-line elevator pitch
 
-> Plexus is the AI orchestration layer for smartphones — a vendor-
-> neutral middleware that decides, per call, which AI features reach
-> the user and whether they run on-device or in the cloud, recovering
-> $9–24 M / year in cloud spend per 14.5 M-device fleet through a
-> 131-line integration shim.
+> Second Brain is the memory + routing layer that plugs into an OEM
+> AI assistant — it gives Catch-Me-Up / Pay-Attention / Remember-This
+> the persistence underneath them, routes ~45 % of inferences
+> on-device per call, and recovers $9–24 M / year in cloud spend per
+> 14.5 M-device fleet through a 131-line integration shim.
 
 ---
 
@@ -58,27 +49,29 @@ demo footer.
 For: Mahmoud Ebrahim, VP, MBG Software Development at Motorola
 Mobility (or equivalent named target). Send Tuesday 4–5 PM IST.
 
-> **Subject:** Plexus — recovering $9–24 M / yr of Moto AI cloud
+> **Subject:** Second Brain — recovering $9–24 M / yr of Moto AI cloud
 > spend with a 131-line shim
 >
 > Hi Mahmoud,
 >
-> Building Plexus, an AI orchestration layer for OEMs. Live demo,
-> deployed today.
+> Building Second Brain — the memory + routing layer for OEM AI.
+> Live demo, deployed today.
 >
-> The premise: Moto AI ships a 24-feature surface, but the median
-> user disables half of those features within 30 days, and the
-> assistant still routes every retained call to cloud by default.
-> Plexus is the missing primitive between the assistant and its
-> compute backends — it filters the surface against per-user
-> behaviour, routes inference local-first, and writes a per-call
-> audit log for EU AI Act / DPDP / SB-1047 compliance.
+> The premise: the Catch-Me-Up / Pay-Attention / Remember-This
+> surface in Moto AI is the right product direction — it's the
+> persistence underneath that's missing. Sessions don't carry,
+> signals don't reinforce, and every retained call routes cloud by
+> default. Second Brain is the missing primitive between the
+> assistant and its compute backends — it persists user signals
+> across sessions, filters the surface against per-user behaviour,
+> routes inference local-first, and writes a per-call audit log for
+> EU AI Act / DPDP / SB-1047 compliance.
 >
 > On a 14.5 M-shipment quarter, the conservative model (`I = $0.002`,
 > `R₀ = 75 % → R₁ = 45 %`) recovers **$9–24 M / year** in cloud
 > inference spend. Integration is a **131-line MVP shim**: AIDL
 > contract + Kotlin client, no SDK, no model dependency, fail-safe
-> fallback if the Plexus APK is uninstalled.
+> fallback if the Second Brain APK is uninstalled.
 >
 > Live demo: <https://out-gwumfbso.devinapps.com/>
 > Repo + buildable APK: <https://github.com/Akshu1245/Secondbrain>
@@ -91,7 +84,7 @@ Mobility (or equivalent named target). Send Tuesday 4–5 PM IST.
 > Best,
 > **K S Akshay**
 > Founder, Rashi Technologies
-> `rashisolutions1245@gmail.com` · `[YOUR LINKEDIN URL]`
+> `rashisolutions1245@gmail.com` · <https://linkedin.com/in/k-s-akshay-0707a42b6>
 
 ---
 
@@ -101,12 +94,12 @@ For: infrastructure-AI partner at a Tier-1 / Tier-2 fund (a16z infra,
 Lightspeed AI, Battery, Foundation, Accel India). Send Tuesday or
 Wednesday morning local.
 
-> **Subject:** Plexus — orchestration layer for OEM AI · live demo,
+> **Subject:** Second Brain — orchestration layer for OEM AI · live demo,
 > 14.5 M-fleet ROI model
 >
 > Hi [Partner first name],
 >
-> Plexus is the AI orchestration layer for smartphone OEMs — a
+> Second Brain is the AI orchestration layer for smartphone OEMs — a
 > vendor-neutral middleware that recovers $9–24 M / year of cloud
 > inference spend per 14.5 M-device fleet through a 131-line
 > integration shim.
@@ -117,7 +110,7 @@ Wednesday morning local.
 >    Pixel AI are all moving from "an app" to "an OS service." None
 >    of them ships the orchestration primitive — context engine,
 >    feature prioritizer, AI router, telemetry, learning loop — as a
->    standalone, vendor-neutral layer. Plexus is.
+>    standalone, vendor-neutral layer. Second Brain is.
 >
 > 2. **The economics are concrete.** Live demo, formula-driven
 >    financial model, conservative / mid / high tiers. 14.5 M-device
@@ -139,7 +132,7 @@ Wednesday morning local.
 > Best,
 > **K S Akshay**
 > Founder, Rashi Technologies
-> `rashisolutions1245@gmail.com` · `[YOUR LINKEDIN URL]`
+> `rashisolutions1245@gmail.com` · <https://linkedin.com/in/k-s-akshay-0707a42b6>
 
 ---
 
@@ -152,7 +145,7 @@ For the cold-email-attached video, or for a live walkthrough on a
 >
 > "Smartphone OEMs ship 24 AI features and users disable most of
 > them in 30 days — but every call still routes to cloud by
-> default. Plexus is the orchestration layer that fixes that."
+> default. Second Brain is the orchestration layer that fixes that."
 >
 > **0:10–0:25 · Problem**
 >
@@ -163,7 +156,7 @@ For the cold-email-attached video, or for a live walkthrough on a
 >
 > **0:25–0:45 · Solution**
 >
-> [Click into tab 1: "Hide what nobody uses".] "Plexus's Feature
+> [Click into tab 1: "Hide what nobody uses".] "Second Brain's Feature
 > Prioritizer hides the long tail — features with under 3 events
 > per 30 days, outside the user's priority categories." [Click
 > into tab 3: "Run on phone vs cloud".] "The AI Router decides
@@ -195,7 +188,7 @@ For the cold-email-attached video, or for a live walkthrough on a
 
 ## 7. LinkedIn DM version (≤ 300 chars)
 
-> Hi Mahmoud — built Plexus, an orchestration layer for OEM AI.
+> Hi Mahmoud — built Second Brain, an orchestration layer for OEM AI.
 > Filters surface, routes local-first, audit log per call.
 > 131-line shim, $9–24 M/yr recoverable cloud spend at Moto's
 > 14.5 M-shipment scale. Live demo + APK:
@@ -205,7 +198,7 @@ For the cold-email-attached video, or for a live walkthrough on a
 
 ## 8. Investor follow-up (T+10 days, no reply)
 
-> **Subject:** Re: Plexus — adding the OEM pilot LOI to the package
+> **Subject:** Re: Second Brain — adding the OEM pilot LOI to the package
 >
 > Hi [Partner first name],
 >
@@ -228,7 +221,7 @@ For the cold-email-attached video, or for a live walkthrough on a
 
 ## 9. Demo invite — once a reply lands
 
-> Subject: Plexus walkthrough · 20 min · [date] · agenda below
+> Subject: Second Brain walkthrough · 20 min · [date] · agenda below
 >
 > [Recipient first name],
 >
@@ -254,8 +247,8 @@ For the cold-email-attached video, or for a live walkthrough on a
 
 ## 10. What to do today
 
-1. **Pick the brand name.** Default Plexus; alternates Conduit,
-   Inferna, Locus, Ravel. Final selection unblocks every other asset.
+1. **Brand is locked: Second Brain.** Repo, demo, cold email, cover
+   letters all updated.
 2. **Fill the two remaining placeholders**: LinkedIn URL (every
    draft) and education line (Lenovo cover letters only).
 3. **Send the OEM cold email** to Mahmoud Tuesday 4–5 PM IST.

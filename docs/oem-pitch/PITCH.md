@@ -1,9 +1,12 @@
-# Plexus — AI Orchestration Layer for OEMs
+# Second Brain — the memory + routing layer for OEM AI
 
-> **Working name: Plexus.** The product is a vendor-neutral AI
-> orchestration middleware for smartphone OEMs. The codebase still uses
-> the legacy "AOL" prefix; that rename is a tracked follow-up. Final
-> brand to be selected from the shortlist in `OUTREACH.md`.
+> **Brand: Second Brain.** The product is a memory + routing layer
+> that plugs into an OEM AI assistant and provides two primitives the
+> first-party stack ships half-built: persistent memory (the layer
+> underneath Catch-Me-Up / Pay-Attention / Remember-This) and per-call
+> routing (on-device vs cloud per inference, audited). The codebase
+> still uses the legacy `aol/` prefix for the routing subsystem;
+> that rename is a tracked follow-up.
 >
 > **Status:** Prototype, live, demoable. **Audience:** OEM AI / Software
 > leadership and infrastructure-AI investors.
@@ -18,7 +21,7 @@ infrastructure for assistant features that **most users disable within
 of whether the user opens it, and every inference defaults to cloud
 because the dispatch logic is hard-wired into the assistant itself.
 
-**Plexus is a thin orchestration layer** that sits between the OEM AI
+**Second Brain is a thin orchestration layer** that sits between the OEM AI
 assistant and its compute backends. It decides, per call, whether a
 feature is worth surfacing to this user right now, and whether the
 inference should run on-device or in the cloud. It is rule-based,
@@ -105,9 +108,9 @@ it closes in 12–18 months.**
 
 ---
 
-## 4. The Solution — Plexus
+## 4. The Solution — Second Brain
 
-Plexus is a system-layer orchestration middleware. It is not a model.
+Second Brain is a system-layer orchestration middleware. It is not a model.
 It is not a framework. It does not change how the OEM's existing AI
 features work. It changes **which calls are made, which device they
 run on, and which features reach the user in the first place.**
@@ -165,9 +168,9 @@ without ML expertise.
 
 * **Integration surface:** AIDL Binder, three RPCs (`filterSurface`,
   `routeCompute`, `recordOutcome`).
-* **Deployment model:** Plexus ships as a separable APK installed
-  alongside the OEM assistant. The assistant calls into Plexus via
-  IPC; if Plexus is uninstalled, the assistant falls back to
+* **Deployment model:** Second Brain ships as a separable APK installed
+  alongside the OEM assistant. The assistant calls into Second Brain via
+  IPC; if Second Brain is uninstalled, the assistant falls back to
   unfiltered surface and cloud routing.
 * **State store:** local key-value, encrypted at rest, never leaves
   the device unless the OEM opts into pseudonymized fleet telemetry.
@@ -206,7 +209,7 @@ prioritization:
 6. **Monetization optionality.** A clean orchestration layer is the
    foundation for tiered AI (free vs paid features), partner AI
    surfacing, and policy-controlled enterprise SKUs. None of these
-   require Plexus, but all of them get easier when it is in place.
+   require Second Brain, but all of them get easier when it is in place.
 
 ---
 
@@ -214,23 +217,23 @@ prioritization:
 
 The honest answer to this objection.
 
-* **Time-to-deploy.** Plexus is shipping today. The internal version
+* **Time-to-deploy.** Second Brain is shipping today. The internal version
   is at minimum 2 quarters behind because every OEM has to re-derive
   the feature catalogue, the routing rules, the telemetry schema, and
   the policy abstraction from scratch — all parts that are
   cross-OEM, not cross-OEM-differentiating.
 
-* **Vendor neutrality.** Plexus does not require Qualcomm vs MediaTek
+* **Vendor neutrality.** Second Brain does not require Qualcomm vs MediaTek
   vs Tensor preference. Internal builds are typically tied to one
   silicon partner's NPU primitives and become migration debt the
   moment that silicon changes.
 
-* **Cross-OEM learning.** Plexus aggregates anonymized policy
+* **Cross-OEM learning.** Second Brain aggregates anonymized policy
   effectiveness across OEM tenants. Each OEM's defaults improve from
   the others' fleet behaviour — a benefit no single OEM's internal
   build can replicate.
 
-* **Modular middleware.** Plexus does not own the user; it does not
+* **Modular middleware.** Second Brain does not own the user; it does not
   own the model; it does not own the assistant brand. It owns
   exactly one thing — the orchestration policy — which is the
   smallest defensible surface that still produces the
@@ -239,14 +242,14 @@ The honest answer to this objection.
 * **Experimentation velocity.** A vendor-neutral middleware can A/B
   test policies across OEM tenants in days. An internal build is
   bound by the OEM's release train (quarterly OTAs, regional
-  rollout). Plexus ships policies via signed config, not OTA.
+  rollout). Second Brain ships policies via signed config, not OTA.
 
 * **Reusable optimization stack.** Same orchestration substrate
   generalizes to laptops, wearables, automotive infotainment. Each of
   those will need it within 24 months. Internal builds do not
   generalize.
 
-The build-vs-buy ROI inverts in Plexus' favour at any deployment
+The build-vs-buy ROI inverts in Second Brain' favour at any deployment
 scale above 5 M devices.
 
 ---
@@ -268,7 +271,7 @@ Pricing model the OEM will see:
   audit data and can model the live delta on their own fleet.
 * **Production:** $0.05 / device / year base licence + 15–25 % share
   of audited cloud-spend delta. The shared-savings tier aligns
-  Plexus' incentive with the CFO's incentive — Plexus only earns
+  Second Brain' incentive with the CFO's incentive — Second Brain only earns
   more if the OEM's bill goes down more.
 
 Payback period at the conservative tier: **< 1 quarter** post-pilot.
@@ -329,10 +332,10 @@ sprint for a single Android engineer.
 ```
 Step 1.  Drop two files into the OEM assistant module:
          - IAolMiddleware.aidl  (38 lines, contract)
-         - PlexusClient.kt      (93 lines, client + fallback)
+         - Second BrainClient.kt      (93 lines, client + fallback)
 
 Step 2.  Bind once, in Application:
-         val plexus = PlexusClient(ctx).also { it.bind() }
+         val plexus = Second BrainClient(ctx).also { it.bind() }
 
 Step 3.  Wrap every AI invocation at three call sites:
          val visible = plexus.filterSurface(allFeatures, ctx)     // surface
@@ -344,7 +347,7 @@ Step 4.  Verify:
          adb install -r app-debug.apk
 ```
 
-The client is fail-safe: if the Plexus APK is uninstalled or
+The client is fail-safe: if the Second Brain APK is uninstalled or
 unreachable, every call returns the unfiltered surface and the cloud
 route, preserving today's behaviour exactly.
 
@@ -360,10 +363,10 @@ route, preserving today's behaviour exactly.
 * **Encrypted state store** at rest. Keys derived from the device
   keystore.
 * **Compliance posture:** EU AI Act, DPDP (India), SB-1047 (CA) all
-  satisfied by default — Plexus's routing primitive is the
+  satisfied by default — Second Brain's routing primitive is the
   on-device-default policy these regulations are written to encourage.
-* **Vendor isolation.** Plexus has no ML model weights, no embedded
-  third-party SDK, no telemetry that flows to a Plexus server. The
+* **Vendor isolation.** Second Brain has no ML model weights, no embedded
+  third-party SDK, no telemetry that flows to a Second Brain server. The
   OEM owns the data path end-to-end.
 
 ---
@@ -387,13 +390,13 @@ The honest list.
 
 | Risk | Likelihood | Mitigation |
 |---|---|---|
-| OEM telemetry integration is non-trivial — every OEM has a different event bus | High | Plexus reads from Android `UsageStatsManager` by default; OEM-specific adapters are 1–2 days of work each. |
+| OEM telemetry integration is non-trivial — every OEM has a different event bus | High | Second Brain reads from Android `UsageStatsManager` by default; OEM-specific adapters are 1–2 days of work each. |
 | Privacy / legal approval inside OEM stalls beyond 90 days | Medium | Audit log designed for non-ML reviewers; pre-approved templates for EU AI Act, DPDP, SB-1047 in `docs/compliance/`. |
 | OEM stack differences (vendor blobs, custom assistants) break the AIDL surface | Medium | Fallback path returns unfiltered surface + cloud route on any IPC failure. The OEM never regresses. |
 | Cold-start personalization — no signal for a new device | High but bounded | First 7 days use OEM defaults; learning loop activates only after ≥ 2 durable signals per feature. |
 | Inference balancing — on-device path becomes the bottleneck | Low | Router respects thermal + battery + concurrency caps; falls back to cloud under pressure. |
 | OEM decides to build internally | Medium | See §7. Time-to-deploy and cross-OEM learning are the durable moats. |
-| Naming / brand collision (legacy "AOL" prefix in code) | Resolved | Rebrand to Plexus (or shortlist alternate); code-symbol rename is a tracked follow-up PR. |
+| Naming / brand collision (legacy "AOL" prefix in code) | Resolved | Rebrand to Second Brain (or shortlist alternate); code-symbol rename is a tracked follow-up PR. |
 
 ---
 
@@ -408,7 +411,7 @@ becomes load-bearing across every device class once it exists.
 * **Automotive (18 months):** In-vehicle infotainment AI is regulated,
   cost-sensitive, and fragmented across OEMs — a perfect target.
 * **Laptops (24 months):** Windows on Arm, ChromeOS, macOS all need
-  the same primitive as their AI surfaces grow. Plexus generalizes
+  the same primitive as their AI surfaces grow. Second Brain generalizes
   with adapter layers; the policy substrate is unchanged.
 
 The end state: **one orchestration policy, audited once, deployed

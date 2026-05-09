@@ -1,6 +1,6 @@
-# Plexus — User Journey
+# Second Brain — User Journey
 
-A 90-day narrative of how Plexus adapts to one user, on one Moto-class
+A 90-day narrative of how Second Brain adapts to one user, on one Moto-class
 device, from first boot to steady-state. Numbers are illustrative but
 match the seed-data behaviour observable in the live demo.
 
@@ -23,16 +23,16 @@ Translate, Pay Attention, Remember This, and 17 others.
 ## Day 0 — First boot
 
 Priya powers on the device. The Moto AI assistant shows the full
-24-feature surface. Plexus is installed but in **cold-start mode** —
+24-feature surface. Second Brain is installed but in **cold-start mode** —
 no per-user signal yet, so the assistant displays the OEM-default
 priority list.
 
-Behind the scenes, Plexus has already received the device context:
+Behind the scenes, Second Brain has already received the device context:
 Asia/Kolkata locale, English + Hindi keyboards, default carrier APN,
 a Snapdragon 7s Gen 3, and the OEM's seed-default policy. No
 inferences have been routed yet.
 
-> **Plexus state:** cold-start. All routing decisions follow OEM
+> **Second Brain state:** cold-start. All routing decisions follow OEM
 > defaults. Telemetry collection begins.
 
 ---
@@ -53,12 +53,12 @@ Priya uses the phone normally:
 * **Live Translate** fires once when a Hindi WhatsApp voice note
   arrives. She uses it.
 
-Plexus's Telemetry Engine is logging all of this — feature ID, when
+Second Brain's Telemetry Engine is logging all of this — feature ID, when
 it fired, whether the user engaged, latency, and which compute path
 (local / cloud) the call took. Nothing has changed in Priya's
 experience yet.
 
-> **Plexus state:** observing. No policy changes. Decision log
+> **Second Brain state:** observing. No policy changes. Decision log
 > growing at ~120 rows / day.
 
 ---
@@ -79,19 +79,19 @@ does not notice anything is missing — the features she did not use are
 gone; the ones she did use are still there. **She does not need to
 have configured anything.**
 
-The decisions are auditable. If Priya opens Settings → Plexus → Why,
+The decisions are auditable. If Priya opens Settings → Second Brain → Why,
 she sees the rule that fired and the alternate she could have had. If
 she disagrees, she clicks "bring back" and the policy is reverted with
 a manual-override marker.
 
-> **Plexus state:** active personalization. Surface size: 24 → 18
+> **Second Brain state:** active personalization. Surface size: 24 → 18
 > features. Cloud-AI calls / day: 21 → 13.
 
 ---
 
 ## Day 30 — Steady state
 
-By day 30, Plexus has converged on Priya's behaviour:
+By day 30, Second Brain has converged on Priya's behaviour:
 
 * **Visible features:** 11 of the original 24. Surface size has
   shrunk by 54 %. Smart Reply, Magic Eraser, Live Translate,
@@ -110,7 +110,7 @@ By day 30, Plexus has converged on Priya's behaviour:
   up 18 % vs day 1. Live Translate is now her most-used AI feature
   by daily-active count.
 
-> **Plexus state:** steady-state. Surface 11 / 24. Local-route
+> **Second Brain state:** steady-state. Surface 11 / 24. Local-route
 > share 52 %. Cloud-AI calls eliminated vs day-0 baseline: ~63 %.
 
 ---
@@ -125,7 +125,7 @@ detects:
 * New language environment (English-only signage).
 * Battery saver toggled on during a long taxi ride.
 
-Plexus reacts in three places:
+Second Brain reacts in three places:
 
 1. **Live Translate** is re-elevated to the top of the surface for
    the duration of the trip — language-shift rule fires.
@@ -141,12 +141,12 @@ None of this required Priya to do anything. None of this required the
 OEM to ship a custom policy. The rules are deterministic and the
 decision log is auditable.
 
-> **Plexus state:** context-shifted. Live Translate temporarily
+> **Second Brain state:** context-shifted. Live Translate temporarily
 > re-elevated. Cloud routing reduced under roaming.
 
 ---
 
-## Day 90 — What Plexus has actually delivered
+## Day 90 — What Second Brain has actually delivered
 
 **For Priya:**
 
@@ -161,15 +161,15 @@ decision log is auditable.
 **For Moto:**
 
 * ~63 % cloud-AI call reduction on Priya's device, audited per
-  call, attributable to Plexus's per-feature decisions.
+  call, attributable to Second Brain's per-feature decisions.
 * No engineering changes to the Moto AI assistant beyond the
   131-line integration shim.
 * A telemetry stream the legal team can use as the audit log for EU
   AI Act, DPDP, and SB-1047.
 * Engagement uplift on retained surfaces — measurable in the
-  assistant's own metrics, no Plexus-side magic required.
+  assistant's own metrics, no Second Brain-side magic required.
 
-**For Plexus:**
+**For Second Brain:**
 
 * One more device's worth of anonymized policy effectiveness data,
   feeding the cross-OEM learning surface. Future OEMs benefit from

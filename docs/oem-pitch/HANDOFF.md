@@ -108,9 +108,9 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
 
 ## What's pending you (5 minutes total)
 
-1. **Fill 2 placeholders** in the outreach drafts:
-   - `[YOUR LINKEDIN URL]` — your profile (or "remove this line if you don't want to include it")
-   - `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]` — one line on the cover letters
+1. **All placeholders are filled.** Review and confirm the defaults are correct:
+   - LinkedIn: <https://linkedin.com/in/k-s-akshay-0707a42b6>
+   - Education line on Lenovo cover letters: "BCA, 2nd year, Bangalore North University, expected 2027"
 
 2. **Tue May 5, 4–5 PM IST** — click-send the Moto cold email to Mahmoud only (no mass-blasting; one quality send wins per your chart)
 
