@@ -73,7 +73,7 @@ Mobility (or equivalent named target). Send Tuesday 4–5 PM IST.
 > contract + Kotlin client, no SDK, no model dependency, fail-safe
 > fallback if the Second Brain APK is uninstalled.
 >
-> Live demo: <https://out-gwumfbso.devinapps.com/>
+> Live demo: <https://out-ujjsjvxm.devinapps.com/>
 > Repo + buildable APK: <https://github.com/Akshu1245/Secondbrain>
 > Per-feature mapping at Moto's Q2 2025 scale:
 > <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md>
@@ -121,7 +121,7 @@ Wednesday morning local.
 >    named MBG software lead at Motorola; OnePlus / Nothing / Samsung
 >    India in the pipeline for the same quarter.
 >
-> Live demo: <https://out-gwumfbso.devinapps.com/>
+> Live demo: <https://out-ujjsjvxm.devinapps.com/>
 > Pitch deck: <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/PITCH.md>
 > Financial model: <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/FINANCIAL-MODEL.md>
 > Repo: <https://github.com/Akshu1245/Secondbrain>
@@ -237,7 +237,7 @@ For the cold-email-attached video, or for a live walkthrough on a
 > assistant's current cloud-share — having those numbers in front
 > of us turns the call from "demo" into "model".
 >
-> Demo URL: <https://out-gwumfbso.devinapps.com/>
+> Demo URL: <https://out-ujjsjvxm.devinapps.com/>
 > Pitch doc: <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/PITCH.md>
 >
 > Best,

@@ -36,8 +36,8 @@ local inference and the cloud and audits the decision per call.
   preferences, plus a per-feature `compute_class` (light / medium /
   heavy). Every decision is logged with the rule that fired, the
   chosen-vs-alternate latency, and the per-call cloud cost.
-    * Demo: <https://out-gwumfbso.devinapps.com>
-    * API + Swagger: <https://aol-api-enqcpqaq.fly.dev/docs>
+    * Demo: <https://out-ujjsjvxm.devinapps.com>
+    * API + Swagger: <https://aol-api-yfdwxezt.fly.dev/docs>
     * Repo: <https://github.com/Akshu1245/Secondbrain>
 * On the seeded 24-feature dataset the router keeps **~45% of calls
   on-device**, eliminating those cloud-AI calls entirely. Real
@@ -114,7 +114,7 @@ Founder, Rashi Technologies
 LinkedIn: <https://linkedin.com/in/k-s-akshay-0707a42b6>
 GitHub: <https://github.com/Akshu1245>
 Repo for this application: <https://github.com/Akshu1245/Secondbrain>
-Live demo: <https://out-gwumfbso.devinapps.com>
+Live demo: <https://out-ujjsjvxm.devinapps.com>
 
 ---
 
@@ -127,7 +127,7 @@ Live demo: <https://out-gwumfbso.devinapps.com>
 > cost. **~45% of calls routed on-device** on the seeded dataset,
 > eliminating those cloud-AI calls entirely; pilot-scale savings are
 > illustrative and documented in the repo. FastAPI + Fly.io + Next.js
-> static export. Live demo: out-gwumfbso.devinapps.com. Repo:
+> static export. Live demo: out-ujjsjvxm.devinapps.com. Repo:
 > github.com/Akshu1245/Secondbrain.
 
 ---
@@ -147,5 +147,5 @@ Live demo: <https://out-gwumfbso.devinapps.com>
       paste this short version: *"Built Second Brain — a rule-based
       local-vs-cloud router for OEM AI surfaces that keeps 45% of
       OEM-AI calls on-device and logs every decision auditably. Live
-      demo: out-gwumfbso.devinapps.com. Want to bring it inside
+      demo: out-ujjsjvxm.devinapps.com. Want to bring it inside
       Lenovo AI Cloud."*

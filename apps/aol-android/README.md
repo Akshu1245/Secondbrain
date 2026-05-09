@@ -11,7 +11,7 @@ end-to-end on-device:
   `recordOutcome()` to feed the nightly improvement loop.
 - The same six AOL modules — Usage Tracker, Smart Filter, Context Engine,
   Compute Optimiser, Control Panel, Feedback Loop — that the dashboard demo at
-  https://out-gwumfbso.devinapps.com renders, but running directly on the
+  https://out-ujjsjvxm.devinapps.com renders, but running directly on the
   device.
 
 The thresholds and per-feature latency / cost numbers mirror the Python
@@ -121,7 +121,7 @@ builds. Total: 131 semantic LOC, reproducibly verified by
 
 ## Why this exists
 
-The dashboard demo (https://out-gwumfbso.devinapps.com) shows the *server-side*
+The dashboard demo (https://out-ujjsjvxm.devinapps.com) shows the *server-side*
 of AOL — the rules engine, the Control Panel, the metrics. This module shows
 the *device-side*: a real Android app, real AIDL bind, real Kotlin client,
 that an MBG software lead can build with `./gradlew` and read in 10 minutes.

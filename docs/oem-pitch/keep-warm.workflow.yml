@@ -5,11 +5,10 @@
 #
 # Devin could not push this file directly because the GitHub PAT in this
 # session does not have the `workflow` scope. Move it into place once,
-# commit, push — done.
+# commit, push — done. Estimated time: 30 seconds.
 #
 #   mkdir -p .github/workflows
-#   mv docs/oem-pitch/keep-warm.workflow.yml .github/workflows/keep-warm.yml
-#   git add .github/workflows/keep-warm.yml
+#   git mv docs/oem-pitch/keep-warm.workflow.yml .github/workflows/keep-warm.yml
 #   git commit -m "ci: keep-demo-warm cron"
 #   git push
 
@@ -28,7 +27,7 @@ jobs:
       - name: Ping demo dashboard
         run: |
           for i in 1 2 3; do
-            if curl -fsSL --max-time 20 https://out-gwumfbso.devinapps.com/ -o /dev/null; then
+            if curl -fsSL --max-time 20 https://out-ujjsjvxm.devinapps.com/ -o /dev/null; then
               echo "demo: ok"
               break
             fi
@@ -39,7 +38,7 @@ jobs:
       - name: Ping API root
         run: |
           for i in 1 2 3; do
-            if curl -fsSL --max-time 20 https://aol-api-enqcpqaq.fly.dev/ -o /dev/null; then
+            if curl -fsSL --max-time 20 https://aol-api-yfdwxezt.fly.dev/ -o /dev/null; then
               echo "api: ok"
               break
             fi
@@ -49,5 +48,5 @@ jobs:
 
       - name: Warm key API endpoints
         run: |
-          curl -fsSL --max-time 20 https://aol-api-enqcpqaq.fly.dev/api/features -o /dev/null || true
-          curl -fsSL --max-time 20 https://aol-api-enqcpqaq.fly.dev/api/analytics -o /dev/null || true
+          curl -fsSL --max-time 20 https://aol-api-yfdwxezt.fly.dev/api/features -o /dev/null || true
+          curl -fsSL --max-time 20 https://aol-api-yfdwxezt.fly.dev/api/analytics -o /dev/null || true

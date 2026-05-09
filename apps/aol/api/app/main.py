@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from . import compute, context, feedback, memory
+from . import compute, context, feedback, learned, memory
 from . import filter as feature_filter
 from . import store, usage
 
@@ -28,7 +28,9 @@ app = FastAPI(
     description=(
         "Middleware that sits between a smartphone user and the OEM AI "
         "assistant. Filters features, suggests by context, routes compute "
-        "between local + cloud, and learns from feedback. Rule-based, no ML."
+        "between local + cloud, and learns from feedback. Rule-based core "
+        "+ optional Phase-2 logistic-regression engagement model with full "
+        "explainability and rule-based fallback."
     ),
     lifespan=_lifespan,
 )
@@ -200,6 +202,32 @@ def memory_suggestions_endpoint(days: int = 90) -> dict[str, Any]:
         "window_days": days,
         "suggestions": memory.memory_suggestions(days=days),
     }
+
+
+# ── Module 7: Learned routing policy (Phase 2, optional) ──────────────────
+
+
+@app.get("/api/learned/status")
+def learned_status() -> dict[str, Any]:
+    return learned.status()
+
+
+@app.post("/api/learned/train")
+def learned_train() -> dict[str, Any]:
+    return learned.train()
+
+
+@app.get("/api/learned/predict")
+def learned_predict(feature_id: str) -> dict[str, Any]:
+    try:
+        return learned.predict_engagement(feature_id)
+    except KeyError:
+        raise HTTPException(404, f"unknown feature: {feature_id}")
+
+
+@app.get("/api/learned/rank")
+def learned_rank(limit: int = 10) -> dict[str, Any]:
+    return {"ranked": learned.rank_features(limit=limit)}
 
 
 # ── Module 5: Demo / Analytics endpoints ──────────────────────────────────

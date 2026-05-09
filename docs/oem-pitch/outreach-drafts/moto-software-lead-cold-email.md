@@ -42,7 +42,7 @@ mid-morning US Central (Mahmoud's tz).
 > Kotlin). At Moto's 14.5 M phones / quarter that's ~$1.6 M/yr in
 > cloud-AI bills before counting battery + churn.
 >
-> Live demo: <https://out-gwumfbso.devinapps.com> ·
+> Live demo: <https://out-ujjsjvxm.devinapps.com> ·
 > Per-feature mapping at Moto's scale:
 > <https://github.com/Akshu1245/Secondbrain/blob/main/docs/oem-pitch/moto-specific.md> ·
 > Repo + buildable APK: <https://github.com/Akshu1245/Secondbrain>.
@@ -65,7 +65,7 @@ mid-morning US Central (Mahmoud's tz).
 > Hi Mahmoud — built Second Brain, the persistence + routing layer
 > the Catch-Me-Up / Remember-This surface is missing. ~45% of calls
 > on-device, 131-LOC AIDL shim, live demo + buildable APK:
-> out-gwumfbso.devinapps.com ·
+> out-ujjsjvxm.devinapps.com ·
 > github.com/Akshu1245/Secondbrain. Worth 15 min? — Akshay
 
 (287 chars including spaces. Drop "+ an AIDL stub for Android in &lt;150
@@ -81,7 +81,7 @@ side first.)
 > Hi Mahmoud,
 >
 > Bumping this once. The demo is still up at
-> out-gwumfbso.devinapps.com and I added an OEM-pain audit that maps
+> out-ujjsjvxm.devinapps.com and I added an OEM-pain audit that maps
 > Reddit / press complaints 1:1 onto the fixes:
 > <https://github.com/Akshu1245/Secondbrain/blob/devin/1777538026-aol-pitch/docs/oem-pitch/user-pain-audit.md>
 >
@@ -107,7 +107,7 @@ audit doc — so it isn't a nag.)
 > for this. Final ask: 15 minutes on the calendar this week or next?
 > If a hard no — totally fine, I'll leave you alone after this.
 >
-> Demo still live: out-gwumfbso.devinapps.com.
+> Demo still live: out-ujjsjvxm.devinapps.com.
 >
 > Best,
 > Akshay
@@ -142,7 +142,7 @@ audit doc — so it isn't a nag.)
       and replace "Mahmoud" with "Thomas" everywhere.
 - [ ] Replace recipient name *only if changing from Mahmoud* (Lenovo /
       Moto culture is first-name in email).
-- [ ] Confirm the demo URL <https://out-gwumfbso.devinapps.com> is
+- [ ] Confirm the demo URL <https://out-ujjsjvxm.devinapps.com> is
       still live the morning of send. (It's deployed on Devin Apps —
       free tier; if it's down, redeploy from the dashboard.)
 - [ ] Confirm the repo URL <https://github.com/Akshu1245/Secondbrain>

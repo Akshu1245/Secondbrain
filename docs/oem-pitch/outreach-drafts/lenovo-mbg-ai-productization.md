@@ -30,8 +30,8 @@ Catch-Me-Up, Pay-Attention, and Remember-This.
   AI assistant. Six rule-based modules: Memory Layer, Usage Tracker,
   Smart Feature Filter, Context Engine, AI Router (codename AOL,
   preserved in the codebase), Feedback Loop. Live demo + Swagger:
-    * Demo: <https://out-gwumfbso.devinapps.com>
-    * API + docs: <https://aol-api-enqcpqaq.fly.dev/docs>
+    * Demo: <https://out-ujjsjvxm.devinapps.com>
+    * API + docs: <https://aol-api-yfdwxezt.fly.dev/docs>
     * Repo: <https://github.com/Akshu1245/Secondbrain>
   * Cuts feature-surface noise by 25% and routes 45% of cloud-AI calls
     on-device on the seeded dataset. Memory layer keeps Catch-Me-Up
@@ -99,7 +99,7 @@ Founder, Rashi Technologies
 LinkedIn: <https://linkedin.com/in/k-s-akshay-0707a42b6>
 GitHub: <https://github.com/Akshu1245>
 Repo for this application: <https://github.com/Akshu1245/Secondbrain>
-Live demo: <https://out-gwumfbso.devinapps.com>
+Live demo: <https://out-ujjsjvxm.devinapps.com>
 
 ---
 
@@ -113,7 +113,7 @@ Live demo: <https://out-gwumfbso.devinapps.com>
 > Router, Feedback Loop). Cut feature-surface noise 25% and routed
 > 45% of cloud-AI calls on-device on the seeded dataset. Shipped a
 > drop-in AIDL + Kotlin reference for native Android integration in
-> 131 LOC. **Live demo: out-gwumfbso.devinapps.com.** **Repo:
+> 131 LOC. **Live demo: out-ujjsjvxm.devinapps.com.** **Repo:
 > github.com/Akshu1245/Secondbrain.**
 
 ---
@@ -132,7 +132,7 @@ Live demo: <https://out-gwumfbso.devinapps.com>
 - [ ] If the application form has a 200-character "why this role" box,
       paste this short version: *"I built Second Brain — the missing
       memory + routing layer for Moto AI — as a solo project. Live
-      demo: out-gwumfbso.devinapps.com. Want to bring it inside the AI
+      demo: out-ujjsjvxm.devinapps.com. Want to bring it inside the AI
       Productization team."*
 - [ ] If the form has a "ready to relocate" question — answer **yes**
       to Chicago and Bangalore (both reqs are MBG and the same team).

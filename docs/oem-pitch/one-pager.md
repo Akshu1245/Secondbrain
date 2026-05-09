@@ -76,7 +76,7 @@ auditable per call:
 | Payback period | < 1 quarter post-pilot |
 
 Full formulas in `FINANCIAL-MODEL.md`. Live measurements at
-<https://out-gwumfbso.devinapps.com/>.
+<https://out-ujjsjvxm.devinapps.com/>.
 
 ---
 

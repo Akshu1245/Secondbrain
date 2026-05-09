@@ -5,8 +5,8 @@
 
 set -e
 
-DEMO="https://out-gwumfbso.devinapps.com/"
-API="https://aol-api-enqcpqaq.fly.dev"
+DEMO="https://out-ujjsjvxm.devinapps.com/"
+API="https://aol-api-yfdwxezt.fly.dev"
 
 echo "Warming demo + API..."
 for i in 1 2 3; do

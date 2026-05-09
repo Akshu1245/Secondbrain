@@ -46,8 +46,8 @@ integration shim**.
 
 ## Live artefacts
 
-* **Demo:** <https://out-gwumfbso.devinapps.com/>
-* **API + Swagger:** <https://aol-api-enqcpqaq.fly.dev/docs>
+* **Demo:** <https://out-ujjsjvxm.devinapps.com/>
+* **API + Swagger:** <https://aol-api-yfdwxezt.fly.dev/docs>
 * **Buildable APK:** `apps/aol-android/` → `./gradlew assembleDebug`
 
 ---

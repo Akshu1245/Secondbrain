@@ -13,8 +13,8 @@ Middleware that sits between the user and the OEM AI assistant. Cuts cloud-AI
 spend, hides feature clutter, surfaces context-relevant capabilities, and ships
 a Control Panel users actually own.
 
-Live demo: <https://out-gwumfbso.devinapps.com>
-API: <https://aol-api-enqcpqaq.fly.dev/docs>
+Live demo: <https://out-ujjsjvxm.devinapps.com>
+API: <https://aol-api-yfdwxezt.fly.dev/docs>
 
 ---
 
@@ -63,14 +63,21 @@ it, and where to run it.**
 | 5. Control Panel | Per-user toggles + priority categories + battery / data / private modes | Users feel ownership; OEM gets feedback |
 | 6. Feedback Loop | "love / ok / annoying / never_use" → auto-disable / re-enable suggestions | Continuous improvement, no model retraining |
 
-All rule-based, runs on-device, no extra ML. Logs every decision. Plugs into a
-real OEM AI via an Android Service (AIDL stub in `docs/integration/`).
+All rule-based by default, runs on-device, logs every decision. Phase-2
+optional: a 150-line pure-Python logistic-regression engagement model
+(`apps/aol/api/app/learned.py`) that re-ranks the Smart Filter's output
+using the user's own usage + feedback log — with per-feature top-3
+explainability and an automatic fallback to the rule-based engagement
+estimate when training data is thin or the model would underperform the
+baseline. Plugs into a real OEM AI via an Android Service (AIDL stub at
+`docs/oem-pitch/integration/`; buildable reference APK at
+`apps/aol-android/`).
 
 ---
 
 ## Slide 5 — Demo metrics (from the deployed MVP, not slides)
 
-Numbers below are **live** from <https://out-gwumfbso.devinapps.com>.
+Numbers below are **live** from <https://out-ujjsjvxm.devinapps.com>.
 
 - **Surface size: 24 → 17 features (–25%)** after AOL applies the filter.
 - **Compute router on a sample run of 11 invocations:** ~45% local,
@@ -167,8 +174,8 @@ bloated and cost less to run.
 
 That's AOL.
 
-- Live demo: <https://out-gwumfbso.devinapps.com>
-- API: <https://aol-api-enqcpqaq.fly.dev/docs>
+- Live demo: <https://out-ujjsjvxm.devinapps.com>
+- API: <https://aol-api-yfdwxezt.fly.dev/docs>
 - Integration stub: [`docs/oem-pitch/integration/`](./integration/)
 - One-pager: [`docs/oem-pitch/one-pager.md`](./one-pager.md)
 - OEM targets + outreach: [`docs/oem-pitch/oem-targets.md`](./oem-targets.md), [`docs/oem-pitch/oem-outreach.md`](./oem-outreach.md)

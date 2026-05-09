@@ -45,7 +45,7 @@ Referral note (200 chars, send same day as the application):
 
 > Hi Mahmoud — just submitted my application to req 69831 (AI
 > Productization, Chicago). I built AOL — a system-layer optimiser for
-> Moto AI — live at out-gwumfbso.devinapps.com. Worth a 15-min look at
+> Moto AI — live at out-ujjsjvxm.devinapps.com. Worth a 15-min look at
 > the demo? — Akshay
 
 ### C. Lenovo Bangalore / AI Cloud referral path (Thursday May 7, applying to req 76696)
@@ -59,7 +59,7 @@ Referral note (200 chars):
 
 > Hi Amith — applied to req 76696 (AI Cloud, Bangalore). I built a
 > rule-based local-vs-cloud router for OEM AI surfaces — routes ~45%
-> of calls on-device, audit-friendly. Live: out-gwumfbso.devinapps.com.
+> of calls on-device, audit-friendly. Live: out-ujjsjvxm.devinapps.com.
 > Worth 15 min? — Akshay
 
 ---

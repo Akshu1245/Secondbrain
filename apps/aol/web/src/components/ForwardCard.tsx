@@ -12,7 +12,7 @@ runs the rest on-device when it can, and remembers what the user
 disabled so it doesn't come back.
 
 Live demo + 30-second pitch:
-https://out-gwumfbso.devinapps.com/
+https://out-ujjsjvxm.devinapps.com/
 
 Repo + buildable Android APK + the 131-line drop-in:
 https://github.com/Akshu1245/Secondbrain
@@ -46,8 +46,8 @@ export function ForwardCard() {
   }
 
   const mailtoHref = `mailto:?subject=${encodeURIComponent(SUBJECT)}&body=${encodeURIComponent(BODY)}`;
-  const linkedInHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://out-gwumfbso.devinapps.com/")}`;
-  const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent("AOL — a drop-in layer that hides the AI features phone users never open, and runs the rest on-device. Working demo + APK:")}&url=${encodeURIComponent("https://out-gwumfbso.devinapps.com/")}`;
+  const linkedInHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://out-ujjsjvxm.devinapps.com/")}`;
+  const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent("AOL — a drop-in layer that hides the AI features phone users never open, and runs the rest on-device. Working demo + APK:")}&url=${encodeURIComponent("https://out-ujjsjvxm.devinapps.com/")}`;
 
   return (
     <section className="rounded-2xl border border-sky-500/30 bg-gradient-to-br from-sky-500/5 via-ink-900 to-ink-900 p-5">
