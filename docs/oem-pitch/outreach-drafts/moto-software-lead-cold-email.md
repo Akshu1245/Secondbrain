@@ -42,8 +42,8 @@ mid-morning US Central (Mahmoud's tz).
 > Live demo: <https://out-gwumfbso.devinapps.com> · Repo + buildable APK:
 > <https://github.com/Akshu1245/Secondbrain>.
 >
-> 4 provisional AI patents (API-security + LLM-cost optimisation — same
-> problem class as on-device routing). Solo founder, ships fast.
+> Solo founder, ships fast — built and deployed the demo, API,
+> Android shim, and 53-test pytest suite end-to-end before this email.
 >
 > Worth 15 minutes on the calendar?
 >
@@ -119,8 +119,9 @@ audit doc — so it isn't a nag.)
 * **Sentence 2: link the demo + the AIDL stub immediately.** No "I've
   attached a deck." Decks are time-asks. Demo + repo is a 30-sec
   glance.
-* **Sentence 3: 4 patents, one line.** Not the titles — that's noise
-  in a cold email. Just the count, as a credentialing signal.
+* **Sentence 3: solo founder, ships fast — show, don't tell.** Use
+  end-to-end shipped artefacts (demo, API, APK, tests) as the credential.
+  No fabricated counts, no patent claims that don't apply to this product.
 * **CTA: "15 minutes" not "a meeting."** Specific small ask converts
   ~3× higher on cold outbound.
 * **No "I'm passionate about AI" or "I admire your work at Moto."**

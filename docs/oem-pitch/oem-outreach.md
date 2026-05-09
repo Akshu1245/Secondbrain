@@ -37,7 +37,7 @@ Sales Navigator (or free LinkedIn search):
 >
 > Hi [Name],
 >
-> I'm an independent AI engineer, 4 provisional patents in adjacent territory.
+> I'm an independent AI engineer, building Second Brain (live demo + open repo + buildable APK).
 > I've been using a [Motorola Edge / OnePlus 13 / etc.] for [N] months and
 > kept hitting the same wall: [specific feature — e.g. "Remember This sessions
 > don't link"]. I went and built the system-layer fix.

@@ -92,9 +92,6 @@ Mobility (or equivalent named target). Send Tuesday 4–5 PM IST.
 > **K S Akshay**
 > Founder, Rashi Technologies
 > `rashisolutions1245@gmail.com` · `[YOUR LINKEDIN URL]`
->
-> *4 provisional AI patents in adjacent territory — API security and
-> LLM cost optimisation; the same problem class as on-device routing.*
 
 ---
 
@@ -259,10 +256,8 @@ For the cold-email-attached video, or for a live walkthrough on a
 
 1. **Pick the brand name.** Default Plexus; alternates Conduit,
    Inferna, Locus, Ravel. Final selection unblocks every other asset.
-2. **Fill the three placeholders** in this file: LinkedIn URL,
-   patent titles (if you cite them in cover letters — this OEM email
-   does not require them), education line (Lenovo cover letters
-   only).
+2. **Fill the two remaining placeholders**: LinkedIn URL (every
+   draft) and education line (Lenovo cover letters only).
 3. **Send the OEM cold email** to Mahmoud Tuesday 4–5 PM IST.
 4. **Send the investor cold email** to your top 5 partners
    Wednesday morning.

@@ -10,9 +10,9 @@ numerology overlay (Mulank-4, Personal Year 4, Mars-dominant chart).
 | [`lenovo-ai-cloud-bangalore.md`](./lenovo-ai-cloud-bangalore.md) | Lenovo (Bangalore) — req 76696, Software Engineer, AI Cloud | **Thursday May 7, 2026 — 10–11 AM IST** (same day, paired submission) |
 | [`moto-software-lead-cold-email.md`](./moto-software-lead-cold-email.md) | Named Moto / MBG software lead, found via LinkedIn | **Tuesday May 5, 2026 — 4–5 PM IST** (Mars day, communication-favoured) |
 
-All three drafts share the same credential pack: live AOL demo URL, repo
-URL, 4 patents, the Catch-Me-Up / Pay-Attention / Remember-This memory
-gap framing.
+All three drafts share the same credential pack: live AOL demo URL,
+repo URL, buildable APK, 53-test pytest suite, the Catch-Me-Up /
+Pay-Attention / Remember-This memory gap framing.
 
 ## Ranked target list (verified May 2026 via public LinkedIn)
 
@@ -72,9 +72,7 @@ Referral note (200 chars):
       subject line + opening.
 - [ ] Replace `[YOUR LINKEDIN URL]` with your own profile (any valid
       `https://linkedin.com/in/...` link).
-- [ ] Replace `[PATENT 1 TITLE]` … `[PATENT 4 TITLE]` with the actual
-      titles (or delete those bullets if you'd rather list patents only
-      in the resume PDF).
+
 - [ ] Replace `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]`
       with a single-line credentials summary.
 - [ ] Send a test email to yourself first to confirm formatting in

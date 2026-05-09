@@ -124,7 +124,6 @@ Gemini / Perplexity contracts.
 
 **Why this team**
 
-- 4 provisional AI patents in adjacent territory.
 - Already shipped `Second Brain` v0 → v2 (memory consolidation, decay,
   multi-hop recall, episodic provenance) on a public repo with 3 PRs and 7+
   commits before this pitch landed. (Ask for the repo URL — it's not the empty

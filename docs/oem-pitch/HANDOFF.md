@@ -12,7 +12,7 @@ Snapshot of state so you can resume from exactly where we left off.
 
 - The full pitch package is on GitHub. Every doc, every cover letter, every line of code.
 - The live demo and the live API are running on the public internet. The backend was just redeployed with the honest-numbers fix.
-- 2 things are still open: (a) a 90-second screen-recording asset (in-flight), (b) 3 placeholders only you can fill (LinkedIn URL, patent titles, education line).
+- 2 things are still open: (a) a 90-second screen-recording asset (in-flight), (b) 2 placeholders only you can fill (LinkedIn URL, education line).
 - Confidence: ~70–75% probability that **at least one** of (Moto cold email reply / Lenovo MBG offer / Lenovo AI Cloud offer) lands by Aug 2026 if you execute the May 5 / May 7 sends.
 
 ---
@@ -108,9 +108,8 @@ Each draft has: subject line, full body, LinkedIn DM short version (≤300 chars
 
 ## What's pending you (5 minutes total)
 
-1. **Fill 3 placeholders** in the outreach drafts:
+1. **Fill 2 placeholders** in the outreach drafts:
    - `[YOUR LINKEDIN URL]` — your profile (or "remove this line if you don't want to include it")
-   - `[PATENT 1–4 TITLE]` — actual titles, OR remove those bullets and list patents only on the resume PDF
    - `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS — 1 line]` — one line on the cover letters
 
 2. **Tue May 5, 4–5 PM IST** — click-send the Moto cold email to Mahmoud only (no mass-blasting; one quality send wins per your chart)

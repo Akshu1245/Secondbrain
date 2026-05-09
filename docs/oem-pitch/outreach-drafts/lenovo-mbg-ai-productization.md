@@ -63,16 +63,14 @@ Catch-Me-Up, Pay-Attention, and Remember-This.
 
 **Credentials:**
 
-* **4 provisional AI patents** filed via Rashi Technologies, all in
-  adjacent AI-systems territory (API security, LLM cost optimisation
-  — the same problem class as on-device vs cloud routing):
-    * `[PATENT 1 TITLE]`
-    * `[PATENT 2 TITLE]`
-    * `[PATENT 3 TITLE]`
-    * `[PATENT 4 TITLE]`
-* Solo-shipped 7 PRs of working code on the AOL project before this
-  application landed — not a course project. Deployed FastAPI backend,
-  Next.js dashboard, buildable Android APK, 53 passing pytest tests.
+* Solo-shipped 7 PRs of working code on the AOL / Second Brain
+  project before this application landed — not a course project.
+  Deployed FastAPI backend, Next.js dashboard, buildable Android APK,
+  53 passing pytest tests, GitHub Actions CI under 60 s wall-clock.
+* Found and pinned a savings-aggregation bug in the routing model
+  inside the test suite before it shipped (documented in `compute.py`)
+  — the kind of measurement-integrity bar a productization team needs
+  on every metric the OEM cites externally.
 * **Education:** `[BRIEF EDUCATION LINE — e.g. "BCA, 2nd year, XYZ
   University, expected 2027"]`. I am candid that I'm early-career; the
   artefact above is the work I'd hand any senior engineer for review.
@@ -126,7 +124,6 @@ Live demo: <https://out-gwumfbso.devinapps.com>
 - [ ] Confirm req **69831** is still posted at the Lenovo careers
       portal. If not, find the closest equivalent on the same team and
       update the subject line + opening paragraph.
-- [ ] Replace `[PATENT 1–4 TITLE]` with your actual patent titles.
 - [ ] Replace `[BRIEF EDUCATION + ANY RELEVANT INTERNSHIPS]`.
 - [ ] Replace `[YOUR LINKEDIN URL]`.
 - [ ] If the application form has a 200-character "why this role" box,
