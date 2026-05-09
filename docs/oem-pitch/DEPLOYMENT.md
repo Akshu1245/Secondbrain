@@ -27,14 +27,22 @@ emailed automatically.
 
 | Asset | URL in docs |
 |---|---|
-| Live dashboard | <https://out-ujjsjvxm.devinapps.com> |
+| Live dashboard (v4 — matches the 90-sec video) | <https://out-ujjsjvxm.devinapps.com> |
+| Live dashboard (v5 — adds Phase-2 "Learned policy" tab) | <https://out-dvhxcryu.devinapps.com> |
 | Live API + Swagger | <https://aol-api-yfdwxezt.fly.dev/docs> |
 | 90-second video | <https://app.devin.ai/attachments/316aaee6-e073-4ad6-b57b-a0517678140d/rec-4e956fb6-3cf3-471f-a679-d97df67da797-edited.mp4> |
+| Sideload APK (debug, 9.1 MB) | <https://app.devin.ai/attachments/8dd985ea-019c-4f8d-bb82-624c0835967f/app-debug.apk> |
 | Active PR | <https://github.com/Akshu1245/Secondbrain/pull/14> |
 
 `docs/oem-pitch/DEMO-WARMUP.sh` warms all four URLs in ~5 seconds. Run
 it 2–3 minutes before each send so the recipient's first click is
 warm-cached, not cold-starting.
+
+The cold email links to the **v4** dashboard URL (because that's what
+the 90-second video shows). If a recipient asks "is there a more
+technical view of the ML?" the v5 URL is the answer — it adds a
+seventh "Learned policy" tab with model status, ranked features, and
+per-feature top-3 explainability.
 
 ---
 

@@ -31,6 +31,30 @@ $ ls -la app/build/outputs/apk/debug/
 | Target SDK | **34** (Android 14) |
 | Compile SDK | 34 |
 | Hardware features required | none (`android.hardware.faketouch implied`) |
+| SHA-256 (debug APK) | `cb21b7ca49ef556dc0a65475d7f93585b53dff3023530c8c4c68d8a629db9225` |
+
+### Hosted debug build (sideload-ready)
+
+The same `app-debug.apk` produced by the build above is hosted at:
+
+**[Download `app-debug.apk` (9.1 MB)](https://app.devin.ai/attachments/8dd985ea-019c-4f8d-bb82-624c0835967f/app-debug.apk)**
+
+Verify integrity before installing:
+
+```
+$ sha256sum app-debug.apk
+cb21b7ca49ef556dc0a65475d7f93585b53dff3023530c8c4c68d8a629db9225  app-debug.apk
+```
+
+Sideload onto a Moto / Pixel / any Android 8+ device:
+
+```
+$ adb install app-debug.apk
+```
+
+The APK is *unsigned debug* — useful for review and emulator runs but
+not for Play distribution. A signed release build is one `gradle
+assembleRelease` step away once an OEM provides a signing key.
 
 `apkanalyzer dex packages` against the produced APK reports **303
 methods and 41,079 bytes of DEX code** in `ai.aol.*` (the AOL

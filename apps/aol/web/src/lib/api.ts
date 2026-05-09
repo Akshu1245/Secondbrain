@@ -141,4 +141,65 @@ export const api = {
   beforeAfter: () => fetch(`${BASE}/before-after`).then(j),
   analytics: () => fetch(`${BASE}/analytics`).then(j),
   reset: () => fetch(`${BASE}/admin/reset`, { method: "POST" }).then(j),
+  learnedStatus: () => fetch(`${BASE}/learned/status`).then(j<LearnedStatus>),
+  learnedTrain: () =>
+    fetch(`${BASE}/learned/train`, { method: "POST" }).then(j<LearnedTrainResult>),
+  learnedPredict: (feature_id: string) =>
+    fetch(`${BASE}/learned/predict?feature_id=${encodeURIComponent(feature_id)}`).then(
+      j<LearnedPrediction>,
+    ),
+  learnedRank: (limit = 12) =>
+    fetch(`${BASE}/learned/rank?limit=${limit}`).then(j<{ ranked: LearnedRanked[] }>),
+};
+
+export type LearnedFactor = {
+  name: string;
+  value: number;
+  weight: number;
+  contribution: number;
+};
+
+export type LearnedPrediction = {
+  feature_id: string;
+  prob_engaged: number;
+  model: string;
+  top_factors: LearnedFactor[];
+};
+
+export type LearnedRanked = LearnedPrediction & {
+  name: string;
+  category: string;
+};
+
+export type LearnedMetrics = {
+  train_accuracy: number;
+  test_accuracy: number;
+  train_log_loss: number;
+  test_log_loss: number;
+  majority_baseline: number;
+  calibration: { mean_pred: number; mean_actual: number; abs_gap: number };
+};
+
+export type LearnedStatus = {
+  trained: boolean;
+  n_rows?: number | null;
+  n_rows_train?: number | null;
+  n_rows_test?: number | null;
+  version?: number | null;
+  metrics?: LearnedMetrics | null;
+  feature_names?: string[] | null;
+  weights?: number[] | null;
+};
+
+export type LearnedTrainResult = LearnedStatus & {
+  beats_baseline?: boolean;
+  rows_train?: number;
+  rows_test?: number;
+  train_accuracy?: number;
+  test_accuracy?: number;
+  train_log_loss?: number;
+  test_log_loss?: number;
+  majority_baseline?: number;
+  calibration?: LearnedMetrics["calibration"];
+  loss_curve_first_last?: [number | null, number | null];
 };

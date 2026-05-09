@@ -124,11 +124,17 @@ def _build_dataset() -> tuple[list[list[float]], list[int], list[str]]:
     return X, y, ids
 
 
-def _fit(X: list[list[float]], y: list[int]) -> list[float]:
-    """Plain SGD on logistic regression with L2 regularisation."""
+def _fit(X: list[list[float]], y: list[int]) -> tuple[list[float], list[float]]:
+    """Plain SGD on logistic regression with L2 regularisation.
+
+    Returns ``(weights, loss_curve)`` where ``loss_curve`` is the mean
+    cross-entropy loss after each epoch — useful for the dashboard to
+    show that the optimiser actually converged (not just that it ran).
+    """
     rng = random.Random(0)  # deterministic for tests
     w = [0.0] * N_FEATURES
     n = len(X)
+    loss_curve: list[float] = []
     for _ in range(N_EPOCHS):
         order = list(range(n))
         rng.shuffle(order)
@@ -138,30 +144,140 @@ def _fit(X: list[list[float]], y: list[int]) -> list[float]:
             err = p - y[i]
             for j in range(N_FEATURES):
                 w[j] -= LEARNING_RATE * (err * xi[j] + L2_REG * w[j])
-    return w
+        loss_curve.append(_mean_log_loss(w, X, y))
+    return w, loss_curve
 
 
-def train() -> dict[str, Any]:
+def _mean_log_loss(w: list[float], X: list[list[float]], y: list[int]) -> float:
+    """Mean cross-entropy loss. Clamped to avoid log(0) when the
+    sigmoid saturates at the extremes."""
+    if not X:
+        return 0.0
+    eps = 1e-9
+    total = 0.0
+    for xi, yi in zip(X, y):
+        p = max(min(_sigmoid(_dot(w, xi)), 1.0 - eps), eps)
+        total += -(yi * math.log(p) + (1 - yi) * math.log(1.0 - p))
+    return total / len(X)
+
+
+def _accuracy(w: list[float], X: list[list[float]], y: list[int]) -> float:
+    if not X:
+        return 0.0
+    correct = sum(
+        1 for xi, yi in zip(X, y)
+        if (1 if _sigmoid(_dot(w, xi)) >= 0.5 else 0) == yi
+    )
+    return correct / len(X)
+
+
+def _calibration(w: list[float], X: list[list[float]], y: list[int]) -> dict[str, float]:
+    """Mean predicted probability vs. observed positive rate. A
+    well-calibrated model has |mean_pred - mean_actual| close to 0;
+    if the gap is large the predicted probabilities are not
+    trustworthy as decision thresholds."""
+    if not X:
+        return {"mean_pred": 0.0, "mean_actual": 0.0, "abs_gap": 0.0}
+    mean_pred = sum(_sigmoid(_dot(w, xi)) for xi in X) / len(X)
+    mean_actual = sum(y) / len(y)
+    return {
+        "mean_pred": round(mean_pred, 3),
+        "mean_actual": round(mean_actual, 3),
+        "abs_gap": round(abs(mean_pred - mean_actual), 3),
+    }
+
+
+def _baseline_accuracy(y: list[int]) -> float:
+    """Majority-class baseline. The learned model must beat this
+    or `train()` refuses to overwrite existing weights — we'd rather
+    keep the rule-based path than ship a model that's worse than
+    'always predict the most common label'."""
+    if not y:
+        return 0.0
+    pos_rate = sum(y) / len(y)
+    return max(pos_rate, 1.0 - pos_rate)
+
+
+def _train_test_split(X: list[list[float]], y: list[int],
+                      test_frac: float = 0.2,
+                      seed: int = 1) -> tuple[
+                          list[list[float]], list[int],
+                          list[list[float]], list[int]]:
+    """Stratified-ish split: shuffle then take the last `test_frac`
+    rows. With only 24 rows we can't do real k-fold cross-validation
+    cleanly, but a held-out 20% gives an honest signal that
+    training-set accuracy isn't pure memorisation."""
+    rng = random.Random(seed)
+    indices = list(range(len(X)))
+    rng.shuffle(indices)
+    n_test = max(1, int(len(X) * test_frac))
+    test_idx = set(indices[-n_test:])
+    X_train = [X[i] for i in range(len(X)) if i not in test_idx]
+    y_train = [y[i] for i in range(len(X)) if i not in test_idx]
+    X_test = [X[i] for i in range(len(X)) if i in test_idx]
+    y_test = [y[i] for i in range(len(X)) if i in test_idx]
+    return X_train, y_train, X_test, y_test
+
+
+def train(force: bool = False) -> dict[str, Any]:
+    """Train, evaluate, and (if quality clears the floor) persist new
+    weights. Returns a structured report covering both the convergence
+    of the optimiser and the held-out generalisation of the model.
+
+    The model is only saved to disk if held-out accuracy beats the
+    majority-class baseline. Pass ``force=True`` to skip that gate
+    (useful for experiments; never the default).
+    """
     X, y, ids = _build_dataset()
     if len(X) < MIN_TRAINING_ROWS // 5:
-        # 24 features in the seed catalogue → require ≥ 24 rows; in practice
-        # we get exactly 24, which is enough for a 11-dimensional model.
         return {"trained": False, "reason": "not enough rows", "rows": len(X)}
-    w = _fit(X, y)
-    state = store.get_state()
-    state["learned"] = {
-        "weights": w,
-        "feature_names": list(FEATURE_NAMES),
-        "n_rows": len(X),
-        "version": 1,
-    }
-    store.save()
-    # Training accuracy is a sanity-check, not a quality claim.
-    correct = sum(1 for xi, yi in zip(X, y) if (1 if _sigmoid(_dot(w, xi)) >= 0.5 else 0) == yi)
+
+    X_train, y_train, X_test, y_test = _train_test_split(X, y)
+    w, loss_curve = _fit(X_train, y_train)
+
+    train_acc = _accuracy(w, X_train, y_train)
+    test_acc = _accuracy(w, X_test, y_test)
+    train_loss = _mean_log_loss(w, X_train, y_train)
+    test_loss = _mean_log_loss(w, X_test, y_test)
+    calibration = _calibration(w, X, y)
+    baseline = _baseline_accuracy(y_train)
+
+    beats_baseline = test_acc >= baseline
+    persisted = beats_baseline or force
+    if persisted:
+        state = store.get_state()
+        state["learned"] = {
+            "weights": w,
+            "feature_names": list(FEATURE_NAMES),
+            "n_rows_train": len(X_train),
+            "n_rows_test": len(X_test),
+            "version": 2,
+            "metrics": {
+                "train_accuracy": round(train_acc, 3),
+                "test_accuracy": round(test_acc, 3),
+                "train_log_loss": round(train_loss, 4),
+                "test_log_loss": round(test_loss, 4),
+                "majority_baseline": round(baseline, 3),
+                "calibration": calibration,
+            },
+        }
+        store.save()
+
     return {
-        "trained": True,
-        "rows": len(X),
-        "training_accuracy": round(correct / len(X), 3),
+        "trained": persisted,
+        "beats_baseline": beats_baseline,
+        "rows_train": len(X_train),
+        "rows_test": len(X_test),
+        "train_accuracy": round(train_acc, 3),
+        "test_accuracy": round(test_acc, 3),
+        "train_log_loss": round(train_loss, 4),
+        "test_log_loss": round(test_loss, 4),
+        "majority_baseline": round(baseline, 3),
+        "calibration": calibration,
+        "loss_curve_first_last": [
+            round(loss_curve[0], 4) if loss_curve else None,
+            round(loss_curve[-1], 4) if loss_curve else None,
+        ],
         "feature_names": list(FEATURE_NAMES),
         "weights": [round(wi, 3) for wi in w],
     }
@@ -237,6 +353,11 @@ def status() -> dict[str, Any]:
     learned = state.get("learned") or {}
     return {
         "trained": "weights" in learned,
-        "n_rows": learned.get("n_rows"),
+        "n_rows": learned.get("n_rows") or learned.get("n_rows_train"),
+        "n_rows_train": learned.get("n_rows_train"),
+        "n_rows_test": learned.get("n_rows_test"),
         "version": learned.get("version"),
+        "metrics": learned.get("metrics"),
+        "feature_names": learned.get("feature_names"),
+        "weights": learned.get("weights"),
     }

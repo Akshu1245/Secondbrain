@@ -10,8 +10,9 @@ import { ScenarioPresets } from "@/components/ScenarioPresets";
 import { PitchCard } from "@/components/PitchCard";
 import { IntegrateCard } from "@/components/IntegrateCard";
 import { ForwardCard } from "@/components/ForwardCard";
+import { LearnedPolicy } from "@/components/LearnedPolicy";
 
-type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "pitch";
+type Tab = "control" | "context" | "compute" | "before-after" | "feedback" | "learned" | "pitch";
 
 const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
   { id: "control",      n: 1, label: "Hide what nobody uses",          sub: "declutter the AI menu" },
@@ -19,7 +20,8 @@ const TABS: { id: Tab; n: number; label: string; sub: string }[] = [
   { id: "compute",      n: 3, label: "Run on phone vs cloud",           sub: "free + private when possible" },
   { id: "before-after", n: 4, label: "Before vs after AOL",             sub: "see the win, side-by-side" },
   { id: "feedback",     n: 5, label: "Learn what the user hates",       sub: "never come back if disabled" },
-  { id: "pitch",        n: 6, label: "The pitch — numbers",              sub: "what to say to Mahmoud" },
+  { id: "learned",      n: 6, label: "Learned policy (Phase 2)",         sub: "on-device logistic regression" },
+  { id: "pitch",        n: 7, label: "The pitch — numbers",              sub: "what to say to Mahmoud" },
 ];
 
 export default function Home() {
@@ -46,9 +48,9 @@ export default function Home() {
       </div>
       <div className="mt-6">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-          Six tabs · click each to see one thing AOL does
+          Seven tabs · click each to see one thing the layer does
         </h3>
-        <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+        <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-7">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -77,6 +79,7 @@ export default function Home() {
         {tab === "compute"      && <ComputeRouter />}
         {tab === "before-after" && <BeforeAfter />}
         {tab === "feedback"     && <FeedbackPanel />}
+        {tab === "learned"      && <LearnedPolicy />}
         {tab === "pitch"        && <PitchEvidence />}
       </div>
       <div className="mt-8">

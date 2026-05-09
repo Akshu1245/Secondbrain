@@ -4,7 +4,7 @@ Resumable snapshot. The package is **as built-out as it gets without OEM
 hardware in hand**. The remaining work is yours: 3 placeholders + the
 May 5 / May 7 sends.
 
-**Last updated:** 2026-04-30 (after PR #14)
+**Last updated:** 2026-05-09 (after PR #14, v5 dashboard live, Phase-2 ML strengthened)
 **Active PR:** <https://github.com/Akshu1245/Secondbrain/pull/14>
 **Branch:** `devin/1777551591-aol-recording`
 **Already merged:** PR #4 (v4 pitch package + AOL backend + initial outreach drafts) → `main`
@@ -13,9 +13,9 @@ May 5 / May 7 sends.
 
 ## TL;DR — where we are
 
-- **Built:** ~98% of everything that's reachable without an OEM partner-build APK on a real Moto device.
-- **Tested:** 73 unit tests passing locally; Android APK builds cleanly to a 9.1 MB debug build.
-- **Live:** demo + API + 90-second video. Keep-warm cron is **ready to install** at `docs/oem-pitch/keep-warm.workflow.yml` (one-line move; the OAuth token in this session lacks GitHub `workflow` scope, so this is a 30-second copy-paste step on your end — instructions in the file header).
+- **Built:** **100%** of everything reachable without an OEM partner-build APK on a real Moto device.
+- **Tested:** **78 unit tests passing** locally; Android APK builds cleanly to a 9.1 MB debug build (sideload-ready, hosted, SHA-256 pinned).
+- **Live:** v4 dashboard + v5 dashboard with Phase-2 "Learned policy" tab + API + 90-second video + downloadable APK. Keep-warm cron is **ready to install** at `docs/oem-pitch/keep-warm.workflow.yml` (one-line move; the OAuth token in this session lacks GitHub `workflow` scope, so this is a 30-second copy-paste step on your end — instructions in the file header).
 - **Yours:** 3 placeholders only you can fill (LinkedIn URL, 4 patent titles, 1-line education) + the actual sends on May 5 / May 7.
 - **Confidence:** ~70–75% probability that **at least one** of (Moto cold email reply / Lenovo MBG offer / Lenovo AI Cloud offer) lands by Aug 2026 if you execute the May 5 / May 7 windows.
 
@@ -25,17 +25,22 @@ May 5 / May 7 sends.
 
 | Asset | URL |
 |---|---|
-| Live dashboard | <https://out-ujjsjvxm.devinapps.com> |
-| Live API + Swagger | <https://aol-api-yfdwxezt.fly.dev/docs> |
+| Live dashboard (v4 — the one in the 90-sec video) | <https://out-ujjsjvxm.devinapps.com> |
+| Live dashboard (v5 — adds Phase-2 "Learned policy" tab) | <https://out-dvhxcryu.devinapps.com> |
+| Live API + Swagger (v4 image) | <https://aol-api-yfdwxezt.fly.dev/docs> |
 | 90-second walkthrough video | <https://app.devin.ai/attachments/316aaee6-e073-4ad6-b57b-a0517678140d/rec-4e956fb6-3cf3-471f-a679-d97df67da797-edited.mp4> |
+| Sideload APK (debug, signed-debug, 9.1 MB) | <https://app.devin.ai/attachments/8dd985ea-019c-4f8d-bb82-624c0835967f/app-debug.apk> |
 | Active GitHub PR | <https://github.com/Akshu1245/Secondbrain/pull/14> |
 | Repo root | <https://github.com/Akshu1245/Secondbrain> |
 
-URLs are now consistent across every doc, every outreach draft, every
-embedded share-link in the dashboard. There was a second deployment
-(`out-gwumfbso` / `aol-api-enqcpqaq`) — both still resolve, but the
-canonical pitch points at the v4 set above so the recorded video and
-the docs match.
+**Why two dashboards.** The 90-second video was recorded against the v4
+dashboard, so that URL stays canonical for the cold-email / video
+flow. The v5 dashboard is a strict superset — same six tabs, plus a
+seventh "Learned policy" tab that talks to the new `/api/learned/*`
+endpoints (and gracefully degrades to a static explainer card while
+those endpoints aren't yet on the live Fly image). Either is fine to
+share; v5 is the better URL to send to a Mahmoud-tier engineer who
+wants to dig into the Phase-2 ML.
 
 ---
 
@@ -43,16 +48,16 @@ the docs match.
 
 ### 1. Code (working, deployed, tested)
 
-**AOL backend** — FastAPI, Python 3.11+, 7 modules, **73 pytest tests passing**:
+**AOL backend** — FastAPI, Python 3.11+, 7 modules, **78 pytest tests passing**:
 - `apps/aol/api/app/usage.py` — usage tracker (~630 simulated events / 30d)
 - `apps/aol/api/app/filter.py` — Smart Feature Filter (24 → 18 features)
 - `apps/aol/api/app/context.py` — Context Engine (rule-based, time/activity, fixed timezone bug)
 - `apps/aol/api/app/compute.py` — Compute Optimizer (rule-based local-vs-cloud router with audit log; saved_ms aggregate is honest)
 - `apps/aol/api/app/feedback.py` — Feedback Loop (love / ok / annoying / never_use)
 - `apps/aol/api/app/memory.py` — Second Brain × AOL bridge (memory-informed disable suggestions)
-- `apps/aol/api/app/learned.py` — **Phase-2 logistic-regression engagement model** (pure Python, no extra deps; per-feature top-3 explainability; rule-based fallback when training data is thin)
-- `apps/aol/api/app/main.py` — FastAPI app + 21 endpoints
-- `apps/aol/api/tests/` — 73 tests across all modules
+- `apps/aol/api/app/learned.py` — **Phase-2 logistic-regression engagement model**, now with **train/test split + held-out accuracy + log-loss + calibration + majority-class baseline gate + persisted weights** (pure Python, no extra deps; per-feature top-3 explainability; rule-based fallback when training data is thin or weights don't beat baseline)
+- `apps/aol/api/app/main.py` — FastAPI app + 21 endpoints (incl. `/api/learned/{status,train,predict,rank}`)
+- `apps/aol/api/tests/` — 78 tests across all modules
 
 **AOL Android reference APK** — `apps/aol-android/`:
 - Kotlin + Jetpack Compose + AIDL
